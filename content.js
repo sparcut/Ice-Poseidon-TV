@@ -29,6 +29,7 @@ var emotes = {};
 				}
 				
 				if (mutation.addedNodes[0].className == chatMessageSelector) {
+                    replaceOldMessages();
 					emoteCheck(mutation.addedNodes[0]);
 				}
 			}
@@ -36,10 +37,6 @@ var emotes = {};
 	});
 	
 	observer.observe(target, options);
-
-    target.addEventListener('DOMNodeInserted', function () {
-         replaceOldMessages();
-}   , false);
 }();
 
 var getGlobalEmotes = +function() {
