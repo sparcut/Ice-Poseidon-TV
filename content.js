@@ -17,13 +17,13 @@ var emotes = {};
 		subtree: true,
 		childList: true,
 		attributes: false,
-		characterData: true
+		characterData: false
 	};
 
     var observer = new MutationObserver(function(mutations) {
 		mutations.forEach(function(mutation) {
 			if (mutation.type === 'childList') {
-				
+
 				if (typeof mutation.addedNodes[0] == 'undefined') {
 					return;
 				}
@@ -36,6 +36,10 @@ var emotes = {};
 	});
 	
 	observer.observe(target, options);
+
+    target.addEventListener('DOMNodeInserted', function () {
+         replaceOldMessages();
+}   , false);
 }();
 
 var getGlobalEmotes = +function() {
@@ -63,21 +67,31 @@ var emoteCheck = function(node) {
 	var words = message.innerHTML.split(" ");
 	
 	for (var i = 0; i < words.length; i++) {
-		console.log(message);
 		replaceWithEmote(message, words[i]);
 	}
 }
 
+var replaceOldMessages = function() {
+
+	var convertedMsgs = document.getElementsByClassName('msg-converted');
+
+    for(var i = 0; i < convertedMsgs.length; i++) {
+        convertedMsgs.item(i).innerHTML = convertedMsgs.item(i).dataset.message;
+    }
+}
+
 var replaceWithEmote = function(message, word) {
-	
-	console.log(message);
-	console.log(word);
-	
+
 	if (typeof emotes[word] === 'undefined') {
 		return;
 	}
 	
-	console.log('EMOTE!');
+	if (word !== 'TriHard') {
+		return;
+	}
+	
+	console.log(message);
+	console.log(word);
 
 	var img = document.createElement('img');
     img.src = emotes[word]['url'];
@@ -86,8 +100,15 @@ var replaceWithEmote = function(message, word) {
     img.style.width = 'auto';
 	img.style.overflow = 'hidden';
 	
-	console.log('@');
+	console.log('img:');
 	console.log(img);
 	
-	// @TODO: replace message innerHTML
+	var innerHTML = message.innerHTML.trim();
+	innerHTML = innerHTML.replace(word, img.outerHTML);
+	
+	message.innerHTML = innerHTML;
+	message.dataset.message = innerHTML;
+	message.className += ' msg-converted';
+	
+	console.log(message);
 }
