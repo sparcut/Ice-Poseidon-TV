@@ -4,6 +4,10 @@ $(function() {
 	$('.popupchat').click(function() {
 		window.open('https://gaming.youtube.com/live_chat?v=AvZ0cYrbsAQ&is_popout=1', 'Ice Poseidon Chat', 'width=550,height=800');
 	});
+
+	$('.openOptions').click(function() {
+		chrome.runtime.openOptionsPage();
+	});
 });
 
 var liveCheck = function() {
@@ -19,18 +23,26 @@ var liveCheck = function() {
 };
 
 var getLatestTweet = function() {
+
+	if (JSON.parse(localStorage.showRecentTweet) === false) {
+		return;
+	}
+
 	var configProfile = {
-	  "profile": {"screenName": 'realiceposeidon'},
-	  "domId": 'latest-tweet',
-	  "maxTweets": 1,
-	  "enableLinks": false,
-	  "showUser": false,
-	  "showTime": false,
-	  "showImages": false,
+	  	"profile": {"screenName": 'realiceposeidon'},
+	  	"domId": 'latest-tweet',
+	  	"maxTweets": 1,
+	  	"enableLinks": false,
+	  	"showUser": false,
+	  	"showTime": false,
+	  	"showImages": false,
 		"showInteraction": false,
-	  "lang": 'en'
+	  	"lang": 'en'
 	};
+
 	twitterFetcher.fetch(configProfile);
+
+	$('.tweet-wrapper').removeClass('hidden');
 };
 
 document.addEventListener('DOMContentLoaded', function () {

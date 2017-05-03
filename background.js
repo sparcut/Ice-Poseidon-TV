@@ -6,12 +6,14 @@ var showNotification = function() {
 	var hour = time[1] % 12 || 12;
 	var period = time[1] < 12 ? 'AM' : 'PM';
   
-	var notification = new Notification('Live! (' + hour + time[2] + ' ' + period + ')', {
-		icon: 'icons/64.png',
-		body: 'Ice Poseidon has started streaming.',
-	});
+	if (JSON.parse(localStorage.isActivated) === true) {
+		var notification = new Notification('Live! (' + hour + time[2] + ' ' + period + ')', {
+			icon: 'icons/64.png',
+			body: 'Ice Poseidon has started streaming.',
+		});
+	}
   
-	if (localStorage.notificationSoundEnabled) {
+	if (JSON.parse(localStorage.notificationSoundEnabled) === true) {
 		var volume = (localStorage.notificationVolume / 100);
 		soundEffect.volume = (typeof volume == 'undefined' ? 0.50 : volume);
 		soundEffect.play();
@@ -46,10 +48,10 @@ if (window.Notification) {
 	}, 60000 * 3);
 };
 
-localStorage.isLive = false;
-localStorage.isActivated = true;
-localStorage.notificationSoundEnabled = true;
-localStorage.notificationVolume = 50;
-localStorage.isInitialized = true;
+if(!localStorage.isLive) localStorage.isLive = false;
+if(!localStorage.isActivated) localStorage.isActivated = true;
+if(!localStorage.notificationSoundEnabled) localStorage.notificationSoundEnabled = true;
+if(!localStorage.notificationVolume) localStorage.notificationVolume = 50;
+if(!localStorage.showRecentTweet) localStorage.showRecentTweet = true;
 
 checkIfLive();
