@@ -26,10 +26,6 @@ var showNotification = function() {
 
 var checkIfLive = function() {
 	
-	if (!JSON.parse(localStorage.isActivated)) { 
-		return;
-	}
-		
 	$.get('http://107.170.95.160/live', function(data) {
 		if (data['status'] === true) {
 			if (JSON.parse(localStorage.isLive) === false) {
@@ -45,7 +41,7 @@ var checkIfLive = function() {
 if (window.Notification) {
 	setInterval(function() {
 		checkIfLive();
-	}, 60000 * 3);
+	}, 60000 * 2);
 };
 
 if(!localStorage.isLive) localStorage.isLive = false;

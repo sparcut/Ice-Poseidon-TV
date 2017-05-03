@@ -89,15 +89,14 @@ a {
 	text-align: center;
 	border-top: 1px solid #495C94;
 	margin: 10px 0;
-	padding-top: 8px;
 }
 
 .options-wrapper {
 	position: absolute;
-	right: 4px;
+	right: 6px;
 	bottom: 4px;
-	font-size: 10px;
-	opacity: 0.9;
+	font-size: 9px;
+	opacity: 0.8;
 }
 
 ul li {
