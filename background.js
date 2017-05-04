@@ -13,7 +13,7 @@ var showNotification = function() {
   
 	if (JSON.parse(localStorage.isActivated) === true) {
 		var notification = new Notification('Live! (' + hour + time[2] + ' ' + period + ')', {
-			icon: 'icons/64.png',
+			icon: LIVE_ICON_PATH,
 			body: 'Ice Poseidon has started streaming.',
 		});
 	}
