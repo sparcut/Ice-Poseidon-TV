@@ -1,13 +1,13 @@
 {
   "name": "Ice Poseidon TV",
-  "version": "1.50",
+  "version": "1.51",
   "description":
     "The (un)official Ice Poseidon Chrome extension, includes features like showing streaming notifications.",
-  "icons": {"64": "icons/64.png"},
+  "icons": {"64": "icons/64.png", "128": "icons/128.png"},
   "permissions": [
 		"tabs",
 		"storage",
-    "notifications",
+		"notifications",
 		"activeTab",
 		"background",
 		"webNavigation",
@@ -19,7 +19,7 @@
   "background": { "scripts": ["external/jquery.min.js", "background.js"] },
   "manifest_version": 2,
   "browser_action": {
-    "default_icon": "icons/64.png",
+    "default_icon": "icons/128.png",
 	"default_title": "Ice Poseidon TV",
     "default_popup": "popup/popup.html"
   },

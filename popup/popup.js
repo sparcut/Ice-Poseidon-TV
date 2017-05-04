@@ -8,6 +8,16 @@ $(function() {
 	$('.openOptions').click(function() {
 		chrome.runtime.openOptionsPage();
 	});
+	
+	$('.discord-item').hover(
+		function() {
+			$('.discord-normal').addClass('hidden');
+			$('.discord-selected').removeClass('hidden');
+		}, function() {
+			$('.discord-selected').addClass('hidden');
+			$('.discord-normal').removeClass('hidden');
+		}
+	);
 });
 
 var liveCheck = function() {
