@@ -1,5 +1,10 @@
-var CHANNEL_ID = 'UCv9Edl_WbtbPeURPtFDo-uA',
+const CHANNEL_ID = 'UCv9Edl_WbtbPeURPtFDo-uA',
+	INTERVAL = 1000 * 60, // 1 Minute Interval
+	DEFAULT_ICON_PATH = "./icons/128.png",
+	LIVE_ICON_PATH = "./icons/128-green.png",
 	soundEffect = new Audio('online.mp3');
+	
+let currentIconPath = DEFAULT_ICON_PATH;
 
 var showNotification = function() {
 	var time = /(..)(:..)/.exec(new Date());
@@ -24,6 +29,18 @@ var showNotification = function() {
 	}
 };
 
+var updateIcon = function() {
+	
+	const isLive = JSON.parse(localStorage.isLive) === true;
+	
+	const iconPath = isLive ? LIVE_ICON_PATH : DEFAULT_ICON_PATH;
+
+	if (iconPath !== currentIconPath) {
+		currentIconPath = iconPath;
+		chrome.browserAction.setIcon({path: currentIconPath});
+	}
+}
+
 var checkIfLive = function() {
 	
 	$.get('http://107.170.95.160/live', function(data) {
@@ -35,13 +52,15 @@ var checkIfLive = function() {
 		} else {
 			localStorage.isLive = false;
 		}
+
+		updateIcon();
 	});
 }
 
 if (window.Notification) {
 	setInterval(function() {
 		checkIfLive();
-	}, 60000 * 2);
+	}, INTERVAL);
 };
 
 if(!localStorage.isLive) localStorage.isLive = false;

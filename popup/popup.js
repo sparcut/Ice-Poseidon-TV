@@ -11,6 +11,10 @@ $(function() {
 });
 
 var liveCheck = function() {
+
+	const bgPage = chrome.extension.getBackgroundPage();
+	const check = bgPage.checkIfLive();
+
 	$.get('http://107.170.95.160/live', function(data) {
 		if (data['status'] === true) {
 			$('.stream-offline').addClass('hidden');
