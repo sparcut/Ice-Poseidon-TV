@@ -12,7 +12,6 @@ Chrome Web Store: https://chrome.google.com/webstore/developer/dashboard?hl=nl
 ## TODO
 - Firefox version
 - Twitch emotes
-- Discord link
 - Changing name color in chat (will require websocket communication between clients)
 
 ## Contributors (Big thanks!)
