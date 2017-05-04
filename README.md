@@ -7,6 +7,5 @@ The (un)official Ice Poseidon Chrome extension, includes features like showing a
 **V1.4:** Show most recent tweet, link to twitter, options no longer reset on restart
 
 ## TODO
-- Change icon to green when Ice goes live
-- Twitch emotes (Working on this right now)
+- Twitch emotes
 - Changing name color in chat (will require websocket communication between clients)
