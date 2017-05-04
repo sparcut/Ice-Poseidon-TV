@@ -4,8 +4,10 @@ The (un)official Ice Poseidon Chrome extension, includes features like showing a
 ## Update logs
 **V1.2:** Sound effect option added per /u/Takamiya's request, custom sounds coming soon!  
 **V1.3:** Made own live API to avoid the extension being rate limited.  
-**V1.4:** Show most recent tweet, link to twitter, options no longer reset on restart
+**V1.4:** Show most recent tweet, link to twitter, options no longer reset on restart  
+**V1.5:** Icon changes to green when live (by: @KyleCrowley)
 
 ## TODO
 - Twitch emotes
+- Discord link
 - Changing name color in chat (will require websocket communication between clients)
