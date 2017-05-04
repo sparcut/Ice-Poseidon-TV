@@ -8,6 +8,7 @@ The (un)official Ice Poseidon Chrome extension, includes features like showing a
 **V1.5:** Icon changes to green when live (by: @KyleCrowley)
 
 ## TODO
+- Firefox version
 - Twitch emotes
 - Discord link
 - Changing name color in chat (will require websocket communication between clients)
