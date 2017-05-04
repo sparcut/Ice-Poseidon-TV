@@ -16,4 +16,3 @@ The (un)official Ice Poseidon Chrome extension, includes features like showing a
 - KyleCrowley
 - kwadhera
 - johnBartos
-- ansien12
