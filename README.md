@@ -14,7 +14,7 @@ Chrome Web Store: https://chrome.google.com/webstore/detail/ice-poseidon-tv/kfhn
 
 ## TODO
 - Firefox version
-- Twitch emotes
+- Emote autocomplete/tooltips
 - Changing name color in chat (will require websocket communication between clients)
 
 ## Contributors (Big thanks!)
