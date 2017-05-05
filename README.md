@@ -20,3 +20,5 @@ Chrome Web Store: https://chrome.google.com/webstore/detail/ice-poseidon-tv/kfhn
 - KyleCrowley
 - kwadhera
 - johnBartos
+- ChrisALee
+- Tinusf
