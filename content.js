@@ -5,10 +5,12 @@ var emotes = {};
 var clickBlueButton = true;
 var url = document.location.href;
 
+var prevScrollTop = 9999999;
+
 console.log(url);
 
 // Temporary fix
-if (url.includes('ice_poseidon') || url.includes('AvZ0cYrbsAQ')) {
+if (url.includes('ice_poseidon') || url.includes('live_chat?is_popout=1')) {
 
     var div = document.createElement('div');
     document.body.appendChild(div);
@@ -17,12 +19,19 @@ if (url.includes('ice_poseidon') || url.includes('AvZ0cYrbsAQ')) {
     $(div).css('right', '125px');
     $(div).css('bottom', '16px');
     $(div).css('color', 'white');
+    $(div).find('input').css('outline', 0);
 
     setInterval(function(){
         if (document.getElementById('scrolldown').checked) {
             $('#item-scroller').scrollTop(999999999);
         }
     }, 100);
+
+    setTimeout(function() {
+        $('#item-scroller').bind('mousewheel DOMMouseScroll', function(event) {
+            document.getElementById('scrolldown').checked = false;
+        });
+    }, 2500);
 }
 
 chrome.runtime.sendMessage({ items: ['emotesTwitch', 'emotesBTTV', 'emotesSub'] }, function(response) {
