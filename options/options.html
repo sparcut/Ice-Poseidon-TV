@@ -26,14 +26,31 @@
 				<td>'Live!' notification sound level:</td>
 				<td><input type="range" name="notificationVolume" min="1" max="100"></td>
 			</tr>
-			<tr>
+			<tr class="paddingBottom">
 				<td>Show most recent tweet:</td>
 				<td><input type="checkbox" name="showRecentTweet" checked></td>
+			</tr>
+			<tr class="trLine">
+				<td>Enable Twitch emotes:</td>
+				<td><input type="checkbox" name="emotesTwitch" checked></td>
+			</tr>
+			<tr>
+				<td>Enable BTTV emotes:</td>
+				<td><input type="checkbox" name="emotesBTTV" checked></td>
+			</tr>
+			<tr>
+				<td>Enable Twitch subscriber emotes:</td>
+				<td><input type="checkbox" name="emotesSub" checked></td>
+			</tr>
+			<tr>
+				<td>Enabled emote channels (seperated by comma):</td>
+				<td><input name="BTTVChannels" style="width:380px"></input></td>
 			</tr>
 		</table>
     </form>
 	<br>
 	<button class="testNotification">Test notification</button><br><br>
-	<small class="soon">Options are automaticly saved, more options/functionality coming soon!</small>
+	<small class="soon">Emote option changes will require a refresh of the livestream page.</small><br><br>
+	<small class="soon">Options are automaticly saved, more options/functionality coming soon.</small>
   </body>
 </html>

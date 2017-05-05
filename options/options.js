@@ -6,6 +6,10 @@ window.addEventListener('load', function()
 	options.notificationSoundEnabled.checked = JSON.parse(localStorage.notificationSoundEnabled);
 	options.notificationVolume.value = JSON.parse(localStorage.notificationVolume);
 	options.showRecentTweet.checked = JSON.parse(localStorage.showRecentTweet);
+	options.emotesTwitch.checked = JSON.parse(localStorage.emotesTwitch);
+	options.emotesBTTV.checked = JSON.parse(localStorage.emotesBTTV);
+	options.emotesSub.checked = JSON.parse(localStorage.emotesSub);
+	options.BTTVChannels.value = localStorage.BTTVChannels;
 
 	options.isActivated.onchange = function() {
 		localStorage.isActivated = options.isActivated.checked;
@@ -21,6 +25,22 @@ window.addEventListener('load', function()
   
 	options.showRecentTweet.onchange = function() {
 		localStorage.showRecentTweet = options.showRecentTweet.checked;
+	};
+
+	options.emotesTwitch.onchange = function() {
+		localStorage.emotesTwitch = options.emotesTwitch.checked;
+	};
+
+	options.emotesBTTV.onchange = function() {
+		localStorage.emotesBTTV = options.emotesBTTV.checked;
+	};
+
+	options.emotesSub.onchange = function() {
+		localStorage.emotesSub = options.emotesSub.checked;
+	};
+
+	options.BTTVChannels.onchange = function() {
+		localStorage.BTTVChannels = options.BTTVChannels.value;
 	};
 
 	$('.testNotification').click(function() {

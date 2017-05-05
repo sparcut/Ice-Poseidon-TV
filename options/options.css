@@ -22,3 +22,12 @@ h2 {
 #options table tr td:first-child {
 	font-weight: bold;
 }
+
+.trLine td {
+  border-top: 1px solid gray;
+  padding-top: 10px;
+}
+
+.paddingBottom td {
+  padding-bottom: 10px;
+}
