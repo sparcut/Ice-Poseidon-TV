@@ -1,6 +1,6 @@
 {
   "name": "Ice Poseidon TV",
-  "version": "1.51",
+  "version": "1.52",
   "description":
     "The official Ice Poseidon Chrome extension, includes showing notifications when Ice Poseidon goes live.",
   "icons": {"64": "icons/64.png", "128": "icons/128.png"},

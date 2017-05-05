@@ -1,5 +1,5 @@
 const CHANNEL_ID = 'UCv9Edl_WbtbPeURPtFDo-uA',
-	INTERVAL = 1000 * 60, // 1 Minute Interval
+	INTERVAL = 1000 * 30, // 30 second interval
 	DEFAULT_ICON_PATH = "./icons/128.png",
 	LIVE_ICON_PATH = "./icons/128-green.png",
 	soundEffect = new Audio('online.mp3');
