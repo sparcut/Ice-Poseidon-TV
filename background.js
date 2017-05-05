@@ -85,18 +85,4 @@ if(!localStorage.emotesBTTV) localStorage.emotesBTTV = true;
 if(!localStorage.emotesSub) localStorage.emotesSub = true;
 if(!localStorage.BTTVChannels) localStorage.BTTVChannels = 'Ice_Poseidon, MonkaSenpai, graphistrs, trihex, reckful, b0aty, NightDev';
 
-if (!localStorage.emoteReminder) {
-
-	var volume = (localStorage.notificationVolume / 100);
-	soundEffect.volume = (typeof volume == 'undefined' ? 0.50 : volume);
-	soundEffect.play();;
-
-	var notification = new Notification('Reminder!', {
-		icon: DEFAULT_ICON_PATH,
-		body: 'Ice Poseidon TV has emotes now, make sure to remove "Kappa Everywhere" or other emote extensions, they will significantly slow down your browser.',
-	});
-
-	localStorage.emoteReminder = true;
-}
-
 checkIfLive();
