@@ -225,7 +225,7 @@ var replaceAll = function(str, find, replace) {
 }
 
 var kappaCheck = function(msg) {
-    var filtered = replaceAll(msg, '<img src="https://gaming.youtube.com/s/gaming/emoji/9f6aae75/emoji_u1f31d.svg" alt="🌝" width="20" height="20" class="style-scope yt-live-chat-text-message-renderer">', '%912391239%');
+    var filtered = replaceAll(msg, '<img src="https://gaming.youtube.com/s/gaming/emoji/9f6aae75/emoji_u1f31d.svg" alt="🌝" width="20" height="20" class="style-scope yt-live-chat-text-message-renderer">', 'Kappa');
     return filtered;
 };
 
@@ -255,6 +255,10 @@ var emoteCheck = function(node) {
 
             emoteCount++;
 
+            var span = document.createElement('span');
+            span.setAttribute('aria-label', word);
+            span.classList.add('hint--bottom');
+
             var img = document.createElement('img');
             img.src = emotes[word]['url'];
             img.alt = word;
@@ -262,10 +266,9 @@ var emoteCheck = function(node) {
             img.style.width = 'auto';
             img.style.overflow = 'hidden';
 
-            img.setAttribute('aria-label', word);
-            img.classList.add('hint--bottom');
+            span.appendChild(img);
 
-            innerHTML = replaceAll(oldHTML, word, img.outerHTML);
+            innerHTML = replaceAll(oldHTML, word, span.outerHTML);
 
             $message.html(innerHTML);
         }
@@ -292,8 +295,7 @@ var emoteCheck = function(node) {
                 return;
             }
 
-            var filtered = kappaCheck(messages[html]);
-            $message.html(filtered);
+            $message.html(messages[html]);
         }
     });
 }
