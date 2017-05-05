@@ -9,11 +9,12 @@ Chrome Web Store: https://chrome.google.com/webstore/detail/ice-poseidon-tv/kfhn
 **V1.40:** Show most recent tweet, link to twitter, options no longer reset on restart (Tweet functionality by: @kwadhera)  
 **V1.50:** Icon changes to green when live (by: @KyleCrowley)  
 **V1.51:** Added Discord, Github and VOD links  
-**V1.60:** Emotes support, Twitch, BTTV and sub emotes have been added!
+**V1.60:** Emotes support, Twitch, BTTV and sub emotes have been added!  
+**V1.66:** Fixed scuffed kappa emote and added always scroll down checkbox to prevent blue arrow bug in chat.
 
 ## TODO
 - Firefox version
-- Twitch emotes
+- Emote autocomplete/tooltips
 - Changing name color in chat (will require websocket communication between clients)
 
 ## Contributors (Big thanks!)
