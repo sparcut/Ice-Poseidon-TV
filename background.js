@@ -85,4 +85,18 @@ if(!localStorage.emotesBTTV) localStorage.emotesBTTV = true;
 if(!localStorage.emotesSub) localStorage.emotesSub = true;
 if(!localStorage.BTTVChannels) localStorage.BTTVChannels = 'Ice_Poseidon, MonkaSenpai, graphistrs, trihex, reckful, b0aty';
 
+if (!localStorage.emoteUpdateNotification) {
+
+	var volume = (localStorage.notificationVolume / 100);
+	soundEffect.volume = (typeof volume == 'undefined' ? 0.50 : volume);
+	soundEffect.play();;
+
+	var notification = new Notification('Big Update!', {
+		icon: DEFAULT_ICON_PATH,
+		body: 'Emotes have been added! Disable other emote extensions for the best viewing experience! Check out the options tab for more info.',
+	});
+
+	localStorage.emoteUpdateNotification = true;
+}
+
 checkIfLive();
