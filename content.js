@@ -4,17 +4,32 @@ var emotes = {};
 
 var clickBlueButton = true;
 var url = document.location.href;
-
 var prevScrollTop = 9999999;
 
-console.log(url);
+function isScrolledToBottom(el) {
+    var $el = $(el);
+    return el.scrollHeight - $el.scrollTop() - $el.outerHeight() < 1;
+}
 
-// Temporary fix
+var bindScrollListener = function() {
+
+	var target = document.getElementById('item-scroller');
+	
+	if (!target) {
+        window.setTimeout(bindScrollListener, 250);
+        return;
+    }
+	
+	$('#item-scroller').bind('mousewheel DOMMouseScroll', function(event) {
+		document.getElementById('scrolldown').checked = false;
+	});
+};
+
 if (url.includes('ice_poseidon') || url.includes('live_chat?is_popout=1')) {
 
     var div = document.createElement('div');
     document.body.appendChild(div);
-    $(div).html('<input type="checkbox" id="scrolldown" name="scrolldown">Always scroll down');
+    $(div).html('<input type="checkbox" id="scrolldown" name="scrolldown" checked>Always scroll down');
     $(div).css('position', 'absolute');
     $(div).css('right', '125px');
     $(div).css('bottom', '16px');
@@ -26,12 +41,8 @@ if (url.includes('ice_poseidon') || url.includes('live_chat?is_popout=1')) {
             $('#item-scroller').scrollTop(999999999);
         }
     }, 100);
-
-    setTimeout(function() {
-        $('#item-scroller').bind('mousewheel DOMMouseScroll', function(event) {
-            document.getElementById('scrolldown').checked = false;
-        });
-    }, 2500);
+	
+	bindScrollListener();
 }
 
 chrome.runtime.sendMessage({ items: ['emotesTwitch', 'emotesBTTV', 'emotesSub'] }, function(response) {
@@ -135,11 +146,8 @@ var emotesTwitch = function() {
                 url: urlTemplate + emoteDic[emote]['image_id'] + '/' + '1.0'
             };
         }
+        emotes['%912391239%'] = emotes['Kappa'];
     }
-
-    // emotes['<img src="https://gaming.youtube.com/s/gaming/emoji/9f6aae75/emoji_u1f31d.svg" alt="🌝" width="20" height="20" class="style-scope yt-live-chat-text-message-renderer">'] = {
-    //     url: 'http://static-cdn.jtvnw.net/emoticons/v1/25/1.0'
-    // };
 };
 
 var emotesBTTV = function() {
@@ -216,14 +224,20 @@ var replaceAll = function(str, find, replace) {
     return str.replace(new RegExp(find, 'g'), replace);
 }
 
+var kappaCheck = function(msg) {
+    var filtered = replaceAll(msg, '<img src="https://gaming.youtube.com/s/gaming/emoji/9f6aae75/emoji_u1f31d.svg" alt="🌝" width="20" height="20" class="style-scope yt-live-chat-text-message-renderer">', '%912391239%');
+    return filtered;
+};
+
 var emoteCheck = function(node) {
 
     var $message = $(node).find('#message');
 
-    var oldHTML = $message.html().trim();
+    var oldHTML = kappaCheck($message.html().trim());
 
     if (typeof messages[oldHTML] == 'undefined') {
-        var words = $message.html().trim().replace("/\xEF\xBB\xBF/", "").replace('﻿', '').split(" ");
+
+        var words = oldHTML.replace("/\xEF\xBB\xBF/", "").replace('﻿', '').split(" ");
         var uniqueWords = [];
         var emoteCount = 0;
 
@@ -251,9 +265,7 @@ var emoteCheck = function(node) {
             img.setAttribute('aria-label', word);
             img.classList.add('hint--bottom');
 
-            var innerHTML = $message.html();
-
-            innerHTML = replaceAll(innerHTML, word, img.outerHTML)
+            innerHTML = replaceAll(oldHTML, word, img.outerHTML);
 
             $message.html(innerHTML);
         }
@@ -262,7 +274,7 @@ var emoteCheck = function(node) {
             return;
         }
 
-        messages[oldHTML] = $message.html();
+        messages[oldHTML] = innerHTML;
     } else {
         $message.html(messages[oldHTML]);
     }
@@ -271,7 +283,8 @@ var emoteCheck = function(node) {
 
         var $message = $(this).find('#message');
 
-        var html = $message.html().trim().replace("/\xEF\xBB\xBF/", "").replace('﻿', '');
+        var html = kappaCheck($message.html().trim());
+        html = html.replace("/\xEF\xBB\xBF/", "").replace('﻿', '');
 
         if (typeof messages[html] !== 'undefined') {
 
@@ -279,7 +292,8 @@ var emoteCheck = function(node) {
                 return;
             }
 
-            $message.html(messages[html]);
+            var filtered = kappaCheck(messages[html]);
+            $message.html(filtered);
         }
     });
 }

@@ -83,7 +83,7 @@ if(!localStorage.showRecentTweet) localStorage.showRecentTweet = true;
 if(!localStorage.emotesTwitch) localStorage.emotesTwitch = true;
 if(!localStorage.emotesBTTV) localStorage.emotesBTTV = true;
 if(!localStorage.emotesSub) localStorage.emotesSub = true;
-if(!localStorage.BTTVChannels) localStorage.BTTVChannels = 'Ice_Poseidon, MonkaSenpai, graphistrs, trihex, reckful, b0aty';
+if(!localStorage.BTTVChannels) localStorage.BTTVChannels = 'Ice_Poseidon, MonkaSenpai, graphistrs, trihex, reckful, b0aty, NightDev';
 
 if (!localStorage.emoteUpdateNotification) {
 
@@ -97,6 +97,20 @@ if (!localStorage.emoteUpdateNotification) {
 	});
 
 	localStorage.emoteUpdateNotification = true;
+}
+
+if (!localStorage.kappaUpdateNotification) {
+
+	var volume = (localStorage.notificationVolume / 100);
+	soundEffect.volume = (typeof volume == 'undefined' ? 0.50 : volume);
+	soundEffect.play();;
+
+	var notification = new Notification('Kappa!', {
+		icon: DEFAULT_ICON_PATH,
+		body: 'The Kappa emote is back! No more scuffed Kappa.',
+	});
+
+	localStorage.kappaUpdateNotification = true;
 }
 
 checkIfLive();
