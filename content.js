@@ -2,6 +2,23 @@ var disallowedChars = ['\\', ':', '/', '&', "'", '"', '?', '!', '#'];
 var messages = {};
 var emotes = {};
 
+var clickBlueButton = true;
+
+// Temporary fix
+var div = document.createElement('div');
+document.body.appendChild(div);
+$(div).html('<input type="checkbox" id="scrolldown" name="scrolldown">Prevent blue arrow');
+$(div).css('position', 'absolute');
+$(div).css('right', '125px');
+$(div).css('bottom', '16px');
+$(div).css('color', 'white');
+
+setInterval(function(){
+     if (document.getElementById('scrolldown').checked) {
+        $('#show-more').click();
+     }
+}, 50);
+
 chrome.runtime.sendMessage({ items: ['emotesTwitch', 'emotesBTTV', 'emotesSub'] }, function(response) {
 
     if (response.data['emotesTwitch'] === true || response.data['emotesBTTV'] === true || response.data['emotesSub'] === true) {
@@ -104,6 +121,10 @@ var emotesTwitch = function() {
             };
         }
     }
+
+    // emotes['<img src="https://gaming.youtube.com/s/gaming/emoji/9f6aae75/emoji_u1f31d.svg" alt="🌝" width="20" height="20" class="style-scope yt-live-chat-text-message-renderer">'] = {
+    //     url: 'http://static-cdn.jtvnw.net/emoticons/v1/25/1.0'
+    // };
 };
 
 var emotesBTTV = function() {
@@ -211,6 +232,9 @@ var emoteCheck = function(node) {
             img.style.display = 'inline';
             img.style.width = 'auto';
             img.style.overflow = 'hidden';
+
+            img.setAttribute('aria-label', word);
+            img.classList.add('hint--bottom');
 
             var innerHTML = $message.html();
 
