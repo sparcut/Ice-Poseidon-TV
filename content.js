@@ -146,7 +146,8 @@ var emotesTwitch = function() {
                 url: urlTemplate + emoteDic[emote]['image_id'] + '/' + '1.0'
             };
         }
-        emotes['%912391239%'] = emotes['Kappa'];
+
+        emotes['%0287d2%'] = emotes['Kappa'];
     }
 };
 
@@ -225,7 +226,7 @@ var replaceAll = function(str, find, replace) {
 }
 
 var kappaCheck = function(msg) {
-    var filtered = replaceAll(msg, '<img src="https://gaming.youtube.com/s/gaming/emoji/9f6aae75/emoji_u1f31d.svg" alt="🌝" width="20" height="20" class="style-scope yt-live-chat-text-message-renderer">', 'Kappa');
+    var filtered = replaceAll(msg, '<img src="https://gaming.youtube.com/s/gaming/emoji/9f6aae75/emoji_u1f31d.svg" alt="🌝" width="20" height="20" class="style-scope yt-live-chat-text-message-renderer">', '%0287d2%');
     return filtered;
 };
 
@@ -234,10 +235,11 @@ var emoteCheck = function(node) {
     var $message = $(node).find('#message');
 
     var oldHTML = kappaCheck($message.html().trim());
+    var msgHTML = kappaCheck($message.html().trim());
 
-    if (typeof messages[oldHTML] == 'undefined') {
+    if (typeof messages[msgHTML] == 'undefined') {
 
-        var words = oldHTML.replace("/\xEF\xBB\xBF/", "").replace('﻿', '').split(" ");
+        var words = msgHTML.replace("/\xEF\xBB\xBF/", "").replace('﻿', '').split(" ");
         var uniqueWords = [];
         var emoteCount = 0;
 
@@ -255,29 +257,31 @@ var emoteCheck = function(node) {
 
             emoteCount++;
 
+            var altTag = (word == '%0287d2%') ? 'Kappa' : word ;
+
             var span = document.createElement('span');
-            span.setAttribute('aria-label', word);
+            span.setAttribute('aria-label', altTag);
             span.classList.add('hint--bottom');
 
             var img = document.createElement('img');
             img.src = emotes[word]['url'];
-            img.alt = word;
+            img.alt = altTag;
             img.style.display = 'inline';
             img.style.width = 'auto';
             img.style.overflow = 'hidden';
 
             span.appendChild(img);
 
-            innerHTML = replaceAll(oldHTML, word, span.outerHTML);
-
-            $message.html(innerHTML);
+            msgHTML = replaceAll(msgHTML, word, span.outerHTML);
         }
 
         if (emoteCount < 1) {
             return;
         }
 
-        messages[oldHTML] = innerHTML;
+        $message.html(msgHTML);
+        messages[oldHTML] = msgHTML;
+
     } else {
         $message.html(messages[oldHTML]);
     }

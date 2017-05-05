@@ -85,32 +85,18 @@ if(!localStorage.emotesBTTV) localStorage.emotesBTTV = true;
 if(!localStorage.emotesSub) localStorage.emotesSub = true;
 if(!localStorage.BTTVChannels) localStorage.BTTVChannels = 'Ice_Poseidon, MonkaSenpai, graphistrs, trihex, reckful, b0aty, NightDev';
 
-if (!localStorage.emoteUpdateNotification) {
+if (!localStorage.emoteReminder) {
 
 	var volume = (localStorage.notificationVolume / 100);
 	soundEffect.volume = (typeof volume == 'undefined' ? 0.50 : volume);
 	soundEffect.play();;
 
-	var notification = new Notification('Big Update!', {
+	var notification = new Notification('Reminder!', {
 		icon: DEFAULT_ICON_PATH,
-		body: 'Emotes have been added! Disable other emote extensions for the best viewing experience! Check out the options tab for more info.',
+		body: 'Ice Poseidon TV has emotes now, make sure to remove "Kappa Everywhere" or other emote extensions, they will significantly slow down your browser.',
 	});
 
-	localStorage.emoteUpdateNotification = true;
-}
-
-if (!localStorage.kappaUpdateNotification) {
-
-	var volume = (localStorage.notificationVolume / 100);
-	soundEffect.volume = (typeof volume == 'undefined' ? 0.50 : volume);
-	soundEffect.play();;
-
-	var notification = new Notification('Kappa!', {
-		icon: DEFAULT_ICON_PATH,
-		body: 'The Kappa emote is back! No more scuffed Kappa.',
-	});
-
-	localStorage.kappaUpdateNotification = true;
+	localStorage.emoteReminder = true;
 }
 
 checkIfLive();
