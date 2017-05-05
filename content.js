@@ -7,7 +7,7 @@ var clickBlueButton = true;
 // Temporary fix
 var div = document.createElement('div');
 document.body.appendChild(div);
-$(div).html('<input type="checkbox" id="scrolldown" name="scrolldown">Prevent blue arrow');
+$(div).html('<input type="checkbox" id="scrolldown" name="scrolldown">Always scroll down');
 $(div).css('position', 'absolute');
 $(div).css('right', '125px');
 $(div).css('bottom', '16px');
@@ -15,9 +15,9 @@ $(div).css('color', 'white');
 
 setInterval(function(){
      if (document.getElementById('scrolldown').checked) {
-        $('#show-more').click();
+        $('#item-scroller').scrollTop(999999999);
      }
-}, 50);
+}, 100);
 
 chrome.runtime.sendMessage({ items: ['emotesTwitch', 'emotesBTTV', 'emotesSub'] }, function(response) {
 
