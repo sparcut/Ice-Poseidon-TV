@@ -3,21 +3,27 @@ var messages = {};
 var emotes = {};
 
 var clickBlueButton = true;
+var url = document.location.href;
+
+console.log(url);
 
 // Temporary fix
-var div = document.createElement('div');
-document.body.appendChild(div);
-$(div).html('<input type="checkbox" id="scrolldown" name="scrolldown">Always scroll down');
-$(div).css('position', 'absolute');
-$(div).css('right', '125px');
-$(div).css('bottom', '16px');
-$(div).css('color', 'white');
+if (url.includes('ice_poseidon') || url.includes('AvZ0cYrbsAQ')) {
 
-setInterval(function(){
-     if (document.getElementById('scrolldown').checked) {
-        $('#item-scroller').scrollTop(999999999);
-     }
-}, 100);
+    var div = document.createElement('div');
+    document.body.appendChild(div);
+    $(div).html('<input type="checkbox" id="scrolldown" name="scrolldown">Always scroll down');
+    $(div).css('position', 'absolute');
+    $(div).css('right', '125px');
+    $(div).css('bottom', '16px');
+    $(div).css('color', 'white');
+
+    setInterval(function(){
+        if (document.getElementById('scrolldown').checked) {
+            $('#item-scroller').scrollTop(999999999);
+        }
+    }, 100);
+}
 
 chrome.runtime.sendMessage({ items: ['emotesTwitch', 'emotesBTTV', 'emotesSub'] }, function(response) {
 
