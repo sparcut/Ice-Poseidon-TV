@@ -25,25 +25,28 @@ var bindScrollListener = function() {
 	});
 };
 
-if (url.includes('ice_poseidon') || url.includes('live_chat?is_popout=1')) {
+$(document).ready(function() {
 
-    var div = document.createElement('div');
-    document.body.appendChild(div);
-    $(div).html('<input type="checkbox" id="scrolldown" name="scrolldown" checked>Always scroll down');
-    $(div).css('position', 'absolute');
-    $(div).css('right', '125px');
-    $(div).css('bottom', '16px');
-    $(div).css('color', 'white');
-    $(div).find('input').css('outline', 0);
+    if (url.includes('ice_poseidon') || url.includes('live_chat?is_popout=1') || url.includes('watch?v=')) {
 
-    setInterval(function(){
-        if (document.getElementById('scrolldown').checked) {
-            $('#item-scroller').scrollTop(999999999);
-        }
-    }, 100);
-	
-	bindScrollListener();
-}
+        var div = document.createElement('div');
+        document.body.appendChild(div);
+        $(div).html('<input type="checkbox" id="scrolldown" name="scrolldown" checked>Always scroll down');
+        $(div).css('position', 'absolute');
+        $(div).css('right', '125px');
+        $(div).css('bottom', '16px');
+        $(div).css('color', 'white');
+        $(div).find('input').css('outline', 0);
+
+        setInterval(function(){
+            if (document.getElementById('scrolldown').checked) {
+                $('#item-scroller').scrollTop(999999999);
+            }
+        }, 100);
+        
+        bindScrollListener();
+    }
+});
 
 chrome.runtime.sendMessage({ items: ['emotesTwitch', 'emotesBTTV', 'emotesSub'] }, function(response) {
 
@@ -62,7 +65,7 @@ chrome.runtime.sendMessage({ items: ['emotesTwitch', 'emotesBTTV', 'emotesSub'] 
     $('<style type="text/css">.yt-live-chat-text-message-renderer-0 #content #author-name:after{content: ":"}</style>').appendTo('head');
 
     if (response.disableAvatars) {
-        $('<style type="text/css">.style-scope .yt-live-chat-item-list-renderer #author-photo { display: none !important; }</style>').appendTo('head');
+        $('<style type="text/css">.style-scope .yt-live-chat-item-list-renderer #author-photo { display: none !important; }.style-scope.yt-live-chat-message-input-renderer.no-transition{ display: none !important; }</style>').appendTo('head');
     }
 
     if (response.enableChatColors) {
