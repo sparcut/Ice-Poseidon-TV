@@ -11,7 +11,12 @@ Developer Discord: https://discord.gg/rRzy7M9
 **V1.50:** Icon changes to green when live (by: @KyleCrowley)  
 **V1.51:** Added Discord, Github and VOD links  
 **V1.60:** Emotes support, Twitch, BTTV and sub emotes have been added!  
-**V1.66:** Fixed scuffed kappa emote and added always scroll down checkbox to prevent blue arrow bug in chat.
+**V1.66:** Fixed scuffed kappa emote and added always scroll down checkbox to prevent blue arrow bug in chat.  
+**V1.68:** Emote tooltips  
+**V1.80:** Custom sounds, wrong page warning and slight codebase cleanup
+
+## Pull Requests
+Feel free to make a pull request and add a feature you'd like to see. But please make sure to follow the current coding style (i.e.: single quotes wherever possible and function expression instead of declaration).
 
 ## TODO
 - Firefox version
