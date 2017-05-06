@@ -58,6 +58,15 @@ chrome.runtime.sendMessage({ items: ['emotesTwitch', 'emotesBTTV', 'emotesSub'] 
         emotesBTTV();
         emotesBTTVCHannels(response.BTTVChannels);
     }
+
+    if (response.disableAvatars) {
+        $('<style type="text/css">.style-scope .yt-live-chat-item-list-renderer #author-photo { display: none !important; }</style>').appendTo('head');
+    }
+
+    if (response.enableChatColors) {
+	    var a = chrome.extension.getURL('external/chatColors.min.css');
+	    $('<link rel="stylesheet" type="text/css" href="' + a + '" >').appendTo('head');
+    }
 });
 
 var addObserverIfDesiredNodeAvailable = function() {

@@ -9,13 +9,17 @@ let currentIconPath = DEFAULT_ICON_PATH;
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
 	var response = {};
-	var BTTVChannels = localStorage['BTTVChannels'];
 
 	for (var i = 0; i < request.items.length; i++) {
 		response[request.items[i]] = JSON.parse(localStorage[request.items[i]]);
 	}
 
-    sendResponse({ data: response, BTTVChannels: BTTVChannels });
+    sendResponse({ 
+		data: response, 
+		BTTVChannels: localStorage['BTTVChannels'],
+		disableAvatars: JSON.parse(localStorage['disableAvatars']),
+		enableChatColors: JSON.parse(localStorage['enableChatColors'])
+	});
 });
 
 var showNotification = function() {
@@ -84,5 +88,7 @@ if(!localStorage.emotesTwitch) localStorage.emotesTwitch = true;
 if(!localStorage.emotesBTTV) localStorage.emotesBTTV = true;
 if(!localStorage.emotesSub) localStorage.emotesSub = true;
 if(!localStorage.BTTVChannels) localStorage.BTTVChannels = 'Ice_Poseidon, MonkaSenpai, graphistrs, trihex, reckful, b0aty, NightDev';
+if(!localStorage.disableAvatars) localStorage.disableAvatars = true;
+if(!localStorage.enableChatColors) localStorage.enableChatColors = true;
 
 checkIfLive();
