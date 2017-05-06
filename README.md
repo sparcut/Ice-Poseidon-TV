@@ -15,8 +15,8 @@ Developer Discord: https://discord.gg/rRzy7M9
 
 ## TODO
 - Firefox version
-- Emote autocomplete/tooltips
-- Changing name color in chat (will require websocket communication between clients)
+- Emote autocomplete
+- Better mod tools
 
 ## Contributors (Big thanks!)
 - sparcut 
