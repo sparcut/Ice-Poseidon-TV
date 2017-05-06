@@ -14,16 +14,40 @@ function isScrolledToBottom(el) {
 var bindScrollListener = function() {
 
 	var target = document.getElementById('item-scroller');
-	
+
 	if (!target) {
         window.setTimeout(bindScrollListener, 250);
         return;
     }
-	
+
 	$('#item-scroller').bind('mousewheel DOMMouseScroll', function(event) {
 		document.getElementById('scrolldown').checked = false;
 	});
 };
+
+function hideScrollOnSponsorButton(div) {
+	var chatInputRenderer = 'yt-live-chat-message-input-renderer';
+
+	var observer = new MutationObserver(function(mutations) {
+		mutations.forEach((m) => {
+			$(m.target).attr('creator-open') ? $(div).hide() : $(div).show();
+		});
+	});
+	var observerOpts = {
+		childList: false,
+		attributes: true,
+		characterData: false,
+		subtree: false,
+		attributeFilter: ["creator-open"]
+	}
+
+	var sponsorClick = setInterval(() => {
+		if($(chatInputRenderer).length) {
+			observer.observe($(chatInputRenderer)[0], observerOpts);
+			clearInterval(sponsorClick);
+		}
+	}, 250);
+}
 
 $(document).ready(function() {
 
@@ -43,7 +67,8 @@ $(document).ready(function() {
                 $('#item-scroller').scrollTop(999999999);
             }
         }, 100);
-        
+
+				hideScrollOnSponsorButton(div);
         bindScrollListener();
     }
 });
