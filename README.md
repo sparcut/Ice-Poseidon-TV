@@ -19,6 +19,7 @@ Developer Discord: https://discord.gg/rRzy7M9
 - Changing name color in chat (will require websocket communication between clients)
 
 ## Contributors (Big thanks!)
+- sparcut 
 - KyleCrowley
 - kwadhera
 - johnBartos
