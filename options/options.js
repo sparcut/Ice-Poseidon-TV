@@ -110,10 +110,14 @@ var showTestNotification = function () {
     var period = time[1] < 12 ? 'AM' : 'PM';
 
     if (JSON.parse(localStorage.isActivated) === true) {
-        var notification = new Notification('Live! (' + hour + time[2] + ' ' + period + ')', {
-            icon: '../icons/64.png',
-            body: 'Test notification!',
-        });
+        
+        chrome.notifications.create(null, {
+  			type: 'basic',
+ 			title: 'Test! (' + hour + time[2] + ' ' + period + ')',
+ 			message: 'Test notification!',
+ 			contextMessage: 'Ice Poseidon TV',
+ 			iconUrl: '../icons/64.png'
+  		});
     }
 
     if (JSON.parse(localStorage.notificationSoundEnabled) === true) {

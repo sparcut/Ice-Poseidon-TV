@@ -208,7 +208,7 @@ var isValidEmote = function (text) {
 var emotesTwitch = function () {
 
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', '//twitchemotes.com/api_cache/v2/global.json');
+    xhr.open('GET', 'https://twitchemotes.com/api_cache/v2/global.json');
     xhr.send();
     var urlTemplate = '//static-cdn.jtvnw.net/emoticons/v1/';
 
@@ -227,7 +227,7 @@ var emotesTwitch = function () {
 var emotesBTTV = function () {
 
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', '//api.betterttv.net/2/emotes');
+    xhr.open('GET', 'https://api.betterttv.net/2/emotes');
     xhr.send();
     var urlTemplate = '//cdn.betterttv.net/emote/';
 
@@ -251,7 +251,7 @@ var emotesBTTVCHannels = function (channels) {
     commaChannels.forEach(function (channel) {
 
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', '//api.betterttv.net/2/channels/' + channel);
+        xhr.open('GET', 'https://api.betterttv.net/2/channels/' + channel);
         xhr.send();
         var url_template = '//cdn.betterttv.net/emote/';
 
@@ -273,7 +273,7 @@ var emotesBTTVCHannels = function (channels) {
 var emotesSub = function () {
 
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', '//twitchemotes.com/api_cache/v2/subscriber.json');
+    xhr.open('GET', 'https://twitchemotes.com/api_cache/v2/subscriber.json');
     xhr.send();
     var urlTemplate = '//static-cdn.jtvnw.net/emoticons/v1/'
 

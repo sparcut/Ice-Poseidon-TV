@@ -23,6 +23,14 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     });
 });
 
+chrome.notifications.onClicked.addListener(function(notificationId) {
+ 
+ 	if(notificationId == 'liveNotification') {
+ 		chrome.tabs.create({ url: 'https://gaming.youtube.com/ice_poseidon/live' });
+		chrome.notifications.clear(notificationId);
+    }
+});
+
 var showNotification = function () {
 
     var time = /(..)(:..)/.exec(new Date());
@@ -30,10 +38,14 @@ var showNotification = function () {
     var period = time[1] < 12 ? 'AM' : 'PM';
 
     if (JSON.parse(localStorage.isActivated) === true) {
-        var notification = new Notification('Live! (' + hour + time[2] + ' ' + period + ')', {
-            icon: LIVE_ICON_PATH,
-            body: 'Ice Poseidon has started streaming.',
-        });
+
+        chrome.notifications.create('liveNotification', {
+ 			type: 'basic',
+ 			title: 'Live! (' + hour + time[2] + ' ' + period + ')',
+ 			message: 'Ice Poseidon has started streaming.',
+ 			contextMessage: 'Ice Poseidon TV',
+ 			iconUrl: LIVE_ICON_PATH
+  		});
     }
 
     if (JSON.parse(localStorage.notificationSoundEnabled) === true) {
@@ -53,10 +65,6 @@ var showNotification = function () {
 
             createSoundWithBuffer(arrayBuffer);
         }
-    }
-
-    notification.onclick = function () {
-        window.open('https://gaming.youtube.com/ice_poseidon/live')
     }
 };
 
