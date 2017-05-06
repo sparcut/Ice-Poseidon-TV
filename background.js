@@ -18,7 +18,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 		data: response, 
 		BTTVChannels: localStorage['BTTVChannels'],
 		disableAvatars: JSON.parse(localStorage['disableAvatars']),
-		enableChatColors: JSON.parse(localStorage['enableChatColors'])
+		enableChatColors: JSON.parse(localStorage['enableChatColors']),
+		wrongPageWarning: JSON.parse(localStorage['wrongPageWarning'])
 	});
 });
 
@@ -90,5 +91,6 @@ if(!localStorage.emotesSub) localStorage.emotesSub = true;
 if(!localStorage.BTTVChannels) localStorage.BTTVChannels = 'Ice_Poseidon, MonkaSenpai, graphistrs, trihex, reckful, b0aty, NightDev';
 if(!localStorage.disableAvatars) localStorage.disableAvatars = true;
 if(!localStorage.enableChatColors) localStorage.enableChatColors = true;
+if(!localStorage.wrongPageWarning) localStorage.wrongPageWarning = true;
 
 checkIfLive();

@@ -6,9 +6,22 @@ var clickBlueButton = true;
 var url = document.location.href;
 var prevScrollTop = 9999999;
 
-function isScrolledToBottom(el) {
-    var $el = $(el);
-    return el.scrollHeight - $el.scrollTop() - $el.outerHeight() < 1;
+var checkIfOnYoutubeGaming = function() {
+
+	var target = document.getElementsByClassName('yt-user-info');
+    
+	if (!target) {
+        window.setTimeout(checkIfOnYoutubeGaming, 250);
+        return;
+    }
+
+    var text = $(target).find('a').text();
+
+    if (text == 'Ice Poseidon' && !url.includes('gaming.youtube')) {
+        $.get(chrome.extension.getURL('/html/redirect.html'), function(data) {
+            $(data).appendTo('body');
+        });
+    }
 }
 
 var bindScrollListener = function() {
@@ -112,6 +125,10 @@ chrome.runtime.sendMessage({ items: ['emotesTwitch', 'emotesBTTV', 'emotesSub'] 
     if (response.enableChatColors) {
 	    var a = chrome.extension.getURL('external/chatColors.min.css');
 	    $('<link rel="stylesheet" type="text/css" href="' + a + '" >').appendTo('head');
+    }
+
+    if (response.wrongPageWarning) {
+		checkIfOnYoutubeGaming();
     }
 });
 
@@ -254,7 +271,7 @@ var emotesBTTVCHannels = function(channels) {
 
 var emotesSub = function() {
 
-    var xhr = new XMLHttpRequest();
+    /*var xhr = new XMLHttpRequest();
     xhr.open('GET', '//twitchemotes.com/api_cache/v2/subscriber.json');
     xhr.send();
     var urlTemplate = "//static-cdn.jtvnw.net/emoticons/v1/"
@@ -273,7 +290,7 @@ var emotesSub = function() {
                 }
             }
         }
-    }
+    }*/
 };
 
 var replaceAll = function(str, find, replace) {

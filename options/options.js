@@ -8,8 +8,11 @@ window.addEventListener('load', function()
 	options.emotesBTTV.checked = JSON.parse(localStorage.emotesBTTV);
 	options.emotesSub.checked = JSON.parse(localStorage.emotesSub);
 	options.BTTVChannels.value = localStorage.BTTVChannels;
-
-	if (localStorage.getItem("audio") === null) {
+	options.disableAvatars.checked = JSON.parse(localStorage.disableAvatars);
+	options.enableChatColors.checked = JSON.parse(localStorage.enableChatColors);
+	options.wrongPageWarning.checked = JSON.parse(localStorage.wrongPageWarning);
+  
+  if (localStorage.getItem("audio") === null) {
 			$('#currentSound').text("Current Sound: online.mp3");
 		} else {
 			$('#currentSound').text("Current Sound: " + localStorage.getItem("soundName"));
@@ -45,6 +48,18 @@ window.addEventListener('load', function()
 
 	options.BTTVChannels.onchange = function() {
 		localStorage.BTTVChannels = options.BTTVChannels.value;
+	};
+
+	options.disableAvatars.onchange = function() {
+		localStorage.disableAvatars = options.disableAvatars.checked;
+	};
+
+	options.enableChatColors.onchange = function() {
+		localStorage.enableChatColors = options.enableChatColors.checked;
+	};
+
+	options.wrongPageWarning.onchange = function() {
+		localStorage.wrongPageWarning = options.wrongPageWarning.checked;
 	};
 
 	$('.testNotification').click(function() {
@@ -106,7 +121,7 @@ var showTestNotification = function() {
 };
 
 // Convert ArrayBuffer to Base64.
-function arrayBufferToBase64(arrayBuffer) {
+var arrayBufferToBase64 = function(arrayBuffer) {
 	var binary = '';
 	var bytes = new Uint8Array(arrayBuffer)
 	var len = bytes.byteLength;
@@ -117,7 +132,7 @@ function arrayBufferToBase64(arrayBuffer) {
 }
 
 // Convert Base64 to ArrayBuffer.
-function base64ToArrayBuffer(base64) {
+var base64ToArrayBuffer = function(base64) {
     var binaryString =  window.atob(base64);
     var len = binaryString.length;
     var bytes = new Uint8Array( len );
@@ -128,7 +143,7 @@ function base64ToArrayBuffer(base64) {
 }
 
 // Convert buffer into audio object.
-function createSoundWithBuffer(buffer) {
+var createSoundWithBuffer = function(buffer) {
   var context = new AudioContext();
   var audioSource = context.createBufferSource();
   var volumeNode = context.createGain();
@@ -146,7 +161,7 @@ function createSoundWithBuffer(buffer) {
 }
 
 // Check for valid audio extensions.
-function hasExtension(inputID, exts) {
+var hasExtension = function(inputID, exts) {
     var fileName = document.getElementById(inputID).value;
     return (new RegExp('(' + exts.join('|').replace(/\./g, '\\.') + ')$')).test(fileName);
 }

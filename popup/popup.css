@@ -1,11 +1,11 @@
 body {
-	width: 478px;
+	width: 400px;
 	max-height: 250px;
 	font-family: 'Noto Sans', sans-serif;
 	background: #2c3e50;
 	color: #ffffff;
 	font-size: 13px;
-	text-shadow: 2px 2px 3px #000000;
+	text-shadow: 2px 2px rgba(0,0,0,0.25);
 }
 
 .hidden {
@@ -43,19 +43,13 @@ a {
 .item {
 	flex-basis: 14%;
 	text-align: center;
-	border-left: 1px solid #495C94;
-	padding: 0 10px;
-}
-
-.item:first-child {
-	border-left: none;
+	padding: 0 2px;
 }
 
 .item svg {
 	fill: #fff;
 	margin: 4px 0;
 	height: 34px;
-	filter: drop-shadow(2px 2px 3px #000000);
 }
 
 .item-svg:hover svg {
@@ -99,7 +93,7 @@ a {
 
 .tweet-container {
 	text-align: center;
-	border-top: 1px solid #495C94;
+	border-top: 1px solid #3F507F;
 	margin: 10px 0;
 	padding-top: 10px;
 }
