@@ -21,6 +21,7 @@ Developer Discord: https://discord.gg/rRzy7M9
 ## Contributors (Big thanks!)
 - sparcut 
 - KyleCrowley
+- RockGuitarist1
 - kwadhera
 - johnBartos
 - ChrisALee
