@@ -25,6 +25,21 @@ var bindScrollListener = function() {
 	});
 };
 
+var bindScrollDownListener = function() {
+	
+	var target = document.getElementById('show-more');
+	
+	if (!target) {
+        window.setTimeout(bindScrollDownListener, 250);
+        return;
+    }
+	
+	target.onmousedown = function () {
+		document.getElementById('scrolldown').checked = true;
+		return true;
+	};
+}
+
 function hideScrollOnSponsorButton(div) {
 	var chatInputRenderer = 'yt-live-chat-message-input-renderer';
 
@@ -62,14 +77,15 @@ $(document).ready(function() {
         $(div).css('color', 'white');
         $(div).find('input').css('outline', 0);
 
-        setInterval(function(){
+        setInterval(function() {
             if (document.getElementById('scrolldown').checked) {
                 $('#item-scroller').scrollTop(999999999);
             }
         }, 100);
 
-				hideScrollOnSponsorButton(div);
+		hideScrollOnSponsorButton(div);
         bindScrollListener();
+		bindScrollDownListener();
     }
 });
 
