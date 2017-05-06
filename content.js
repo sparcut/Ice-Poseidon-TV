@@ -5,22 +5,44 @@ var disallowedChars = ['\\', ':', '/', '&', "'", '"', '?', '!', '#'],
     url = document.location.href,
     prevScrollTop = 9999999;
 
+var bindWarningObserver = function() {
+
+    // @NOTE: Working on this atm - andries
+
+    // var observer = new MutationObserver(function (mutations) {
+    //     checkIfOnYoutubeGaming();
+    // });
+
+    // var observerOpts = {
+    //     childList: true,
+    //     attributes: true,
+    //     characterData: true,
+    //     subtree: false,
+    //     attributeFilter: ['class']
+    // }
+
+    // observer.observe(document.documentElement, observerOpts);
+};
+
 var checkIfOnYoutubeGaming = function () {
 
-    var target = document.getElementsByClassName('yt-user-info');
+    // @NOTE: Working on this atm - andries
 
-    if (!target) {
-        window.setTimeout(checkIfOnYoutubeGaming, 250);
-        return;
-    }
+    // var target = document.getElementsByClassName('yt-user-info');
+    // $('.page-warning').remove();
 
-    var text = $(target).find('a').text();
+    // if (!target) {
+    //     window.setTimeout(checkIfOnYoutubeGaming, 250);
+    //     return;
+    // }
 
-    if (text == 'Ice Poseidon' && !url.includes('gaming.youtube')) {
-        $.get(chrome.extension.getURL('/html/redirect.html'), function (data) {
-            $(data).appendTo('body');
-        });
-    }
+    // var text = $(target).find('a').text();
+
+    // if (text == 'Ice Poseidon' && !url.includes('gaming.youtube')) {
+    //     $.get(chrome.extension.getURL('/html/redirect.html'), function (data) {
+    //         $(data).appendTo('#page');
+    //     });
+    // }
 };
 
 var bindScrollListener = function () {
@@ -80,10 +102,11 @@ var hideScrollOnSponsorButton = function (div) {
 
 $(document).ready(function () {
 
-    if (url.includes('ice_poseidon') || url.includes('live_chat?is_popout=1') || url.includes('watch?v=')) {
+    if ((url.includes('ice_poseidon') && url.includes('gaming.youtube')) || url.includes('live_chat')) {
 
         var div = document.createElement('div');
         document.body.appendChild(div);
+
         $(div).html('<input type="checkbox" id="scrolldown" name="scrolldown" checked>Always scroll down');
         $(div).css('position', 'absolute');
         $(div).css('right', '125px');
@@ -131,7 +154,7 @@ chrome.runtime.sendMessage({
     }
 
     if (response.wrongPageWarning) {
-        checkIfOnYoutubeGaming();
+        bindWarningObserver();
     }
 });
 
