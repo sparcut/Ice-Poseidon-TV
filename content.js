@@ -59,6 +59,8 @@ chrome.runtime.sendMessage({ items: ['emotesTwitch', 'emotesBTTV', 'emotesSub'] 
         emotesBTTVCHannels(response.BTTVChannels);
     }
 
+    $('<style type="text/css">.yt-live-chat-text-message-renderer-0 #content #author-name:after{content: ":"}</style>').appendTo('head');
+
     if (response.disableAvatars) {
         $('<style type="text/css">.style-scope .yt-live-chat-item-list-renderer #author-photo { display: none !important; }</style>').appendTo('head');
     }
