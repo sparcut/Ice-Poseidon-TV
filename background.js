@@ -1,7 +1,7 @@
 const CHANNEL_ID = 'UCv9Edl_WbtbPeURPtFDo-uA',
     INTERVAL = 1000 * 30, // 30 second interval
-    DEFAULT_ICON_PATH = "./icons/128.png",
-    LIVE_ICON_PATH = "./icons/128-green.png",
+    DEFAULT_ICON_PATH = './icons/128.png',
+    LIVE_ICON_PATH = './icons/128-green.png',
     soundEffect = new Audio('online.mp3');
 
 let currentIconPath = DEFAULT_ICON_PATH;
@@ -40,7 +40,7 @@ var showNotification = function () {
 
         if (localStorage.getItem('audio') === null) {
 
-            var defaultSound = new Audio("../online.mp3");
+            var defaultSound = new Audio('online.mp3');
             var volume = (localStorage.notificationVolume / 100);
 
             defaultSound.volume = (typeof volume == 'undefined' ? 0.50 : volume);
@@ -48,7 +48,7 @@ var showNotification = function () {
 
         } else {
 
-            var encodedAudio = localStorage.getItem("audio");
+            var encodedAudio = localStorage.getItem('audio');
             var arrayBuffer = base64ToArrayBuffer(encodedAudio);
 
             createSoundWithBuffer(arrayBuffer);

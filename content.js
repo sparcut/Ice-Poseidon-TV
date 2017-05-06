@@ -67,7 +67,7 @@ var hideScrollOnSponsorButton = function (div) {
         attributes: true,
         characterData: false,
         subtree: false,
-        attributeFilter: ["creator-open"]
+        attributeFilter: ['creator-open']
     }
 
     var sponsorClick = setInterval(() => {
@@ -210,7 +210,7 @@ var emotesTwitch = function () {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', '//twitchemotes.com/api_cache/v2/global.json');
     xhr.send();
-    var urlTemplate = "//static-cdn.jtvnw.net/emoticons/v1/";
+    var urlTemplate = '//static-cdn.jtvnw.net/emoticons/v1/';
 
     xhr.onload = function () {
         emoteDic = JSON.parse(xhr.responseText)['emotes'];
@@ -229,7 +229,7 @@ var emotesBTTV = function () {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', '//api.betterttv.net/2/emotes');
     xhr.send();
-    var urlTemplate = "//cdn.betterttv.net/emote/";
+    var urlTemplate = '//cdn.betterttv.net/emote/';
 
     xhr.onload = function () {
         emoteList = JSON.parse(xhr.responseText)['emotes'];
@@ -253,7 +253,7 @@ var emotesBTTVCHannels = function (channels) {
         var xhr = new XMLHttpRequest();
         xhr.open('GET', '//api.betterttv.net/2/channels/' + channel);
         xhr.send();
-        var url_template = "//cdn.betterttv.net/emote/";
+        var url_template = '//cdn.betterttv.net/emote/';
 
         xhr.onload = function () {
             emoteList = JSON.parse(xhr.responseText)['emotes'];
@@ -262,7 +262,7 @@ var emotesBTTVCHannels = function (channels) {
                 if (!containsDisallowedChar(dict['code'])) {
                     emotes[dict['code']] = {
                         url: url_template + dict['id'] + '/' + '1x',
-                        channel: channel + " (bttv)"
+                        channel: channel + ' (bttv)'
                     };
                 }
             }
@@ -275,7 +275,7 @@ var emotesSub = function () {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', '//twitchemotes.com/api_cache/v2/subscriber.json');
     xhr.send();
-    var urlTemplate = "//static-cdn.jtvnw.net/emoticons/v1/"
+    var urlTemplate = '//static-cdn.jtvnw.net/emoticons/v1/'
 
     xhr.onload = function () {
         emoteDic = JSON.parse(xhr.responseText)['channels'];
@@ -312,7 +312,7 @@ var emoteCheck = function (node) {
 
     if (typeof messages[msgHTML] == 'undefined') {
 
-        var words = msgHTML.replace("/\xEF\xBB\xBF/", "").replace('﻿', '').split(" ");
+        var words = msgHTML.replace('/\xEF\xBB\xBF/', '').replace('﻿', '').split(' ');
         var uniqueWords = [];
         var emoteCount = 0;
 
@@ -364,7 +364,7 @@ var emoteCheck = function (node) {
         var $message = $(this).find('#message');
 
         var html = kappaCheck($message.html().trim());
-        html = html.replace("/\xEF\xBB\xBF/", "").replace('﻿', '');
+        html = html.replace('/\xEF\xBB\xBF/', '').replace('﻿', '');
 
         if (typeof messages[html] !== 'undefined') {
 

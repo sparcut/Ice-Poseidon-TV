@@ -85,7 +85,7 @@ window.addEventListener('load', function () {
                 localStorage.setItem('audio', encodedAudio);
 
                 var soundPath = newSound.value;
-                var audioName = soundPath.replace(/^.*\\/, "");
+                var audioName = soundPath.replace(/^.*\\/, '');
 
                 localStorage.setItem('audioName', audioName);
 
@@ -99,7 +99,7 @@ window.addEventListener('load', function () {
     reset.onclick = function () {
         localStorage.removeItem('audio');
         localStorage.removeItem('audioName');
-        $('#currentSound').text("Current Sound: online.mp3");
+        $('#currentSound').text('Current Sound: online.mp3');
     }
 });
 
@@ -120,7 +120,7 @@ var showTestNotification = function () {
 
         if (localStorage.getItem('audio') === null) {
 
-            var defaultSound = new Audio("../online.mp3");
+            var defaultSound = new Audio('../online.mp3');
             var volume = (localStorage.notificationVolume / 100);
 
             defaultSound.volume = (typeof volume == 'undefined' ? 0.50 : volume);
@@ -128,7 +128,7 @@ var showTestNotification = function () {
 
         } else {
 
-            var encodedAudio = localStorage.getItem("audio");
+            var encodedAudio = localStorage.getItem('audio');
             var arrayBuffer = base64ToArrayBuffer(encodedAudio);
 
             createSoundWithBuffer(arrayBuffer);

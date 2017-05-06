@@ -33,15 +33,15 @@ var getLatestTweet = function() {
 	}
 
 	var configProfile = {
-	  	"profile": {"screenName": 'realiceposeidon'},
-	  	"domId": 'latest-tweet',
-	  	"maxTweets": 1,
-	  	"enableLinks": false,
-	  	"showUser": false,
-	  	"showTime": false,
-	  	"showImages": false,
-		"showInteraction": false,
-	  	"lang": 'en'
+	  	profile: {screenName: 'realiceposeidon'},
+	  	domId: 'latest-tweet',
+	  	maxTweets: 1,
+	  	enableLinks: false,
+	  	showUser: false,
+	  	showTime: false,
+	  	showImages: false,
+		showInteraction: false,
+	  	lang: 'en'
 	};
 
 	twitterFetcher.fetch(configProfile);
