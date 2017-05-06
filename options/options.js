@@ -1,5 +1,3 @@
-var soundEffect = new Audio('../online.mp3');
-
 window.addEventListener('load', function()
 {
 	options.isActivated.checked = JSON.parse(localStorage.isActivated)
@@ -10,8 +8,12 @@ window.addEventListener('load', function()
 	options.emotesBTTV.checked = JSON.parse(localStorage.emotesBTTV);
 	options.emotesSub.checked = JSON.parse(localStorage.emotesSub);
 	options.BTTVChannels.value = localStorage.BTTVChannels;
-	options.disableAvatars.checked = JSON.parse(localStorage.disableAvatars);
-	options.enableChatColors.checked = JSON.parse(localStorage.enableChatColors);
+
+	if (localStorage.getItem("audio") === null) {
+			$('#currentSound').text("Current Sound: online.mp3");
+		} else {
+			$('#currentSound').text("Current Sound: " + localStorage.getItem("soundName"));
+		}
 
 	options.isActivated.onchange = function() {
 		localStorage.isActivated = options.isActivated.checked;
@@ -22,7 +24,7 @@ window.addEventListener('load', function()
 	};
   
 	options.notificationVolume.onchange = function() {
-		localStorage.notificationVolume = options.notificationVolume.value;
+        localStorage.notificationVolume = options.notificationVolume.value;
 	};
   
 	options.showRecentTweet.onchange = function() {
@@ -45,17 +47,36 @@ window.addEventListener('load', function()
 		localStorage.BTTVChannels = options.BTTVChannels.value;
 	};
 
-	options.disableAvatars.onchange = function() {
-		localStorage.disableAvatars = options.disableAvatars.checked;
-	};
-
-	options.enableChatColors.onchange = function() {
-		localStorage.enableChatColors = options.enableChatColors.checked;
-	};
-
 	$('.testNotification').click(function() {
 		showTestNotification();
-	}); 
+	});
+
+	$('#newSound').change(function() {
+		if (!hasExtension('newSound', ['.mp3', '.ogg', '.aac', '.wav', '.aiff', '.pcm', '.wma', '.alac', '.flac'])) {
+			window.alert('Invalid file type');
+		} else {
+			// Load audio into ArrayBuffer.
+			var fileReader = new FileReader;
+			fileReader.onload = function() {
+				var arrayBuffer = this.result;
+				console.log(arrayBuffer);
+				console.log(arrayBuffer.byteLength);
+
+				var encodedAudio = arrayBufferToBase64(arrayBuffer);
+				localStorage.setItem("audio", encodedAudio);
+				var soundPath = newSound.value;
+				var soundName = soundPath.replace(/^.*\\/, "");
+				localStorage.setItem("soundName", soundName);
+				$('#currentSound').text("Current Sound: " + localStorage.getItem("soundName"));
+			}
+		fileReader.readAsArrayBuffer(this.files[0]);
+		}
+	});
+
+	reset.onclick = function() {
+		localStorage.removeItem('audio');
+		$('#currentSound').text("Current Sound: online.mp3");
+	}
 });
 
 var showTestNotification = function() {
@@ -71,8 +92,61 @@ var showTestNotification = function() {
 	}
   
 	if (JSON.parse(localStorage.notificationSoundEnabled) === true) {
-		var volume = (localStorage.notificationVolume / 100);
-		soundEffect.volume = (typeof volume == 'undefined' ? 0.50 : volume);
-		soundEffect.play();
+		if (localStorage.getItem("audio") === null) {
+			var defaultSound = new Audio("../online.mp3");
+			var volume = (localStorage.notificationVolume / 100);
+			defaultSound.volume = (typeof volume == 'undefined' ? 0.50 : volume);
+			defaultSound.play();
+		} else {
+			var encodedAudio = localStorage.getItem("audio");
+			var arrayBuffer = base64ToArrayBuffer(encodedAudio);
+			createSoundWithBuffer(arrayBuffer);
+		}
 	}
 };
+
+// Convert ArrayBuffer to Base64.
+function arrayBufferToBase64(arrayBuffer) {
+	var binary = '';
+	var bytes = new Uint8Array(arrayBuffer)
+	var len = bytes.byteLength;
+	for (var i = 0; i < len; i++) {
+		binary += String.fromCharCode(bytes[i]);
+	}
+	return window.btoa(binary);
+}
+
+// Convert Base64 to ArrayBuffer.
+function base64ToArrayBuffer(base64) {
+    var binaryString =  window.atob(base64);
+    var len = binaryString.length;
+    var bytes = new Uint8Array( len );
+    for (var i = 0; i < len; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+    }
+    return bytes.buffer;
+}
+
+// Convert buffer into audio object.
+function createSoundWithBuffer(buffer) {
+  var context = new AudioContext();
+  var audioSource = context.createBufferSource();
+  var volumeNode = context.createGain();
+  var volume = (localStorage.notificationVolume / 100);
+
+  audioSource.connect(volumeNode);
+  volumeNode.connect(context.destination);
+  
+  volumeNode.gain.value = (typeof volume == 'undefined' ? 0.50 : volume);
+
+  context.decodeAudioData(buffer, function(res) {
+      audioSource.buffer = res;
+	  audioSource.start(0);
+  });
+}
+
+// Check for valid audio extensions.
+function hasExtension(inputID, exts) {
+    var fileName = document.getElementById(inputID).value;
+    return (new RegExp('(' + exts.join('|').replace(/\./g, '\\.') + ')$')).test(fileName);
+}
