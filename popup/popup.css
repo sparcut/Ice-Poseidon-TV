@@ -1,5 +1,5 @@
 body {
-	width: 420px;
+	width: 478px;
 	max-height: 250px;
 	font-family: 'Noto Sans', sans-serif;
 	background: #2c3e50;
@@ -33,20 +33,50 @@ a {
 	flex-wrap: wrap;
 }
 
-.item:not(:last-child) {
-	flex-basis: 14%;
-	text-align: center;
+.item-wrap {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
 }
 
-.item img {
-	margin-top: 5px;
-	margin-bottom: -1px;
-	height: 36px;
-	width: auto;
+.item {
+	flex-basis: 14%;
+	text-align: center;
+	border-left: 1px solid #495C94;
+	padding: 0 10px;
+}
+
+.item:first-child {
+	border-left: none;
+}
+
+.item svg {
+	fill: #fff;
+	margin: 4px 0;
+	height: 34px;
 	filter: drop-shadow(2px 2px 3px #000000);
 }
 
-.item:last-child {
+.item-svg:hover svg {
+	fill: #9B30FF;
+}
+
+.item:hover {
+	cursor: pointer;
+}
+
+.item .fa {
+	font-size: 32px;
+	margin: 4px 0;
+}
+
+.item:hover .fa {
+	color: #9B30FF;
+}
+
+.stream-status {
+	cursor: pointer;
 	margin: 12px 0 0 0;
 }
 
@@ -56,32 +86,6 @@ a {
 
 .status.online {
 	color: #2ecc71;
-}
-
-.item:hover {
-	cursor: pointer;
-}
-
-.item:hover:not(:last-child) .fa {
-	color: #9B30FF;
-}
-
-.item:not(:last-child) .fa {
-	font-size: 32px;
-	margin: 4px 0;
-}
-
-.item:nth-child(2) {
-	margin: 0 5px;
-	padding: 0 5px;
-	border-right: 1px solid #495C94;
-	border-left: 1px solid #495C94;
-}
-
-.item:nth-child(3), .item:nth-child(4), .item:nth-child(5) {
-	margin-right: 5px;
-	padding-right: 5px;
-	border-right: 1px solid #495C94;
 }
 
 .pulse {
@@ -97,6 +101,7 @@ a {
 	text-align: center;
 	border-top: 1px solid #495C94;
 	margin: 10px 0;
+	padding-top: 10px;
 }
 
 .github-wrapper, .divider-wrapper, .options-wrapper, .version-wrapper {
