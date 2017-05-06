@@ -1,7 +1,7 @@
 # Ice-Poseidon-TV
 The (un)official Ice Poseidon Chrome extension, includes features like showing a notification when Ice goes live.
 
-Chrome Web Store: https://chrome.google.com/webstore/detail/ice-poseidon-tv/kfhnbapjliobhpehkfjoicjojafenkll
+Chrome Web Store: https://chrome.google.com/webstore/detail/ice-poseidon-tv/kfhnbapjliobhpehkfjoicjojafenkll  
 Developer discord: https://discord.gg/rRzy7M9
 
 ## Update logs
