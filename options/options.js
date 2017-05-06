@@ -12,6 +12,7 @@ window.addEventListener('load', function()
 	options.BTTVChannels.value = localStorage.BTTVChannels;
 	options.disableAvatars.checked = JSON.parse(localStorage.disableAvatars);
 	options.enableChatColors.checked = JSON.parse(localStorage.enableChatColors);
+	options.wrongPageWarning.checked = JSON.parse(localStorage.wrongPageWarning);
 
 	options.isActivated.onchange = function() {
 		localStorage.isActivated = options.isActivated.checked;
@@ -51,6 +52,10 @@ window.addEventListener('load', function()
 
 	options.enableChatColors.onchange = function() {
 		localStorage.enableChatColors = options.enableChatColors.checked;
+	};
+
+	options.wrongPageWarning.onchange = function() {
+		localStorage.wrongPageWarning = options.wrongPageWarning.checked;
 	};
 
 	$('.testNotification').click(function() {
