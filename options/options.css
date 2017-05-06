@@ -1,3 +1,4 @@
+/* Default options page css */
 body {
   margin: 10px;
   font: 84% Arial, sans-serif;
@@ -32,7 +33,7 @@ h2 {
   padding-bottom: 10px;
 }
 
-/* Chrome range slider.*/
+/* Chrome range slider */
 @media screen and (-webkit-min-device-pixel-ratio:0) {
     input[type='range'] {
       overflow: hidden;
@@ -63,7 +64,7 @@ h2 {
 
 }
 
-/* Firefox range slider.*/
+/* Firefox range slider */
 input[type="range"]::-moz-range-progress {
   background-color: #B800FF; 
 }

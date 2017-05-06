@@ -1,16 +1,15 @@
-var disallowedChars = ['\\', ':', '/', '&', "'", '"', '?', '!', '#'];
-var messages = {};
-var emotes = {};
+var disallowedChars = ['\\', ':', '/', '&', "'", '"', '?', '!', '#'],
+    messages = {},
+    emotes = {},
+    clickBlueButton = true,
+    url = document.location.href,
+    prevScrollTop = 9999999;
 
-var clickBlueButton = true;
-var url = document.location.href;
-var prevScrollTop = 9999999;
+var checkIfOnYoutubeGaming = function () {
 
-var checkIfOnYoutubeGaming = function() {
+    var target = document.getElementsByClassName('yt-user-info');
 
-	var target = document.getElementsByClassName('yt-user-info');
-    
-	if (!target) {
+    if (!target) {
         window.setTimeout(checkIfOnYoutubeGaming, 250);
         return;
     }
@@ -18,66 +17,68 @@ var checkIfOnYoutubeGaming = function() {
     var text = $(target).find('a').text();
 
     if (text == 'Ice Poseidon' && !url.includes('gaming.youtube')) {
-        $.get(chrome.extension.getURL('/html/redirect.html'), function(data) {
+        $.get(chrome.extension.getURL('/html/redirect.html'), function (data) {
             $(data).appendTo('body');
         });
     }
-}
+};
 
-var bindScrollListener = function() {
+var bindScrollListener = function () {
 
-	var target = document.getElementById('item-scroller');
+    var target = document.getElementById('item-scroller');
 
-	if (!target) {
+    if (!target) {
         window.setTimeout(bindScrollListener, 250);
         return;
     }
 
-	$('#item-scroller').bind('mousewheel DOMMouseScroll', function(event) {
-		document.getElementById('scrolldown').checked = false;
-	});
+    $('#item-scroller').bind('mousewheel DOMMouseScroll', function (event) {
+        document.getElementById('scrolldown').checked = false;
+    });
 };
 
-var bindScrollDownListener = function() {
-	
-	var target = document.getElementById('show-more');
-	
-	if (!target) {
+var bindScrollDownListener = function () {
+
+    var target = document.getElementById('show-more');
+
+    if (!target) {
         window.setTimeout(bindScrollDownListener, 250);
         return;
     }
-	
-	target.onmousedown = function () {
-		document.getElementById('scrolldown').checked = true;
-		return true;
-	};
-}
 
-function hideScrollOnSponsorButton(div) {
-	var chatInputRenderer = 'yt-live-chat-message-input-renderer';
+    target.onmousedown = function () {
+        document.getElementById('scrolldown').checked = true;
+        return true;
+    };
+};
 
-	var observer = new MutationObserver(function(mutations) {
-		mutations.forEach((m) => {
-			$(m.target).attr('creator-open') ? $(div).hide() : $(div).show();
-		});
-	});
-	var observerOpts = {
-		childList: false,
-		attributes: true,
-		characterData: false,
-		subtree: false,
-		attributeFilter: ["creator-open"]
-	}
+var hideScrollOnSponsorButton = function (div) {
 
-	var sponsorClick = setInterval(() => {
-		if($(chatInputRenderer).length) {
-			observer.observe($(chatInputRenderer)[0], observerOpts);
-			clearInterval(sponsorClick);
-		}
-	}, 250);
-}
+    var chatInputRenderer = 'yt-live-chat-message-input-renderer';
 
-$(document).ready(function() {
+    var observer = new MutationObserver(function (mutations) {
+        mutations.forEach((m) => {
+            $(m.target).attr('creator-open') ? $(div).hide() : $(div).show();
+        });
+    });
+
+    var observerOpts = {
+        childList: false,
+        attributes: true,
+        characterData: false,
+        subtree: false,
+        attributeFilter: ["creator-open"]
+    }
+
+    var sponsorClick = setInterval(() => {
+        if ($(chatInputRenderer).length) {
+            observer.observe($(chatInputRenderer)[0], observerOpts);
+            clearInterval(sponsorClick);
+        }
+    }, 250);
+};
+
+$(document).ready(function () {
 
     if (url.includes('ice_poseidon') || url.includes('live_chat?is_popout=1') || url.includes('watch?v=')) {
 
@@ -90,19 +91,21 @@ $(document).ready(function() {
         $(div).css('color', 'white');
         $(div).find('input').css('outline', 0);
 
-        setInterval(function() {
+        setInterval(function () {
             if (document.getElementById('scrolldown').checked) {
                 $('#item-scroller').scrollTop(999999999);
             }
         }, 100);
 
-		hideScrollOnSponsorButton(div);
+        hideScrollOnSponsorButton(div);
         bindScrollListener();
-		bindScrollDownListener();
+        bindScrollDownListener();
     }
 });
 
-chrome.runtime.sendMessage({ items: ['emotesTwitch', 'emotesBTTV', 'emotesSub'] }, function(response) {
+chrome.runtime.sendMessage({
+    items: ['emotesTwitch', 'emotesBTTV', 'emotesSub']
+}, function (response) {
 
     if (response.data['emotesTwitch'] === true || response.data['emotesBTTV'] === true || response.data['emotesSub'] === true) {
         addObserverIfDesiredNodeAvailable();
@@ -123,16 +126,16 @@ chrome.runtime.sendMessage({ items: ['emotesTwitch', 'emotesBTTV', 'emotesSub'] 
     }
 
     if (response.enableChatColors) {
-	    var a = chrome.extension.getURL('external/chatColors.min.css');
-	    $('<link rel="stylesheet" type="text/css" href="' + a + '" >').appendTo('head');
+        var a = chrome.extension.getURL('external/chatColors.min.css');
+        $('<link rel="stylesheet" type="text/css" href="' + a + '" >').appendTo('head');
     }
 
     if (response.wrongPageWarning) {
-		checkIfOnYoutubeGaming();
+        checkIfOnYoutubeGaming();
     }
 });
 
-var addObserverIfDesiredNodeAvailable = function() {
+var addObserverIfDesiredNodeAvailable = function () {
 
     var target = document.querySelector('.style-scope .yt-live-chat-item-list-renderer');
 
@@ -141,17 +144,15 @@ var addObserverIfDesiredNodeAvailable = function() {
         return;
     }
 
-    var observer = new MutationObserver(function(mutations) {
+    var observer = new MutationObserver(function (mutations) {
 
-        mutations.forEach(function(mutation) {
-
+        mutations.forEach(function (mutation) {
             var newNodes = mutation.addedNodes;
 
             if (newNodes !== null) {
-
                 var $nodes = $(newNodes);
 
-                $nodes.each(function() {
+                $nodes.each(function () {
 
                     var $node = $(this);
 
@@ -177,16 +178,16 @@ var addObserverIfDesiredNodeAvailable = function() {
     replaceExistingEmotes();
 };
 
-var replaceExistingEmotes = function() {
+var replaceExistingEmotes = function () {
 
     var chatElements = $('.style-scope.yt-live-chat-item-list-renderer.x-scope.yt-live-chat-text-message-renderer-0');
 
-    chatElements.each(function(i, el){
+    chatElements.each(function (i, el) {
         emoteCheck(el);
     });
-}
+};
 
-var containsDisallowedChar = function(word) {
+var containsDisallowedChar = function (word) {
 
     for (c in disallowedChars) {
         if (word.indexOf(c) > -1) {
@@ -195,23 +196,23 @@ var containsDisallowedChar = function(word) {
     }
 
     return false;
-}
+};
 
-function isValidEmote(text) {
+var isValidEmote = function (text) {
     return !(text[0].match(/[A-Z]/g) ||
         text.match(/^[a-z]+$/g) ||
         text.match(/^\d*$/g)
     );
-}
+};
 
-var emotesTwitch = function() {
+var emotesTwitch = function () {
 
     var xhr = new XMLHttpRequest();
     xhr.open('GET', '//twitchemotes.com/api_cache/v2/global.json');
     xhr.send();
     var urlTemplate = "//static-cdn.jtvnw.net/emoticons/v1/";
 
-    xhr.onload = function() {
+    xhr.onload = function () {
         emoteDic = JSON.parse(xhr.responseText)['emotes'];
         for (var emote in emoteDic) {
             emotes[emote] = {
@@ -223,14 +224,14 @@ var emotesTwitch = function() {
     }
 };
 
-var emotesBTTV = function() {
+var emotesBTTV = function () {
 
     var xhr = new XMLHttpRequest();
     xhr.open('GET', '//api.betterttv.net/2/emotes');
     xhr.send();
     var urlTemplate = "//cdn.betterttv.net/emote/";
 
-    xhr.onload = function() {
+    xhr.onload = function () {
         emoteList = JSON.parse(xhr.responseText)['emotes'];
         for (var i in emoteList) {
             var dict = emoteList[i];
@@ -243,18 +244,18 @@ var emotesBTTV = function() {
     }
 };
 
-var emotesBTTVCHannels = function(channels) {
+var emotesBTTVCHannels = function (channels) {
 
     var commaChannels = channels.replace(/\s+/g, '').split(',');
 
-    commaChannels.forEach(function(channel) {
+    commaChannels.forEach(function (channel) {
 
         var xhr = new XMLHttpRequest();
         xhr.open('GET', '//api.betterttv.net/2/channels/' + channel);
         xhr.send();
         var url_template = "//cdn.betterttv.net/emote/";
 
-        xhr.onload = function() {
+        xhr.onload = function () {
             emoteList = JSON.parse(xhr.responseText)['emotes'];
             for (var i in emoteList) {
                 var dict = emoteList[i];
@@ -267,16 +268,16 @@ var emotesBTTVCHannels = function(channels) {
             }
         }
     }, this);
-}
+};
 
-var emotesSub = function() {
+var emotesSub = function () {
 
-    /*var xhr = new XMLHttpRequest();
+    var xhr = new XMLHttpRequest();
     xhr.open('GET', '//twitchemotes.com/api_cache/v2/subscriber.json');
     xhr.send();
     var urlTemplate = "//static-cdn.jtvnw.net/emoticons/v1/"
 
-    xhr.onload = function() {
+    xhr.onload = function () {
         emoteDic = JSON.parse(xhr.responseText)['channels'];
         for (var channel in emoteDic) {
             for (var i in emoteDic[channel]['emotes']) {
@@ -290,19 +291,19 @@ var emotesSub = function() {
                 }
             }
         }
-    }*/
+    }
 };
 
-var replaceAll = function(str, find, replace) {
+var replaceAll = function (str, find, replace) {
     return str.replace(new RegExp(find, 'g'), replace);
-}
+};
 
-var kappaCheck = function(msg) {
+var kappaCheck = function (msg) {
     var filtered = replaceAll(msg, '<img src="https://gaming.youtube.com/s/gaming/emoji/9f6aae75/emoji_u1f31d.svg" alt="🌝" width="20" height="20" class="style-scope yt-live-chat-text-message-renderer">', '%0287d2%');
     return filtered;
 };
 
-var emoteCheck = function(node) {
+var emoteCheck = function (node) {
 
     var $message = $(node).find('#message');
 
@@ -315,7 +316,7 @@ var emoteCheck = function(node) {
         var uniqueWords = [];
         var emoteCount = 0;
 
-        $.each(words, function(i, el) {
+        $.each(words, function (i, el) {
             if ($.inArray(el, uniqueWords) === -1) uniqueWords.push(el);
         });
 
@@ -329,7 +330,7 @@ var emoteCheck = function(node) {
 
             emoteCount++;
 
-            var altTag = (word == '%0287d2%') ? 'Kappa' : word ;
+            var altTag = (word == '%0287d2%') ? 'Kappa' : word;
 
             var span = document.createElement('span');
             span.setAttribute('aria-label', altTag);
@@ -358,7 +359,7 @@ var emoteCheck = function(node) {
         $message.html(messages[oldHTML]);
     }
 
-    $message.parent().parent().bind('DOMSubtreeModified', function() {
+    $message.parent().parent().bind('DOMSubtreeModified', function () {
 
         var $message = $(this).find('#message');
 
@@ -374,4 +375,4 @@ var emoteCheck = function(node) {
             $message.html(messages[html]);
         }
     });
-}
+};
