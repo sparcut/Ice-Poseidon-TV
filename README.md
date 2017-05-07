@@ -4,7 +4,7 @@ The (un)official Ice Poseidon Chrome extension, includes features like showing a
 Chrome Web Store: https://chrome.google.com/webstore/detail/ice-poseidon-tv/kfhnbapjliobhpehkfjoicjojafenkll  
 Discord: Andries#7148 / Ice Poseidon Discord #dev channel
 
-## Update logs
+## Changelog
 See: https://github.com/ansien12/Ice-Poseidon-TV/blob/master/changelog.html
 
 ## Pull Requests
