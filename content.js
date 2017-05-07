@@ -6,8 +6,8 @@ var disallowedChars = ['\\', ':', '/', '&', "'", '"', '?', '!', '#'],
     prevScrollTop = 9999999,
     scrolldownInterval = null,
     redirectToYTGaming = false,
-    developerMode = true,
-    log = null;
+    developerMode = false,
+    log = function(){};
 
 var emoteStates = {
     twitch: {
@@ -26,16 +26,16 @@ var emoteStates = {
         loaded: false,
         loadedCount: 0,
         channels: {}
-    },
+    }
 };
 
-+function() {
+var toggleDevMode = function() {
     if (developerMode === true) {
         log = console.log.bind(window.console);
     } else {
         log = function(){};
     }
-}();
+};
 
 var onNewPageLoad = function() {
 
@@ -169,6 +169,7 @@ var checkIfOnStreamPage = function() {
 
     var target = document.getElementById('owner');
     var chat = document.getElementById('chat');
+    var text = $(target).find('span').text(); // Use "text != 'Ice Poseidon'" to check if on Ice's stream
     $('.scrolldownWrapper').remove();
 
     if (typeof scrolldownInterval !== 'undefined') {
@@ -187,8 +188,11 @@ var checkIfOnStreamPage = function() {
     $(div).css('position', 'absolute');
     $(div).css('right', '125px');
     $(div).css('bottom', '16px');
-    $(div).css('color', 'white');
-    $(div).find('input').css('outline', 0);
+    $(div).css('color', 'rgba(255, 255, 255, 0.54)');
+
+    var $input = $(div).find('input');
+    $input.css('outline', 0);
+    $input.css('opacity', 0.65);
 
     scrolldownInterval = setInterval(function () {
         if (document.getElementById('scrolldown').checked) {
@@ -515,5 +519,6 @@ chrome.runtime.sendMessage({ items: ['emotesTwitch', 'emotesBTTV', 'emotesSub'] 
         $('<link rel="stylesheet" type="text/css" href="' + a + '" >').appendTo('head');
     }
 
+    toggleDevMode();
     onNewPageLoad();
 });
