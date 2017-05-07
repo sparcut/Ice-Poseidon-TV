@@ -19,8 +19,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         BTTVChannels: localStorage['BTTVChannels'],
         disableAvatars: JSON.parse(localStorage['disableAvatars']),
         enableChatColors: JSON.parse(localStorage['enableChatColors']),
-        redirectToYTGaming: JSON.parse(localStorage['redirectToYTGaming']),
-        developerMode: JSON.parse(localStorage['developerMode'])
+        redirectToYTGaming: JSON.parse(localStorage['redirectToYTGaming'])
     });
 });
 
