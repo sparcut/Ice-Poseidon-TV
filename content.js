@@ -257,7 +257,6 @@ var emotesTwitch = function () {
             };
         }
 
-        emotes['%0287d2%'] = emotes['Kappa'];
         emotesTwitchLoaded = true;
     }
 };
@@ -348,16 +347,20 @@ var replaceAll = function (str, find, replace) {
 };
 
 var kappaCheck = function (msg) {
-    var filtered = replaceAll(msg, '<img src="https://gaming.youtube.com/s/gaming/emoji/9f6aae75/emoji_u1f31d.svg" alt="🌝" width="20" height="20" class="style-scope yt-live-chat-text-message-renderer">', '%0287d2%');
-    return filtered;
+     $('img', msg).each(function () {
+          var $img = $(this);
+          if (/\ud83c\udf1d/g.test($img.attr('alt'))) {
+              $img.replaceWith(document.createTextNode('Kappa'));
+          }
+      });
 };
 
 var emoteCheck = function (node) {
 
     var $message = $(node).find('#message');
-
-    var oldHTML = kappaCheck($message.html().trim());
-    var msgHTML = kappaCheck($message.html().trim());
+    kappaCheck($message);
+    var oldHTML = $message.html().trim();
+    var msgHTML = oldHTML;
 
     if (typeof messages[msgHTML] == 'undefined') {
 
@@ -379,15 +382,13 @@ var emoteCheck = function (node) {
 
             emoteCount++;
 
-            var altTag = (word == '%0287d2%') ? 'Kappa' : word;
-
             var span = document.createElement('span');
-            span.setAttribute('aria-label', altTag);
+            span.setAttribute('aria-label', word);
             span.classList.add('hint--bottom');
 
             var img = document.createElement('img');
             img.src = emotes[word]['url'];
-            img.alt = altTag;
+            img.alt = word;
             img.style.display = 'inline';
             img.style.width = 'auto';
             img.style.overflow = 'hidden';
@@ -412,8 +413,8 @@ var emoteCheck = function (node) {
     $message.parent().parent().bind('DOMSubtreeModified', function () {
 
         var $message = $(this).find('#message');
-
-        var html = kappaCheck($message.html().trim());
+        kappaCheck($message);
+        var html = $message.html().trim();
         html = html.replace('/\xEF\xBB\xBF/', '').replace('﻿', '').replace(/\s/g,'');
 
         if (typeof messages[html] !== 'undefined') {
