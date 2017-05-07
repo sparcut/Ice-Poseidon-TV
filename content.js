@@ -3,62 +3,92 @@ var disallowedChars = ['\\', ':', '/', '&', "'", '"', '?', '!', '#'],
     emotes = {},
     clickBlueButton = true,
     url = document.location.href,
-    prevScrollTop = 9999999
-    emotesTwitchLoaded = false,
-    emotesBTTVLoaded = false,
-    emotesSubLoaded = false;
-    emotesBTTVCHannelsLoaded = false,
-    BTTVchannelsLoaded = 0;
+    prevScrollTop = 9999999,
+    scrolldownInterval = null,
+    redirectToYTGaming = false;
+
+var emoteStates = {
+    twitch: {
+        shouldLoad: false,
+        loaded: false
+    },
+    sub: {
+        shouldLoad: false,
+        loaded: false
+    },
+    BTTV: {
+        shouldLoad: false,
+        loaded: false
+    },
+    BTTVChannels: {
+        loaded: false,
+        loadedCount: 0,
+        channels: {}
+    },
+};
+
+var onNewPageLoad = function() {
+
+    if (redirectToYTGaming === true) {
+        checkIfOnYTGaming();
+    }
+
+    checkIfOnStreamPage();
+};
+
++function() {
+
+    console.log('@MutationObserver')
+
+    var target = document.querySelector('head > title');
+
+    var observer = new window.WebKitMutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+
+            console.log('New title: ' + mutation.target.textContent);
+
+            onNewPageLoad();
+        });
+    });
+
+    observer.observe(target, { subtree: true, characterData: true, childList: true });
+}();
+
+var loadEmotes = function() {
+
+    console.log('@loadEmotes');
+
+    console.log(emoteStates.twitch.shouldLoad);
+
+    if (emoteStates.twitch.shouldLoad) loadTwitchEmotes();
+    if (emoteStates.sub.shouldLoad) loadSubEmotes();
+
+    if (emoteStates.BTTV.shouldLoad) {
+        loadBTTVEmotes();
+        loadBTTVChannelEmotes();
+    }
+
+    waitTillEmotesLoaded();
+};
 
 var waitTillEmotesLoaded = function() {
 
-    if (emotesTwitchLoaded && emotesBTTVLoaded && emotesSubLoaded && emotesBTTVCHannelsLoaded) {
-        replaceExistingEmotes();
-    } else {
+    console.log('@waitTillEmotesLoaded');
+
+    console.log(emoteStates);
+
+    if ((emoteStates.twitch.shouldLoad !== emoteStates.twitch.loaded) || 
+        (emoteStates.sub.shouldLoad !== emoteStates.sub.loaded) ||
+        (emoteStates.BTTV.shouldLoad !== emoteStates.BTTV.loaded) ||
+        (emoteStates.BTTV.shouldLoad !== emoteStates.BTTVChannels.loaded)) {
+
         setTimeout(waitTillEmotesLoaded, 250);
+        return;
     }
-};
 
-waitTillEmotesLoaded();
+    console.log(emotes);
 
-var bindWarningObserver = function() {
-
-    // @NOTE: Working on this atm - andries
-
-    // var observer = new MutationObserver(function (mutations) {
-    //     checkIfOnYoutubeGaming();
-    // });
-
-    // var observerOpts = {
-    //     childList: true,
-    //     attributes: true,
-    //     characterData: true,
-    //     subtree: false,
-    //     attributeFilter: ['class']
-    // }
-
-    // observer.observe(document.documentElement, observerOpts);
-};
-
-var checkIfOnYoutubeGaming = function () {
-
-    // @NOTE: Working on this atm - andries
-
-    // var target = document.getElementsByClassName('yt-user-info');
-    // $('.page-warning').remove();
-
-    // if (!target) {
-    //     window.setTimeout(checkIfOnYoutubeGaming, 250);
-    //     return;
-    // }
-
-    // var text = $(target).find('a').text();
-
-    // if (text == 'Ice Poseidon' && !url.includes('gaming.youtube')) {
-    //     $.get(chrome.extension.getURL('/html/redirect.html'), function (data) {
-    //         $(data).appendTo('#page');
-    //     });
-    // }
+    replaceExistingEmotes();
 };
 
 var bindScrollListener = function () {
@@ -116,63 +146,57 @@ var hideScrollOnSponsorButton = function (div) {
     }, 250);
 };
 
-$(document).ready(function () {
+var checkIfOnYTGaming = function() {
 
-    if ((url.includes('ice_poseidon') && url.includes('gaming.youtube')) || url.includes('live_chat')) {
+    var iframe = document.getElementById('live-chat-iframe');
+    var textWrapper = document.getElementsByClassName('yt-user-info');
+    var text = $(textWrapper).find('a').text();
 
-        var div = document.createElement('div');
-        document.body.appendChild(div);
-
-        $(div).html('<input type="checkbox" id="scrolldown" name="scrolldown" checked>Always scroll down');
-        $(div).css('position', 'absolute');
-        $(div).css('right', '125px');
-        $(div).css('bottom', '16px');
-        $(div).css('color', 'white');
-        $(div).find('input').css('outline', 0);
-
-        setInterval(function () {
-            if (document.getElementById('scrolldown').checked) {
-                $('#item-scroller').scrollTop(999999999);
-            }
-        }, 100);
-
-        hideScrollOnSponsorButton(div);
-        bindScrollListener();
-        bindScrollDownListener();
+    if (text == 'Ice Poseidon' && !url.includes('gaming.youtube') && iframe) {
+        window.location = 'https://gaming.youtube.com/ice_poseidon/live';
     }
-});
+};
 
-chrome.runtime.sendMessage({
-    items: ['emotesTwitch', 'emotesBTTV', 'emotesSub']
-}, function (response) {
+var checkIfOnStreamPage = function() {
 
-    if (response.data['emotesTwitch'] === true || response.data['emotesBTTV'] === true || response.data['emotesSub'] === true) {
-        addObserverIfDesiredNodeAvailable();
+    console.log('@checkIfOnStreamPage');
+
+    var target = document.getElementById('owner');
+    var chat = document.getElementById('chat');
+    var text = $(target).find('span').text();
+    $('.scrolldownWrapper').remove();
+
+    if (typeof scrolldownInterval !== 'undefined') {
+        clearTimeout(scrolldownInterval);
     }
 
-    if (response.data['emotesTwitch'] === true) emotesTwitch();
-    if (response.data['emotesSub'] === true) emotesSub();
-
-    if (response.data['emotesBTTV'] === true) {
-        emotesBTTV();
-        emotesBTTVCHannels(response.BTTVChannels);
+    if ((!target || !chat || text != 'Ice Poseidon') && !url.includes('live_chat')) {
+        return;
     }
 
-    $('<style type="text/css">.yt-live-chat-text-message-renderer-0 #content #author-name:after{content: ":"}</style>').appendTo('head');
+    var div = document.createElement('div');
+    document.body.appendChild(div);
+    $(div).addClass('scrolldownWrapper');
 
-    if (response.disableAvatars) {
-        $('<style type="text/css">.style-scope .yt-live-chat-item-list-renderer #author-photo { display: none !important; }.style-scope.yt-live-chat-message-input-renderer.no-transition{ display: none !important; }</style>').appendTo('head');
-    }
+    $(div).html('<input type="checkbox" id="scrolldown" name="scrolldown" checked>Always scroll down');
+    $(div).css('position', 'absolute');
+    $(div).css('right', '125px');
+    $(div).css('bottom', '16px');
+    $(div).css('color', 'white');
+    $(div).find('input').css('outline', 0);
 
-    if (response.enableChatColors) {
-        var a = chrome.extension.getURL('external/chatColors.min.css');
-        $('<link rel="stylesheet" type="text/css" href="' + a + '" >').appendTo('head');
-    }
+    scrolldownInterval = setInterval(function () {
+        if (document.getElementById('scrolldown').checked) {
+            $('#item-scroller').scrollTop(999999999);
+        }
+    }, 100);
 
-    if (response.wrongPageWarning) {
-        bindWarningObserver();
-    }
-});
+    hideScrollOnSponsorButton(div);
+    bindScrollListener();
+    bindScrollDownListener();
+
+    loadEmotes();
+};
 
 var addObserverIfDesiredNodeAvailable = function () {
 
@@ -217,7 +241,14 @@ var addObserverIfDesiredNodeAvailable = function () {
 
 var replaceExistingEmotes = function () {
 
+    console.log('@replaceExistingEmotes');
+
     var chatElements = $('.style-scope.yt-live-chat-item-list-renderer.x-scope.yt-live-chat-text-message-renderer-0');
+
+    if (chatElements.length < 1) {
+        setTimeout(replaceExistingEmotes, 250);
+        return;
+    }
 
     chatElements.each(function (i, el) {
         emoteCheck(el);
@@ -242,7 +273,9 @@ var isValidEmote = function (text) {
     );
 };
 
-var emotesTwitch = function () {
+var loadTwitchEmotes = function () {
+
+    console.log('@loadTwitchEmotes');
 
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'https://twitchemotes.com/api_cache/v2/global.json');
@@ -257,66 +290,14 @@ var emotesTwitch = function () {
             };
         }
 
-        emotesTwitchLoaded = true;
+        emoteStates.twitch.loaded = true;
     }
 };
 
-var emotesBTTV = function () {
 
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'https://api.betterttv.net/2/emotes');
-    xhr.send();
-    var urlTemplate = '//cdn.betterttv.net/emote/';
+var loadSubEmotes = function () {
 
-    xhr.onload = function () {
-        emoteList = JSON.parse(xhr.responseText)['emotes'];
-        for (var i in emoteList) {
-            var dict = emoteList[i];
-            if (!containsDisallowedChar(dict['code'])) {
-                emotes[dict['code']] = {
-                    url: urlTemplate + dict['id'] + '/' + '1x'
-                };
-            }
-        }
-
-        emotesBTTVLoaded = true;
-    }
-};
-
-var emotesBTTVCHannels = function (channels) {
-
-    var commaChannels = channels.replace(/\s+/g, '').split(',');
-
-    commaChannels.forEach(function (channel) {
-
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'https://api.betterttv.net/2/channels/' + channel);
-        xhr.send();
-        var url_template = '//cdn.betterttv.net/emote/';
-
-        xhr.onload = function () {
-            emoteList = JSON.parse(xhr.responseText)['emotes'];
-            for (var i in emoteList) {
-                var dict = emoteList[i];
-                if (!containsDisallowedChar(dict['code'])) {
-                    emotes[dict['code']] = {
-                        url: url_template + dict['id'] + '/' + '1x',
-                        channel: channel + ' (bttv)'
-                    };
-                }
-            }
-
-            console.log(BTTVchannelsLoaded);
-            BTTVchannelsLoaded++;
-
-            if (BTTVchannelsLoaded >= commaChannels.length) {
-                emotesBTTVCHannelsLoaded = true;
-            }
-        }
-    }, this);
-};
-
-var emotesSub = function () {
+    console.log('@loadSubEmotes');
 
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'https://twitchemotes.com/api_cache/v2/subscriber.json');
@@ -338,8 +319,67 @@ var emotesSub = function () {
             }
         }
 
-        emotesSubLoaded = true;
+        emoteStates.sub.loaded = true;
     }
+};
+
+var loadBTTVEmotes = function () {
+
+    console.log('@loadBTTVEmotes');
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'https://api.betterttv.net/2/emotes');
+    xhr.send();
+    var urlTemplate = '//cdn.betterttv.net/emote/';
+
+    xhr.onload = function () {
+        emoteList = JSON.parse(xhr.responseText)['emotes'];
+        for (var i in emoteList) {
+            var dict = emoteList[i];
+            if (!containsDisallowedChar(dict['code'])) {
+                emotes[dict['code']] = {
+                    url: urlTemplate + dict['id'] + '/' + '1x'
+                };
+            }
+        }
+
+        emoteStates.BTTV.loaded = true;
+    }
+};
+
+var loadBTTVChannelEmotes = function () {
+
+    console.log('@loadBTTVChannelEmotes');
+
+    var channels = emoteStates.BTTVChannels.channels;
+    var commaChannels = channels.replace(/\s+/g, '').split(',');
+
+    commaChannels.forEach(function (channel) {
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'https://api.betterttv.net/2/channels/' + channel);
+        xhr.send();
+        var url_template = '//cdn.betterttv.net/emote/';
+
+        xhr.onload = function () {
+            emoteList = JSON.parse(xhr.responseText)['emotes'];
+            for (var i in emoteList) {
+                var dict = emoteList[i];
+                if (!containsDisallowedChar(dict['code'])) {
+                    emotes[dict['code']] = {
+                        url: url_template + dict['id'] + '/' + '1x',
+                        channel: channel + ' (bttv)'
+                    };
+                }
+            }
+
+            emoteStates.BTTVChannels.loadedCount++;
+
+            if (emoteStates.BTTVChannels.loadedCount >= commaChannels.length) {
+                emoteStates.BTTVChannels.loaded = true;
+            }
+        }
+    }, this);
 };
 
 var replaceAll = function (str, find, replace) {
@@ -348,19 +388,26 @@ var replaceAll = function (str, find, replace) {
 
 var kappaCheck = function (msg) {
      $('img', msg).each(function () {
-          var $img = $(this);
-          if (/\ud83c\udf1d/g.test($img.attr('alt'))) {
-              $img.replaceWith(document.createTextNode('Kappa'));
-          }
-      });
+         
+        var $img = $(this);
+
+        if (/\ud83c\udf1d/g.test($img.attr('alt'))) {
+            $img.replaceWith(document.createTextNode('Kappa'));
+        }
+    });
 };
 
 var emoteCheck = function (node) {
 
+    console.log('@emoteCheck');
+
     var $message = $(node).find('#message');
     kappaCheck($message);
+
     var oldHTML = $message.html().trim();
     var msgHTML = oldHTML;
+
+    console.log(oldHTML);
 
     if (typeof messages[msgHTML] == 'undefined') {
 
@@ -371,6 +418,8 @@ var emoteCheck = function (node) {
         $.each(words, function (i, el) {
             if ($.inArray(el, uniqueWords) === -1) uniqueWords.push(el);
         });
+
+        console.log(uniqueWords);
 
         for (var i = 0; i < uniqueWords.length; i++) {
 
@@ -404,6 +453,8 @@ var emoteCheck = function (node) {
 
         $message.html(msgHTML);
 
+        console.log(msgHTML);
+
         messages[oldHTML.replace(/\s/g,'')] = msgHTML;
 
     } else {
@@ -427,3 +478,37 @@ var emoteCheck = function (node) {
         }
     });
 };
+
+chrome.runtime.sendMessage({ items: ['emotesTwitch', 'emotesBTTV', 'emotesSub'] }, function (response) {
+
+    if (response.data['emotesTwitch'] === true || response.data['emotesBTTV'] === true || response.data['emotesSub'] === true) {
+        addObserverIfDesiredNodeAvailable();
+    }
+
+    console.log('@messageResponse', response);
+
+    redirectToYTGaming = response.redirectToYTGaming;
+
+    emoteStates.twitch.shouldLoad = response.data['emotesTwitch'];
+    emoteStates.sub.shouldLoad = response.data['emotesSub'];
+
+    if (response.data['emotesBTTV'] === true) {
+        emoteStates.BTTV.shouldLoad = response.data['emotesBTTV'];
+        emoteStates.BTTVChannels.channels = response.BTTVChannels;
+    }
+
+    console.log(emoteStates);
+
+    $('<style type="text/css">.yt-live-chat-text-message-renderer-0 #content #author-name:after{content: ":"}</style>').appendTo('head'); // Add ':' behind message author in chat
+
+    if (response.disableAvatars) {
+        $('<style type="text/css">.style-scope .yt-live-chat-item-list-renderer #author-photo { display: none !important; }.style-scope.yt-live-chat-message-input-renderer.no-transition{ display: none !important; }</style>').appendTo('head');
+    }
+
+    if (response.enableChatColors) {
+        var a = chrome.extension.getURL('external/chatColors.min.css');
+        $('<link rel="stylesheet" type="text/css" href="' + a + '" >').appendTo('head');
+    }
+
+    onNewPageLoad();
+});

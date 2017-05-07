@@ -11,7 +11,7 @@ window.addEventListener('load', function () {
     options.BTTVChannels.value = localStorage.BTTVChannels;
     options.disableAvatars.checked = JSON.parse(localStorage.disableAvatars);
     options.enableChatColors.checked = JSON.parse(localStorage.enableChatColors);
-    options.wrongPageWarning.checked = JSON.parse(localStorage.wrongPageWarning);
+    options.redirectToYTGaming.checked = JSON.parse(localStorage.redirectToYTGaming);
 
     options.isActivated.onchange = function () {
         localStorage.isActivated = options.isActivated.checked;
@@ -53,8 +53,8 @@ window.addEventListener('load', function () {
         localStorage.enableChatColors = options.enableChatColors.checked;
     };
 
-    options.wrongPageWarning.onchange = function () {
-        localStorage.wrongPageWarning = options.wrongPageWarning.checked;
+    options.redirectToYTGaming.onchange = function () {
+        localStorage.redirectToYTGaming = options.redirectToYTGaming.checked;
     };
 
     var audio = localStorage.getItem('audio');
@@ -110,7 +110,7 @@ var showTestNotification = function () {
     var period = time[1] < 12 ? 'AM' : 'PM';
 
     if (JSON.parse(localStorage.isActivated) === true) {
-        
+
         chrome.notifications.create(null, {
   			type: 'basic',
  			title: 'Test! (' + hour + time[2] + ' ' + period + ')',
