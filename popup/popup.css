@@ -95,7 +95,7 @@ a {
 	text-align: center;
 	border-top: 1px solid #3F507F;
 	margin: 10px 0;
-	padding-top: 10px;
+	padding: 10px 0 4px 0;
 }
 
 .github-wrapper, .divider-right-wrapper, .divider-left-wrapper, .options-wrapper, .version-wrapper, .changelog-wrapper {

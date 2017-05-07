@@ -113,10 +113,13 @@ if (!localStorage.showRecentTweet) localStorage.showRecentTweet = true;
 if (!localStorage.emotesTwitch) localStorage.emotesTwitch = true;
 if (!localStorage.emotesBTTV) localStorage.emotesBTTV = true;
 if (!localStorage.emotesSub) localStorage.emotesSub = true;
-if (!localStorage.BTTVChannels) localStorage.BTTVChannels = 'Ice_Poseidon, MonkaSenpai, graphistrs, trihex, reckful, b0aty, NightDev';
+if (!localStorage.BTTVChannels) localStorage.BTTVChannels = 'Ice_Poseidon, monkasen, graphistrs, trihex, reckful, b0aty, NightDev';
 if (!localStorage.disableAvatars) localStorage.disableAvatars = true;
 if (!localStorage.enableChatColors) localStorage.enableChatColors = true;
 if (!localStorage.redirectToYTGaming) localStorage.redirectToYTGaming = true;
-if (!localStorage.developerMode) localStorage.developerMode = false;
+
+if (localStorage.BTTVChannels) {
+    localStorage.BTTVChannels = localStorage.BTTVChannels.replace('MonkaSenpai', 'monkasen');
+}
 
 checkIfLive();

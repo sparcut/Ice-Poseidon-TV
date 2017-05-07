@@ -5,7 +5,8 @@ var disallowedChars = ['\\', ':', '/', '&', "'", '"', '?', '!', '#'],
     url = document.location.href,
     prevScrollTop = 9999999,
     scrolldownInterval = null,
-    redirectToYTGaming = false;
+    redirectToYTGaming = false,
+    redirectConfirm = null;
 
 var emoteStates = {
     twitch: {
@@ -30,16 +31,17 @@ var emoteStates = {
 var onNewPageLoad = function() {
 
     if (redirectToYTGaming === true) {
-        checkIfOnYTGaming();
+        setTimeout(checkIfOnYTGaming, 2500);
     }
 
     checkIfOnStreamPage();
 };
 
-(function() {
+var addLoadingDiv = function () {
 
+    $('.loadingIceTV').remove();
     var div = document.createElement('div');
-    $(div).text('Loading Ice Poseidon TV...');
+    $(div).text('Loading emotes...');
     
     $(div).css('position', 'absolute');
     $(div).css('right', '25px');
@@ -50,7 +52,7 @@ var onNewPageLoad = function() {
     $(div).addClass('loadingIceTV');
 
     document.body.appendChild(div);
-}());
+};
 
 (function() {
 
@@ -88,6 +90,8 @@ var waitTillEmotesLoaded = function() {
         setTimeout(waitTillEmotesLoaded, 250);
         return;
     }
+
+    console.log(emotes['monkaS']);
 
     $('.loadingIceTV').remove();
     replaceExistingEmotes();
@@ -151,11 +155,17 @@ var hideScrollOnSponsorButton = function (div) {
 var checkIfOnYTGaming = function() {
 
     var iframe = document.getElementById('live-chat-iframe');
-    var textWrapper = document.getElementsByClassName('yt-user-info');
-    var text = $(textWrapper).find('a').text();
+
+    var $textWrapper = $('.yt-user-info');
+    var text = $textWrapper.find('a').text();
 
     if (text == 'Ice Poseidon' && !url.includes('gaming.youtube') && iframe) {
-        window.location = 'https://gaming.youtube.com/ice_poseidon/live';
+
+        redirectConfirm = confirm('[Ice PoseidonTV] Go to the official Ice Poseidon livestream page?');
+
+        if (redirectConfirm == true) {
+            window.location = 'https://gaming.youtube.com/ice_poseidon/live';
+        }
     }
 };
 
@@ -195,6 +205,7 @@ var checkIfOnStreamPage = function() {
         }
     }, 100);
 
+    addLoadingDiv();
     hideScrollOnSponsorButton(div);
     bindScrollListener();
     bindScrollDownListener();
