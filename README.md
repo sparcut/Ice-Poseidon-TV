@@ -1,5 +1,5 @@
 # Ice-Poseidon-TV
-The (un)official Ice Poseidon Chrome extension, includes features like showing a notification when Ice goes live.
+The official Ice Poseidon Chrome extension, includes all Twitch emotes and showing notifications when Ice Poseidon goes live.
 
 Chrome Web Store: https://chrome.google.com/webstore/detail/ice-poseidon-tv/kfhnbapjliobhpehkfjoicjojafenkll  
 Discord: Andries#7148 / Ice Poseidon Discord #dev channel
