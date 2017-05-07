@@ -69,6 +69,22 @@ var addLoadingDiv = function () {
 
 var loadEmotes = function() {
 
+    // Add message if emotes failed to load
+    setTimeout(function() {
+		
+		if ($('.loadingIceTV')[0]){
+			$('.loadingIceTV').css('color', '#c0392b');
+			$('.loadingIceTV').css('background-color', '#282828');
+			$('.loadingIceTV').text('Failed loading emotes (API servers down)');
+			$('.loadingIceTV').css('right', '25px');
+		}
+		
+		setTimeout(function() {
+			$('.loadingIceTV').remove();
+		}, 7.5 * 1000);
+		
+	}, 10 * 1000);
+
     if (emoteStates.twitch.shouldLoad) loadTwitchEmotes();
     if (emoteStates.sub.shouldLoad) loadSubEmotes();
 
@@ -90,8 +106,6 @@ var waitTillEmotesLoaded = function() {
         setTimeout(waitTillEmotesLoaded, 250);
         return;
     }
-
-    console.log(emotes['monkaS']);
 
     $('.loadingIceTV').remove();
     replaceExistingEmotes();
