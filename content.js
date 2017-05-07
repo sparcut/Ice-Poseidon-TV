@@ -5,9 +5,7 @@ var disallowedChars = ['\\', ':', '/', '&', "'", '"', '?', '!', '#'],
     url = document.location.href,
     prevScrollTop = 9999999,
     scrolldownInterval = null,
-    redirectToYTGaming = false,
-    developerMode = false,
-    log = function(){};
+    redirectToYTGaming = false;
 
 var emoteStates = {
     twitch: {
@@ -29,17 +27,7 @@ var emoteStates = {
     }
 };
 
-var toggleDevMode = function() {
-    if (developerMode === true) {
-        log = console.log.bind(window.console);
-    } else {
-        log = function(){};
-    }
-};
-
 var onNewPageLoad = function() {
-
-    log('@onNewPageLoad');
 
     if (redirectToYTGaming === true) {
         checkIfOnYTGaming();
@@ -48,27 +36,36 @@ var onNewPageLoad = function() {
     checkIfOnStreamPage();
 };
 
-+function() {
+(function() {
 
-    log('@MutationObserver');
+    var div = document.createElement('div');
+    $(div).text('Loading Ice Poseidon TV...');
+    
+    $(div).css('position', 'absolute');
+    $(div).css('right', '25px');
+    $(div).css('bottom', '75px');
+    $(div).css('color', '#fff');
+    $(div).css('text-shadow', '2px 2px 2px rgba(0,0,0,0.75)');
+
+    $(div).addClass('loadingIceTV');
+
+    document.body.appendChild(div);
+}());
+
+(function() {
 
     var target = document.querySelector('head > title');
 
     var observer = new window.WebKitMutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
-
-            log('New title: ' + mutation.target.textContent);
-
             onNewPageLoad();
         });
     });
 
     observer.observe(target, { subtree: true, characterData: true, childList: true });
-}();
+}());
 
 var loadEmotes = function() {
-
-    log('@loadEmotes');
 
     if (emoteStates.twitch.shouldLoad) loadTwitchEmotes();
     if (emoteStates.sub.shouldLoad) loadSubEmotes();
@@ -83,8 +80,6 @@ var loadEmotes = function() {
 
 var waitTillEmotesLoaded = function() {
 
-    log('@waitTillEmotesLoaded');
-
     if ((emoteStates.twitch.shouldLoad !== emoteStates.twitch.loaded) || 
         (emoteStates.sub.shouldLoad !== emoteStates.sub.loaded) ||
         (emoteStates.BTTV.shouldLoad !== emoteStates.BTTV.loaded) ||
@@ -94,6 +89,7 @@ var waitTillEmotesLoaded = function() {
         return;
     }
 
+    $('.loadingIceTV').remove();
     replaceExistingEmotes();
 };
 
@@ -165,8 +161,6 @@ var checkIfOnYTGaming = function() {
 
 var checkIfOnStreamPage = function() {
 
-    log('@checkIfOnStreamPage');
-
     var target = document.getElementById('owner');
     var chat = document.getElementById('chat');
     var text = $(target).find('span').text(); // Use "text != 'Ice Poseidon'" to check if on Ice's stream
@@ -181,8 +175,9 @@ var checkIfOnStreamPage = function() {
     }
 
     var div = document.createElement('div');
-    document.body.appendChild(div);
     $(div).addClass('scrolldownWrapper');
+
+    document.body.appendChild(div);
 
     $(div).html('<input type="checkbox" id="scrolldown" name="scrolldown" checked>Always scroll down');
     $(div).css('position', 'absolute');
@@ -250,9 +245,6 @@ var addObserverIfDesiredNodeAvailable = function () {
 
 var replaceExistingEmotes = function () {
 
-    log('@replaceExistingEmotes');
-    log(emotes);
-
     var chatElements = $('.style-scope.yt-live-chat-item-list-renderer.x-scope.yt-live-chat-text-message-renderer-0');
 
     if (chatElements.length < 1) {
@@ -285,8 +277,6 @@ var isValidEmote = function (text) {
 
 var loadTwitchEmotes = function () {
 
-    log('@loadTwitchEmotes');
-
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'https://twitchemotes.com/api_cache/v2/global.json');
     xhr.send();
@@ -306,8 +296,6 @@ var loadTwitchEmotes = function () {
 
 
 var loadSubEmotes = function () {
-
-    log('@loadSubEmotes');
 
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'https://twitchemotes.com/api_cache/v2/subscriber.json');
@@ -335,8 +323,6 @@ var loadSubEmotes = function () {
 
 var loadBTTVEmotes = function () {
 
-    log('@loadBTTVEmotes');
-
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'https://api.betterttv.net/2/emotes');
     xhr.send();
@@ -358,8 +344,6 @@ var loadBTTVEmotes = function () {
 };
 
 var loadBTTVChannelEmotes = function () {
-
-    log('@loadBTTVChannelEmotes');
 
     var channels = emoteStates.BTTVChannels.channels;
     var commaChannels = channels.replace(/\s+/g, '').split(',');
@@ -409,15 +393,11 @@ var kappaCheck = function (msg) {
 
 var emoteCheck = function (node) {
 
-    log('@emoteCheck');
-
     var $message = $(node).find('#message');
     kappaCheck($message);
 
     var oldHTML = $message.html().trim();
     var msgHTML = oldHTML;
-
-    log(oldHTML);
 
     if (typeof messages[msgHTML] == 'undefined') {
 
@@ -428,8 +408,6 @@ var emoteCheck = function (node) {
         $.each(words, function (i, el) {
             if ($.inArray(el, uniqueWords) === -1) uniqueWords.push(el);
         });
-
-        log(uniqueWords);
 
         for (var i = 0; i < uniqueWords.length; i++) {
 
@@ -463,8 +441,6 @@ var emoteCheck = function (node) {
 
         $message.html(msgHTML);
 
-        log(msgHTML);
-
         messages[oldHTML.replace(/\s/g,'')] = msgHTML;
 
     } else {
@@ -491,14 +467,11 @@ var emoteCheck = function (node) {
 
 chrome.runtime.sendMessage({ items: ['emotesTwitch', 'emotesBTTV', 'emotesSub'] }, function (response) {
 
-    log ('@sendMessage');
-
     if (response.data['emotesTwitch'] === true || response.data['emotesBTTV'] === true || response.data['emotesSub'] === true) {
         addObserverIfDesiredNodeAvailable();
     }
 
     redirectToYTGaming = response.redirectToYTGaming;
-    developerMode = response.developerMode;
 
     emoteStates.twitch.shouldLoad = response.data['emotesTwitch'];
     emoteStates.sub.shouldLoad = response.data['emotesSub'];
@@ -519,6 +492,8 @@ chrome.runtime.sendMessage({ items: ['emotesTwitch', 'emotesBTTV', 'emotesSub'] 
         $('<link rel="stylesheet" type="text/css" href="' + a + '" >').appendTo('head');
     }
 
-    toggleDevMode();
-    onNewPageLoad();
+    // Delay init till everything is fully loaded
+    $(window).bind('load', function () {
+        onNewPageLoad();
+    });
 });
