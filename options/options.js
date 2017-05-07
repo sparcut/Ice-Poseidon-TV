@@ -12,6 +12,7 @@ window.addEventListener('load', function () {
     options.disableAvatars.checked = JSON.parse(localStorage.disableAvatars);
     options.enableChatColors.checked = JSON.parse(localStorage.enableChatColors);
     options.redirectToYTGaming.checked = JSON.parse(localStorage.redirectToYTGaming);
+    options.developerMode.checked = JSON.parse(localStorage.developerMode);
 
     options.isActivated.onchange = function () {
         localStorage.isActivated = options.isActivated.checked;
@@ -55,6 +56,10 @@ window.addEventListener('load', function () {
 
     options.redirectToYTGaming.onchange = function () {
         localStorage.redirectToYTGaming = options.redirectToYTGaming.checked;
+    };
+
+    options.developerMode.onchange = function () {
+        localStorage.developerMode = options.developerMode.checked;
     };
 
     var audio = localStorage.getItem('audio');

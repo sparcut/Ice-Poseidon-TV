@@ -5,7 +5,9 @@ var disallowedChars = ['\\', ':', '/', '&', "'", '"', '?', '!', '#'],
     url = document.location.href,
     prevScrollTop = 9999999,
     scrolldownInterval = null,
-    redirectToYTGaming = false;
+    redirectToYTGaming = false,
+    developerMode = true,
+    log = null;
 
 var emoteStates = {
     twitch: {
@@ -27,7 +29,17 @@ var emoteStates = {
     },
 };
 
++function() {
+    if (developerMode === true) {
+        log = console.log.bind(window.console);
+    } else {
+        log = function(){};
+    }
+}();
+
 var onNewPageLoad = function() {
+
+    log('@onNewPageLoad');
 
     if (redirectToYTGaming === true) {
         checkIfOnYTGaming();
@@ -38,14 +50,14 @@ var onNewPageLoad = function() {
 
 +function() {
 
-    console.log('@MutationObserver')
+    log('@MutationObserver');
 
     var target = document.querySelector('head > title');
 
     var observer = new window.WebKitMutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
 
-            console.log('New title: ' + mutation.target.textContent);
+            log('New title: ' + mutation.target.textContent);
 
             onNewPageLoad();
         });
@@ -56,9 +68,7 @@ var onNewPageLoad = function() {
 
 var loadEmotes = function() {
 
-    console.log('@loadEmotes');
-
-    console.log(emoteStates.twitch.shouldLoad);
+    log('@loadEmotes');
 
     if (emoteStates.twitch.shouldLoad) loadTwitchEmotes();
     if (emoteStates.sub.shouldLoad) loadSubEmotes();
@@ -73,9 +83,7 @@ var loadEmotes = function() {
 
 var waitTillEmotesLoaded = function() {
 
-    console.log('@waitTillEmotesLoaded');
-
-    console.log(emoteStates);
+    log('@waitTillEmotesLoaded');
 
     if ((emoteStates.twitch.shouldLoad !== emoteStates.twitch.loaded) || 
         (emoteStates.sub.shouldLoad !== emoteStates.sub.loaded) ||
@@ -85,8 +93,6 @@ var waitTillEmotesLoaded = function() {
         setTimeout(waitTillEmotesLoaded, 250);
         return;
     }
-
-    console.log(emotes);
 
     replaceExistingEmotes();
 };
@@ -159,18 +165,17 @@ var checkIfOnYTGaming = function() {
 
 var checkIfOnStreamPage = function() {
 
-    console.log('@checkIfOnStreamPage');
+    log('@checkIfOnStreamPage');
 
     var target = document.getElementById('owner');
     var chat = document.getElementById('chat');
-    var text = $(target).find('span').text();
     $('.scrolldownWrapper').remove();
 
     if (typeof scrolldownInterval !== 'undefined') {
         clearTimeout(scrolldownInterval);
     }
 
-    if ((!target || !chat || text != 'Ice Poseidon') && !url.includes('live_chat')) {
+    if ((!target || !chat) && !url.includes('live_chat')) {
         return;
     }
 
@@ -241,7 +246,8 @@ var addObserverIfDesiredNodeAvailable = function () {
 
 var replaceExistingEmotes = function () {
 
-    console.log('@replaceExistingEmotes');
+    log('@replaceExistingEmotes');
+    log(emotes);
 
     var chatElements = $('.style-scope.yt-live-chat-item-list-renderer.x-scope.yt-live-chat-text-message-renderer-0');
 
@@ -275,7 +281,7 @@ var isValidEmote = function (text) {
 
 var loadTwitchEmotes = function () {
 
-    console.log('@loadTwitchEmotes');
+    log('@loadTwitchEmotes');
 
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'https://twitchemotes.com/api_cache/v2/global.json');
@@ -297,7 +303,7 @@ var loadTwitchEmotes = function () {
 
 var loadSubEmotes = function () {
 
-    console.log('@loadSubEmotes');
+    log('@loadSubEmotes');
 
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'https://twitchemotes.com/api_cache/v2/subscriber.json');
@@ -325,7 +331,7 @@ var loadSubEmotes = function () {
 
 var loadBTTVEmotes = function () {
 
-    console.log('@loadBTTVEmotes');
+    log('@loadBTTVEmotes');
 
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'https://api.betterttv.net/2/emotes');
@@ -349,7 +355,7 @@ var loadBTTVEmotes = function () {
 
 var loadBTTVChannelEmotes = function () {
 
-    console.log('@loadBTTVChannelEmotes');
+    log('@loadBTTVChannelEmotes');
 
     var channels = emoteStates.BTTVChannels.channels;
     var commaChannels = channels.replace(/\s+/g, '').split(',');
@@ -399,7 +405,7 @@ var kappaCheck = function (msg) {
 
 var emoteCheck = function (node) {
 
-    console.log('@emoteCheck');
+    log('@emoteCheck');
 
     var $message = $(node).find('#message');
     kappaCheck($message);
@@ -407,7 +413,7 @@ var emoteCheck = function (node) {
     var oldHTML = $message.html().trim();
     var msgHTML = oldHTML;
 
-    console.log(oldHTML);
+    log(oldHTML);
 
     if (typeof messages[msgHTML] == 'undefined') {
 
@@ -419,7 +425,7 @@ var emoteCheck = function (node) {
             if ($.inArray(el, uniqueWords) === -1) uniqueWords.push(el);
         });
 
-        console.log(uniqueWords);
+        log(uniqueWords);
 
         for (var i = 0; i < uniqueWords.length; i++) {
 
@@ -453,7 +459,7 @@ var emoteCheck = function (node) {
 
         $message.html(msgHTML);
 
-        console.log(msgHTML);
+        log(msgHTML);
 
         messages[oldHTML.replace(/\s/g,'')] = msgHTML;
 
@@ -481,13 +487,14 @@ var emoteCheck = function (node) {
 
 chrome.runtime.sendMessage({ items: ['emotesTwitch', 'emotesBTTV', 'emotesSub'] }, function (response) {
 
+    log ('@sendMessage');
+
     if (response.data['emotesTwitch'] === true || response.data['emotesBTTV'] === true || response.data['emotesSub'] === true) {
         addObserverIfDesiredNodeAvailable();
     }
 
-    console.log('@messageResponse', response);
-
     redirectToYTGaming = response.redirectToYTGaming;
+    developerMode = response.developerMode;
 
     emoteStates.twitch.shouldLoad = response.data['emotesTwitch'];
     emoteStates.sub.shouldLoad = response.data['emotesSub'];
@@ -496,8 +503,6 @@ chrome.runtime.sendMessage({ items: ['emotesTwitch', 'emotesBTTV', 'emotesSub'] 
         emoteStates.BTTV.shouldLoad = response.data['emotesBTTV'];
         emoteStates.BTTVChannels.channels = response.BTTVChannels;
     }
-
-    console.log(emoteStates);
 
     $('<style type="text/css">.yt-live-chat-text-message-renderer-0 #content #author-name:after{content: ":"}</style>').appendTo('head'); // Add ':' behind message author in chat
 

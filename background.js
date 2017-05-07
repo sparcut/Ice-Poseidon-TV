@@ -19,7 +19,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         BTTVChannels: localStorage['BTTVChannels'],
         disableAvatars: JSON.parse(localStorage['disableAvatars']),
         enableChatColors: JSON.parse(localStorage['enableChatColors']),
-        redirectToYTGaming: JSON.parse(localStorage['redirectToYTGaming'])
+        redirectToYTGaming: JSON.parse(localStorage['redirectToYTGaming']),
+        developerMode: JSON.parse(localStorage['developerMode'])
     });
 });
 
@@ -116,5 +117,6 @@ if (!localStorage.BTTVChannels) localStorage.BTTVChannels = 'Ice_Poseidon, Monka
 if (!localStorage.disableAvatars) localStorage.disableAvatars = true;
 if (!localStorage.enableChatColors) localStorage.enableChatColors = true;
 if (!localStorage.redirectToYTGaming) localStorage.redirectToYTGaming = true;
+if (!localStorage.developerMode) localStorage.developerMode = false;
 
 checkIfLive();
