@@ -3,7 +3,23 @@ var disallowedChars = ['\\', ':', '/', '&', "'", '"', '?', '!', '#'],
     emotes = {},
     clickBlueButton = true,
     url = document.location.href,
-    prevScrollTop = 9999999;
+    prevScrollTop = 9999999
+    emotesTwitchLoaded = false,
+    emotesBTTVLoaded = false,
+    emotesSubLoaded = false;
+    emotesBTTVCHannelsLoaded = false,
+    BTTVchannelsLoaded = 0;
+
+var waitTillEmotesLoaded = function() {
+
+    if (emotesTwitchLoaded && emotesBTTVLoaded && emotesSubLoaded && emotesBTTVCHannelsLoaded) {
+        replaceExistingEmotes();
+    } else {
+        setTimeout(waitTillEmotesLoaded, 250);
+    }
+};
+
+waitTillEmotesLoaded();
 
 var bindWarningObserver = function() {
 
@@ -197,8 +213,6 @@ var addObserverIfDesiredNodeAvailable = function () {
     };
 
     observer.observe(target, options);
-
-    replaceExistingEmotes();
 };
 
 var replaceExistingEmotes = function () {
@@ -244,6 +258,7 @@ var emotesTwitch = function () {
         }
 
         emotes['%0287d2%'] = emotes['Kappa'];
+        emotesTwitchLoaded = true;
     }
 };
 
@@ -264,6 +279,8 @@ var emotesBTTV = function () {
                 };
             }
         }
+
+        emotesBTTVLoaded = true;
     }
 };
 
@@ -288,6 +305,13 @@ var emotesBTTVCHannels = function (channels) {
                         channel: channel + ' (bttv)'
                     };
                 }
+            }
+
+            console.log(BTTVchannelsLoaded);
+            BTTVchannelsLoaded++;
+
+            if (BTTVchannelsLoaded >= commaChannels.length) {
+                emotesBTTVCHannelsLoaded = true;
             }
         }
     }, this);
@@ -314,6 +338,8 @@ var emotesSub = function () {
                 }
             }
         }
+
+        emotesSubLoaded = true;
     }
 };
 
@@ -376,7 +402,8 @@ var emoteCheck = function (node) {
         }
 
         $message.html(msgHTML);
-        messages[oldHTML] = msgHTML;
+
+        messages[oldHTML.replace(/\s/g,'')] = msgHTML;
 
     } else {
         $message.html(messages[oldHTML]);
@@ -387,7 +414,7 @@ var emoteCheck = function (node) {
         var $message = $(this).find('#message');
 
         var html = kappaCheck($message.html().trim());
-        html = html.replace('/\xEF\xBB\xBF/', '').replace('﻿', '');
+        html = html.replace('/\xEF\xBB\xBF/', '').replace('﻿', '').replace(/\s/g,'');
 
         if (typeof messages[html] !== 'undefined') {
 
