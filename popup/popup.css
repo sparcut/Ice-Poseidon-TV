@@ -98,19 +98,24 @@ a {
 	padding-top: 10px;
 }
 
-.github-wrapper, .divider-wrapper, .options-wrapper, .version-wrapper {
+.github-wrapper, .divider-right-wrapper, .divider-left-wrapper, .options-wrapper, .version-wrapper, .changelog-wrapper {
 	position: absolute;
 	opacity: 0.8;
 	font-size: 9px;
 }
 
 .github-wrapper {
-	right: 49px;
+	right: 48px;
 	bottom: 4px;
 }
 
-.divider-wrapper {
+.divider-right-wrapper {
 	right: 42px;
+	bottom: 4px;
+}
+
+.divider-left-wrapper {
+	left: 33px;
 	bottom: 4px;
 }
 
@@ -124,7 +129,12 @@ a {
 	bottom: 4px;
 }
 
-.github-wrapper:hover, .options-wrapper:hover {
+.changelog-wrapper {
+	left: 40px;
+	bottom: 4px;
+}
+
+.github-wrapper:hover, .options-wrapper:hover, .changelog-wrapper:hover {
 	opacity: 1;
 }
 
