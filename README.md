@@ -11,7 +11,6 @@ See: https://github.com/ansien12/Ice-Poseidon-TV/blob/master/changelog.html
 Feel free to make a pull request and add a feature you'd like to see. But please make sure to follow the current coding style (i.e.: single quotes wherever possible and function expression instead of declaration).
 
 ## TODO
-- Firefox version
 - Emote autocomplete
 - Better mod tools
 
