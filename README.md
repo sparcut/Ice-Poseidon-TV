@@ -13,7 +13,8 @@ Discord: Andries#7148 / Ice Poseidon Discord #dev channel
 **V1.60:** Emotes support, Twitch, BTTV and sub emotes have been added!  
 **V1.66:** Fixed scuffed kappa emote and added always scroll down checkbox to prevent blue arrow bug in chat.  
 **V1.68:** Emote tooltips  
-**V1.80:** Custom sounds, wrong page warning and slight codebase cleanup
+**V1.80:** Custom sounds, wrong page warning and slight codebase cleanup  
+**V2.0.0:** Firefox and permission adjustments
 
 ## Pull Requests
 Feel free to make a pull request and add a feature you'd like to see. But please make sure to follow the current coding style (i.e.: single quotes wherever possible and function expression instead of declaration).
@@ -24,6 +25,7 @@ Feel free to make a pull request and add a feature you'd like to see. But please
 - Better mod tools
 
 ## Contributors (Big thanks!)
+- wtfblub (Firefox and more! <3)
 - sparcut 
 - KyleCrowley
 - RockGuitarist1
