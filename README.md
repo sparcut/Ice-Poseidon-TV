@@ -16,7 +16,7 @@ Feel free to make a pull request and add a feature you'd like to see. But please
 - Better mod tools
 
 ## Contributors (Big thanks!)
-- wtfblub (Firefox and more! <3)
+- wtfblub
 - sparcut
 - KyleCrowley
 - RockGuitarist1
