@@ -29,6 +29,7 @@ var liveCheck = function() {
 var getLatestTweet = function() {
 
 	if (JSON.parse(localStorage.showRecentTweet) === false) {
+		$('<style type="text/css">html{height: 125px;}</style>').appendTo('head');
 		return;
 	}
 
