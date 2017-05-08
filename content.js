@@ -54,6 +54,12 @@ var addLoadingDiv = function () {
     document.body.appendChild(div);
 };
 
+var isNode = function(o) {
+    return (
+        typeof Node === "object" ? o instanceof Node : o && typeof o === "object" && typeof o.nodeType === "number" && typeof o.nodeName==="string"
+    );
+};
+
 (function() {
 
     var target = document.querySelector('head > title');
@@ -63,6 +69,10 @@ var addLoadingDiv = function () {
             onNewPageLoad();
         });
     });
+	
+	if (!isNode(target)) {
+		return;
+	}
 
     observer.observe(target, { subtree: true, characterData: true, childList: true });
 }());
@@ -193,11 +203,11 @@ var checkIfOnStreamPage = function() {
     if (typeof scrolldownInterval !== 'undefined') {
         clearTimeout(scrolldownInterval);
     }
-
-    if ((!target || !chat) && !url.includes('live_chat')) {
+	
+    if ((!target || !chat) && (!url.includes('live_chat') && !url.includes('is_popout=1'))) {
         return;
     }
-
+	
     var div = document.createElement('div');
     $(div).addClass('scrolldownWrapper');
 
@@ -517,8 +527,5 @@ chrome.runtime.sendMessage({ items: ['emotesTwitch', 'emotesBTTV', 'emotesSub'] 
         $('<link rel="stylesheet" type="text/css" href="' + a + '" >').appendTo('head');
     }
 
-    // Delay init till everything is fully loaded
-    $(window).bind('load', function () {
-        onNewPageLoad();
-    });
+    onNewPageLoad();
 });
