@@ -32,21 +32,7 @@ var getLatestTweet = function() {
 		return;
 	}
 
-	var configProfile = {
-	  	profile: {screenName: 'realiceposeidon'},
-	  	domId: 'latest-tweet',
-	  	maxTweets: 1,
-	  	enableLinks: false,
-	  	showUser: false,
-	  	showTime: false,
-	  	showImages: false,
-		showInteraction: false,
-	  	lang: 'en'
-	};
-
-	twitterFetcher.fetch(configProfile);
-
-	$('.tweet-wrapper').removeClass('hidden');
+	$('.tweet-container').removeClass('hidden');
 };
 
 document.addEventListener('DOMContentLoaded', function () {

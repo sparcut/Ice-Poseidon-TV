@@ -1,11 +1,14 @@
 body {
-	width: 400px;
-	max-height: 250px;
 	font-family: 'Noto Sans', sans-serif;
-	background: #2c3e50;
+	background: #292F33;
 	color: #ffffff;
 	font-size: 13px;
 	text-shadow: 2px 2px 2px rgba(0,0,0,0.20);
+	margin: 0;
+}
+
+.container {
+	margin: 8px;
 }
 
 .hidden {
@@ -18,7 +21,7 @@ a {
 }
 
 .item a {
-	display: block;
+	/*display: block;*/
 }
 
 .hidden {
@@ -43,7 +46,7 @@ a {
 .item {
 	flex-basis: 14%;
 	text-align: center;
-	padding: 0 2px;
+	padding: 0 8px;
 }
 
 .item svg {
@@ -71,7 +74,7 @@ a {
 
 .stream-status {
 	cursor: pointer;
-	margin: 12px 0 0 0;
+	margin: 14px 0 0 0;
 }
 
 .status.offline {
@@ -92,46 +95,38 @@ a {
 }
 
 .tweet-container {
-	text-align: center;
-	border-top: 1px solid #3F507F;
-	margin: 10px 0;
-	padding: 10px 0 4px 0;
+	margin: 14px 0 4px 0;
 }
 
 .github-wrapper, .divider-right-wrapper, .divider-left-wrapper, .options-wrapper, .version-wrapper, .changelog-wrapper {
 	position: absolute;
 	opacity: 0.8;
 	font-size: 9px;
+	bottom: 6px;
 }
 
 .github-wrapper {
 	right: 48px;
-	bottom: 4px;
 }
 
 .divider-right-wrapper {
 	right: 42px;
-	bottom: 4px;
 }
 
 .divider-left-wrapper {
 	left: 33px;
-	bottom: 4px;
 }
 
 .options-wrapper {
 	right: 6px;
-	bottom: 4px;
 }
 
 .version-wrapper {
 	left: 6px;
-	bottom: 4px;
 }
 
 .changelog-wrapper {
 	left: 40px;
-	bottom: 4px;
 }
 
 .github-wrapper:hover, .options-wrapper:hover, .changelog-wrapper:hover {
@@ -172,8 +167,4 @@ ul {
 		-moz-box-shadow: 0 0 0 0 rgba(46,204,113,0);
 		box-shadow: 0 0 0 0 rgba(46,204,113,0);
 	}
-}
-
-.tweet {
-	font-size: 12px;
 }
