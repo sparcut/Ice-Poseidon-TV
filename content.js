@@ -121,6 +121,12 @@ var waitTillEmotesLoaded = function() {
     replaceExistingEmotes();
 };
 
+var checkIfAtBottom = function () {
+	if (document.getElementById('show-more').style.visibility == 'hidden') {
+		document.getElementById('scrolldown').checked = true;
+	}
+}
+
 var bindScrollListener = function () {
 
     var target = document.getElementById('item-scroller');
@@ -131,7 +137,16 @@ var bindScrollListener = function () {
     }
 
     $('#item-scroller').bind('mousewheel DOMMouseScroll', function (event) {
-        document.getElementById('scrolldown').checked = false;
+		
+		document.getElementById('scrolldown').checked = false;
+		
+		if( event.originalEvent.detail > 0 || event.originalEvent.wheelDelta < 0 ) {
+			// Scroll Down
+			if(document.getElementById('show-more').style.visibility == 'hidden') {
+			   document.getElementById('scrolldown').checked = true;
+			}
+			window.setTimeout(checkIfAtBottom, 500);
+		}
     });
 };
 
