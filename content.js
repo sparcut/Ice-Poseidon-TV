@@ -225,7 +225,12 @@ var checkIfOnStreamPage = function() {
 
     chrome.runtime.sendMessage({ items: ['enableSplitChat'] }, function (response) {
         if (response.enableSplitChat) {
-            $('<style type="text/css">.style-scope yt-live-chat-text-message-renderer { border-top: 1px solid #4E4E4E; border-bottom: 1px solid #000000; background: -webkit-linear-gradient(#1F1F1F, #191919, #1F1F1F)}</style>').appendTo('head');
+            $('<style type="text/css">.style-scope yt-live-chat-text-message-renderer { border-top: 0.5px solid #333333; border-bottom: 0.5px solid #000000; }</style>').appendTo('head');
+        }
+
+        if (response.enableChatColors) {
+        var a = chrome.extension.getURL('external/chatColors.min.css');
+        $('<link rel="stylesheet" type="text/css" href="' + a + '" >').appendTo('head');
         }
     });
 
