@@ -223,6 +223,12 @@ var checkIfOnStreamPage = function() {
     $(div).css('bottom', '16px');
     $(div).css('color', 'rgba(255, 255, 255, 0.54)');
 
+    var test = JSON.parse(localStorage.enableSplitChat);
+
+    // if (JSON.parse(localStorage.enableSplitChat)) {
+    //     $('<style type="text/css">.style-scope yt-live-chat-text-message-renderer { border-bottom: 1px solid #4E4E4E; border-top: 1px solid #000000; background: -webkit-linear-gradient(#1F1F1F, #191919, #1F1F1F)}</style>').appendTo('head');
+    // }
+
     var $input = $(div).find('input');
     $input.css('outline', 0);
     $input.css('opacity', 0.65);
