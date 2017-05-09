@@ -460,7 +460,7 @@ var emoteCheck = function (node) {
 
             var span = document.createElement('span');
             span.setAttribute('aria-label', word);
-            span.classList.add('hint--bottom');
+            span.classList.add('hint--top');
 
             var img = document.createElement('img');
             img.src = emotes[word]['url'];
