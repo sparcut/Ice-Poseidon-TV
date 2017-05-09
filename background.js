@@ -117,7 +117,7 @@ if (!localStorage.BTTVChannels) localStorage.BTTVChannels = 'Ice_Poseidon, monka
 if (!localStorage.disableAvatars) localStorage.disableAvatars = true;
 if (!localStorage.enableChatColors) localStorage.enableChatColors = true;
 if (!localStorage.redirectToYTGaming) localStorage.redirectToYTGaming = true;
-if (!localStorage.enableSplitChat) localStorage.enableSplitChat = true;
+if (!localStorage.enableSplitChat) localStorage.enableSplitChat = false;
 
 if (localStorage.BTTVChannels) {
     localStorage.BTTVChannels = localStorage.BTTVChannels.replace('MonkaSenpai', 'monkasen');
