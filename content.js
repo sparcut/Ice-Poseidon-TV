@@ -523,7 +523,7 @@ chrome.runtime.sendMessage({ items: ['emotesTwitch', 'emotesBTTV', 'emotesSub'] 
     $('<style type="text/css">.yt-live-chat-text-message-renderer-0 #content #author-name:after{content: ":"}</style>').appendTo('head'); // Add ':' behind message author in chat
 
     if (response.disableAvatars) {
-        $('<style type="text/css">.style-scope .yt-live-chat-item-list-renderer #author-photo { display: none !important; }.style-scope.yt-live-chat-message-input-renderer.no-transition{ display: none !important; }</style>').appendTo('head');
+        $('<style type="text/css">.style-scope .yt-live-chat-item-list-renderer #author-photo { display: none !important; }.style-scope.yt-live-chat-message-input-renderer.no-transition{ display: none !important; }.style-scope yt-live-chat-message-input-renderer #avatar { display: none !important; }</style>').appendTo('head');
     }
 
     if (response.enableChatColors) {
