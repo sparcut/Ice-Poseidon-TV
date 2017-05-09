@@ -130,7 +130,7 @@ var bindScrollListener = function () {
         return;
     }
 
-    $('#item-scroller').bind('mousewheel DOMMouseScroll', function (event) {
+    $('#item-scroller').bind('scroll', function (event) {
         if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
             document.getElementById('scrolldown').checked = true;
         } else {
