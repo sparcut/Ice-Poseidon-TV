@@ -21,7 +21,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         disableAvatars: JSON.parse(localStorage['disableAvatars']),
         enableChatColors: JSON.parse(localStorage['enableChatColors']),
         redirectToYTGaming: JSON.parse(localStorage['redirectToYTGaming']),
-        enableSplitChat: JSON.parse(localStorage['enableSplitChat'])
+        enableSplitChat: JSON.parse(localStorage['enableSplitChat']),
+        showDeletedMessages: JSON.parse(localStorage['showDeletedMessages'])
     });
 });
 
@@ -125,6 +126,7 @@ if (!localStorage.disableAvatars) localStorage.disableAvatars = true;
 if (!localStorage.enableChatColors) localStorage.enableChatColors = true;
 if (!localStorage.redirectToYTGaming) localStorage.redirectToYTGaming = true;
 if (!localStorage.enableSplitChat) localStorage.enableSplitChat = false;
+if (!localStorage.showDeletedMessages) localStorage.showDeletedMessages = false;
 
 if (localStorage.BTTVChannels) {
     localStorage.BTTVChannels = localStorage.BTTVChannels.replace('MonkaSenpai', 'monkasen');
