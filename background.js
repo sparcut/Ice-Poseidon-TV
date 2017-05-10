@@ -19,7 +19,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         BTTVChannels: localStorage['BTTVChannels'],
         disableAvatars: JSON.parse(localStorage['disableAvatars']),
         enableChatColors: JSON.parse(localStorage['enableChatColors']),
-        redirectToYTGaming: JSON.parse(localStorage['redirectToYTGaming'])
+        redirectToYTGaming: JSON.parse(localStorage['redirectToYTGaming']),
+        enableSplitChat: JSON.parse(localStorage['enableSplitChat'])
     });
 });
 
@@ -116,6 +117,7 @@ if (!localStorage.BTTVChannels) localStorage.BTTVChannels = 'Ice_Poseidon, monka
 if (!localStorage.disableAvatars) localStorage.disableAvatars = true;
 if (!localStorage.enableChatColors) localStorage.enableChatColors = true;
 if (!localStorage.redirectToYTGaming) localStorage.redirectToYTGaming = true;
+if (!localStorage.enableSplitChat) localStorage.enableSplitChat = false;
 
 if (localStorage.BTTVChannels) {
     localStorage.BTTVChannels = localStorage.BTTVChannels.replace('MonkaSenpai', 'monkasen');

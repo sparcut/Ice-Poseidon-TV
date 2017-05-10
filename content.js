@@ -130,7 +130,7 @@ var bindScrollListener = function () {
         return;
     }
 
-    $('#item-scroller').bind('mousewheel DOMMouseScroll', function (event) {
+    $('#item-scroller').bind('scroll', function (event) {
         if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
             document.getElementById('scrolldown').checked = true;
         } else {
@@ -222,6 +222,17 @@ var checkIfOnStreamPage = function() {
     $(div).css('right', '125px');
     $(div).css('bottom', '16px');
     $(div).css('color', 'rgba(255, 255, 255, 0.54)');
+
+    chrome.runtime.sendMessage({ items: ['enableSplitChat'] }, function (response) {
+        if (response.enableSplitChat) {
+            $('<style type="text/css">.style-scope yt-live-chat-text-message-renderer { border-top: 0.5px solid #333333; border-bottom: 0.5px solid #000000; }</style>').appendTo('head');
+        }
+
+        if (response.enableChatColors) {
+        var a = chrome.extension.getURL('external/chatColors.min.css');
+        $('<link rel="stylesheet" type="text/css" href="' + a + '" >').appendTo('head');
+        }
+    });
 
     var $input = $(div).find('input');
     $input.css('outline', 0);
