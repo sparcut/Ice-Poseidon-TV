@@ -99,8 +99,8 @@ var loadEmotes = function() {
 		if ($('.loadingIceTV')[0]){
 			$('.loadingIceTV').css('color', '#c0392b');
 			$('.loadingIceTV').css('background-color', '#282828');
-			$('.loadingIceTV').text('Failed loading emotes (API servers down)');
-			$('.loadingIceTV').css('right', '25px');
+			$('.loadingIceTV').text('Failed some loading emotes (API servers down)');
+			$('.loadingIceTV').css('right', '19px');
 		}
 		
 		setTimeout(function() {
