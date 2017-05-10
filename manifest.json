@@ -14,7 +14,8 @@
         "http://107.170.95.160/",
         "https://twitchemotes.com/api_cache/v2/*.json",
         "https://api.betterttv.net/2/emotes",
-        "https://api.betterttv.net/2/channels/*"
+        "https://api.betterttv.net/2/channels/*",
+		"http://127.0.0.1/*"
     ],
     "options_page": "options/options.html",
     "options_ui": { 
@@ -48,7 +49,8 @@
         ]
     }],
     "web_accessible_resources": [
-        "64.png",
+        "/icons/sub-3.png",
+        "/icons/64-chevron.png",
         "external/chatColors.min.css"
     ]
 }

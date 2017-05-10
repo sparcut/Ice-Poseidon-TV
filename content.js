@@ -6,7 +6,8 @@ var disallowedChars = ['\\', ':', '/', '&', "'", '"', '?', '!', '#'],
     prevScrollTop = 9999999,
     scrolldownInterval = null,
     redirectToYTGaming = false,
-    redirectConfirm = null;
+    redirectConfirm = null,
+    subscribers = null;
 
 var emoteStates = {
     twitch: {
@@ -36,6 +37,18 @@ var onNewPageLoad = function() {
 
     checkIfOnStreamPage();
 };
+
+var getSubscribers = function() {
+	
+	var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'http://127.0.0.1:8000/api/v1/subscriptions');
+    xhr.send();
+
+    xhr.onload = function () {
+		var responseSubs = JSON.parse(xhr.responseText)['subscriptions'];
+        subscribers = responseSubs;
+    }
+}
 
 var addLoadingDiv = function () {
 
@@ -198,47 +211,44 @@ var checkIfOnYTGaming = function() {
 };
 
 var checkIfOnStreamPage = function() {
-
+ 
     var target = document.getElementById('owner');
     var chat = document.getElementById('chat');
     var text = $(target).find('span').text(); // Use "text != 'Ice Poseidon'" to check if on Ice's stream
     $('.scrolldownWrapper').remove();
-
+ 
     if (typeof scrolldownInterval !== 'undefined') {
         clearTimeout(scrolldownInterval);
     }
-	
+   
     if ((!target || !chat) && (!url.includes('live_chat') && !url.includes('is_popout=1'))) {
         return;
     }
-	
+   
     var div = document.createElement('div');
     $(div).addClass('scrolldownWrapper');
-
+ 
     document.body.appendChild(div);
-
-    $(div).html('<input type="checkbox" id="scrolldown" name="scrolldown" checked>Always scroll down');
+ 
+    var imageUrl = chrome.extension.getURL('/icons/64-chevron.png');
+    $(div).html(`<img src="${imageUrl}" id="scrolldown" name="scrolldown" />`);
     $(div).css('position', 'absolute');
-    $(div).css('right', '125px');
+    $(div).css('right', '110px');
     $(div).css('bottom', '16px');
-    $(div).css('color', 'rgba(255, 255, 255, 0.54)');
-
-    var $input = $(div).find('input');
-    $input.css('outline', 0);
-    $input.css('opacity', 0.65);
-
+ 
     scrolldownInterval = setInterval(function () {
         if (document.getElementById('scrolldown').checked) {
             $('#item-scroller').scrollTop(999999999);
         }
     }, 100);
-
+ 
     addLoadingDiv();
     hideScrollOnSponsorButton(div);
     bindScrollListener();
     bindScrollDownListener();
-
+ 
     loadEmotes();
+	getSubscribers();
 };
 
 var addObserverIfDesiredNodeAvailable = function () {
@@ -282,6 +292,27 @@ var addObserverIfDesiredNodeAvailable = function () {
     observer.observe(target, options);
 };
 
+var subCheck = function(el) {
+
+    var $img = $(el).find('img');
+    var imgSrc = $img.attr('src');
+    var ytId = imgSrc.split('/')[6];
+
+    if (!subscribers.includes(ytId)) {
+        return;
+    }
+
+    var imageUrl = chrome.extension.getURL('/icons/sub-3.png');
+    var $img = $('<img>');
+    $img.css('height', '14px');
+    $img.css('width', 'auto');
+    $img.css('margin-right', '4px');
+
+    $img.attr('src', imageUrl);
+
+    $(el).find('#author-badges').append($img);
+}
+
 var replaceExistingEmotes = function () {
 
     var chatElements = $('.style-scope.yt-live-chat-item-list-renderer.x-scope.yt-live-chat-text-message-renderer-0');
@@ -293,6 +324,7 @@ var replaceExistingEmotes = function () {
 
     chatElements.each(function (i, el) {
         emoteCheck(el);
+        subCheck(el);
     });
 };
 
