@@ -22,3 +22,4 @@ Feel free to make a pull request and add a feature you'd like to see. But please
 - johnBartos
 - ChrisALee
 - Tinusf
+- Magnaboy
