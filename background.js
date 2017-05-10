@@ -2,7 +2,8 @@ const CHANNEL_ID = 'UCv9Edl_WbtbPeURPtFDo-uA',
     INTERVAL = 1000 * 30, // 30 second interval
     DEFAULT_ICON_PATH = './icons/128.png',
     LIVE_ICON_PATH = './icons/128-green.png',
-    soundEffect = new Audio('online.mp3');
+    soundEffect = new Audio('online.mp3'),
+    lastNotification = null;
 
 let currentIconPath = DEFAULT_ICON_PATH;
 
@@ -19,7 +20,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         BTTVChannels: localStorage['BTTVChannels'],
         disableAvatars: JSON.parse(localStorage['disableAvatars']),
         enableChatColors: JSON.parse(localStorage['enableChatColors']),
-        redirectToYTGaming: JSON.parse(localStorage['redirectToYTGaming'])
+        redirectToYTGaming: JSON.parse(localStorage['redirectToYTGaming']),
+        enableSplitChat: JSON.parse(localStorage['enableSplitChat'])
     });
 });
 
@@ -36,6 +38,13 @@ var showNotification = function () {
     var time = /(..)(:..)/.exec(new Date());
     var hour = time[1] % 12 || 12;
     var period = time[1] < 12 ? 'AM' : 'PM';
+
+    // Temp fix to prevent notification spam
+    if (((Date.now() - lastNotification) >= (1000 * 60 * 30)) && (lastNotification !== null)) {
+        return ;
+    }
+
+    lastNotification = Date.now();
 
     if (JSON.parse(localStorage.isActivated) === true) {
 
@@ -116,6 +125,7 @@ if (!localStorage.BTTVChannels) localStorage.BTTVChannels = 'Ice_Poseidon, monka
 if (!localStorage.disableAvatars) localStorage.disableAvatars = true;
 if (!localStorage.enableChatColors) localStorage.enableChatColors = true;
 if (!localStorage.redirectToYTGaming) localStorage.redirectToYTGaming = true;
+if (!localStorage.enableSplitChat) localStorage.enableSplitChat = false;
 
 if (localStorage.BTTVChannels) {
     localStorage.BTTVChannels = localStorage.BTTVChannels.replace('MonkaSenpai', 'monkasen');

@@ -56,6 +56,7 @@ var addLoadingDiv = function () {
     var div = document.createElement('div');
     $(div).text('Loading emotes...');
     
+    $(div).css('font-size', '16px');
     $(div).css('position', 'absolute');
     $(div).css('right', '25px');
     $(div).css('bottom', '75px');
@@ -144,11 +145,7 @@ var bindScrollListener = function () {
     }
 
     $('#item-scroller').bind('mousewheel DOMMouseScroll', function (event) {
-        if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
-            document.getElementById('scrolldown').checked = true;
-        } else {
-            document.getElementById('scrolldown').checked = false;
-        }
+        document.getElementById('scrolldown').checked = false;
     });
 };
 
@@ -230,17 +227,32 @@ var checkIfOnStreamPage = function() {
  
     document.body.appendChild(div);
  
-    var imageUrl = chrome.extension.getURL('/icons/64-chevron.png');
-    $(div).html(`<img src="${imageUrl}" id="scrolldown" name="scrolldown" />`);
+    var div = document.createElement('div');
+    $(div).addClass('scrolldownWrapper');
+ 
+    document.body.appendChild(div);
+ 
+    $(div).html('<input type="checkbox" id="scrolldown" name="scrolldown" checked>Always scroll down');
+    $(div).css('font-size', '16px');
     $(div).css('position', 'absolute');
-    $(div).css('right', '110px');
+    $(div).css('right', '125px');
     $(div).css('bottom', '16px');
+    $(div).css('color', 'rgba(255, 255, 255, 0.54)');
+ 
+    var $input = $(div).find('input');
+    $input.css('outline', 0);
+    $input.css('opacity', 0.65);
  
     scrolldownInterval = setInterval(function () {
         if (document.getElementById('scrolldown').checked) {
             $('#item-scroller').scrollTop(999999999);
         }
     }, 100);
+
+    // Temp fix to prevent ram being filled with messages
+    setInterval(function () {
+        messages = {};
+    }, 1000 * 60 * 5);
  
     addLoadingDiv();
     hideScrollOnSponsorButton(div);
@@ -492,7 +504,7 @@ var emoteCheck = function (node) {
 
             var span = document.createElement('span');
             span.setAttribute('aria-label', word);
-            span.classList.add('hint--bottom');
+            span.classList.add('hint--top');
 
             var img = document.createElement('img');
             img.src = emotes[word]['url'];
@@ -555,12 +567,16 @@ chrome.runtime.sendMessage({ items: ['emotesTwitch', 'emotesBTTV', 'emotesSub'] 
     $('<style type="text/css">.yt-live-chat-text-message-renderer-0 #content #author-name:after{content: ":"}</style>').appendTo('head'); // Add ':' behind message author in chat
 
     if (response.disableAvatars) {
-        $('<style type="text/css">.style-scope .yt-live-chat-item-list-renderer #author-photo { display: none !important; }.style-scope.yt-live-chat-message-input-renderer.no-transition{ display: none !important; }</style>').appendTo('head');
+        $('<style type="text/css">.style-scope .yt-live-chat-item-list-renderer #author-photo { display: none !important; }.style-scope.yt-live-chat-message-input-renderer.no-transition{ display: none !important; }.style-scope yt-live-chat-message-input-renderer #avatar { display: none !important; }</style>').appendTo('head');
     }
 
     if (response.enableChatColors) {
         var a = chrome.extension.getURL('external/chatColors.min.css');
         $('<link rel="stylesheet" type="text/css" href="' + a + '" >').appendTo('head');
+    }
+
+    if (response.enableSplitChat) {
+        $('<style type="text/css">.style-scope yt-live-chat-text-message-renderer { border-top: 0.5px solid #333333; border-bottom: 0.5px solid #000000; }</style>').appendTo('head');
     }
 
     onNewPageLoad();
