@@ -26,7 +26,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 });
 
 chrome.notifications.onClicked.addListener(function(notificationId) {
- 
  	if(notificationId == 'liveNotification') {
  		chrome.tabs.create({ url: 'https://gaming.youtube.com/ice_poseidon/live' });
 		chrome.notifications.clear(notificationId);

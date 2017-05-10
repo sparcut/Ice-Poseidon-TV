@@ -55,7 +55,7 @@ var addLoadingDiv = function () {
     $('.loadingIceTV').remove();
     var div = document.createElement('div');
     $(div).text('Loading emotes...');
-    
+
     $(div).css('font-size', '16px');
     $(div).css('position', 'absolute');
     $(div).css('right', '25px');
@@ -365,6 +365,10 @@ var loadTwitchEmotes = function () {
     xhr.send();
     var urlTemplate = '//static-cdn.jtvnw.net/emoticons/v1/';
 
+    xhr.ontimeout = function() {
+        emoteStates.twitch.loaded = true;
+    };
+
     xhr.onload = function () {
         emoteDic = JSON.parse(xhr.responseText)['emotes'];
         for (var emote in emoteDic) {
@@ -383,7 +387,11 @@ var loadSubEmotes = function () {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'https://twitchemotes.com/api_cache/v2/subscriber.json');
     xhr.send();
-    var urlTemplate = '//static-cdn.jtvnw.net/emoticons/v1/'
+    var urlTemplate = '//static-cdn.jtvnw.net/emoticons/v1/';
+
+    xhr.ontimeout = function() {
+        emoteStates.sub.loaded = true;
+    };
 
     xhr.onload = function () {
         emoteDic = JSON.parse(xhr.responseText)['channels'];
@@ -411,6 +419,10 @@ var loadBTTVEmotes = function () {
     xhr.send();
     var urlTemplate = '//cdn.betterttv.net/emote/';
 
+    xhr.ontimeout = function() {
+        emoteStates.BTTV.loaded = true;
+    };
+
     xhr.onload = function () {
         emoteList = JSON.parse(xhr.responseText)['emotes'];
         for (var i in emoteList) {
@@ -437,6 +449,14 @@ var loadBTTVChannelEmotes = function () {
         xhr.open('GET', 'https://api.betterttv.net/2/channels/' + channel);
         xhr.send();
         var url_template = '//cdn.betterttv.net/emote/';
+
+        xhr.ontimeout = function() {
+            emoteStates.BTTVChannels.loadedCount++;
+
+            if (emoteStates.BTTVChannels.loadedCount >= commaChannels.length) {
+                emoteStates.BTTVChannels.loaded = true;
+            }
+        }
 
         xhr.onload = function () {
             emoteList = JSON.parse(xhr.responseText)['emotes'];
