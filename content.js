@@ -39,15 +39,17 @@ var onNewPageLoad = function() {
 };
 
 var getSubscribers = function() {
-	
-	var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'http://127.0.0.1:8000/api/v1/subscriptions');
-    xhr.send();
 
-    xhr.onload = function () {
-		var responseSubs = JSON.parse(xhr.responseText)['subscriptions'];
-        subscribers = responseSubs;
-    }
+	// WIP
+
+	// var xhr = new XMLHttpRequest();
+    // xhr.open('GET', 'http://127.0.0.1:8000/api/v1/subscriptions');
+    // xhr.send();
+
+    // xhr.onload = function () {
+	// 	var responseSubs = JSON.parse(xhr.responseText)['subscriptions'];
+    //     subscribers = responseSubs;
+    // }
 }
 
 var addLoadingDiv = function () {
@@ -306,23 +308,25 @@ var addObserverIfDesiredNodeAvailable = function () {
 
 var subCheck = function(el) {
 
-    var $img = $(el).find('img');
-    var imgSrc = $img.attr('src');
-    var ytId = imgSrc.split('/')[6];
+    // WIP
 
-    if (!subscribers.includes(ytId)) {
-        return;
-    }
+    // var $img = $(el).find('img');
+    // var imgSrc = $img.attr('src');
+    // var ytId = imgSrc.split('/')[6];
 
-    var imageUrl = chrome.extension.getURL('/icons/sub-3.png');
-    var $img = $('<img>');
-    $img.css('height', '14px');
-    $img.css('width', 'auto');
-    $img.css('margin-right', '4px');
+    // if (!subscribers.includes(ytId)) {
+    //     return;
+    // }
 
-    $img.attr('src', imageUrl);
+    // var imageUrl = chrome.extension.getURL('/icons/sub-3.png');
+    // var $img = $('<img>');
+    // $img.css('height', '14px');
+    // $img.css('width', 'auto');
+    // $img.css('margin-right', '4px');
 
-    $(el).find('#author-badges').append($img);
+    // $img.attr('src', imageUrl);
+
+    // $(el).find('#author-badges').append($img);
 }
 
 var replaceExistingEmotes = function () {
@@ -591,7 +595,7 @@ chrome.runtime.sendMessage({ items: ['emotesTwitch', 'emotesBTTV', 'emotesSub'] 
     }
 
     if (response.enableChatColors) {
-        var a = chrome.extension.getURL('external/chatColors.min.css');
+        var a = chrome.extension.getURL('external/chat-colors.css');
         $('<link rel="stylesheet" type="text/css" href="' + a + '" >').appendTo('head');
     }
 

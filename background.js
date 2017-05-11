@@ -39,11 +39,11 @@ var showNotification = function () {
     var period = time[1] < 12 ? 'AM' : 'PM';
 
     // Temp fix to prevent notification spam
-    if (((Date.now() - lastNotification) >= (1000 * 60 * 30)) && (lastNotification !== null)) {
+    /*if (((Date.now() - lastNotification) >= (1000 * 60 * 30)) && (lastNotification !== null)) {
         return ;
     }
 
-    lastNotification = Date.now();
+    lastNotification = Date.now();*/
 
     if (JSON.parse(localStorage.isActivated) === true) {
 
