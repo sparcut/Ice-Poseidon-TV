@@ -39,7 +39,7 @@ var onNewPageLoad = function() {
 };
 
 var getSubscribers = function() {
-	
+
 	var xhr = new XMLHttpRequest();
     xhr.open('GET', 'http://127.0.0.1:8000/api/v1/subscriptions');
     xhr.send();
@@ -83,7 +83,7 @@ var isNode = function(o) {
             onNewPageLoad();
         });
     });
-	
+
 	if (!isNode(target)) {
 		return;
 	}
@@ -95,18 +95,18 @@ var loadEmotes = function() {
 
     // Add message if emotes failed to load
     setTimeout(function() {
-		
+
 		if ($('.loadingIceTV')[0]){
 			$('.loadingIceTV').css('color', '#c0392b');
 			$('.loadingIceTV').css('background-color', '#282828');
 			$('.loadingIceTV').text('Failed some loading emotes (API servers down)');
 			$('.loadingIceTV').css('right', '19px');
 		}
-		
+
 		setTimeout(function() {
 			$('.loadingIceTV').remove();
 		}, 7.5 * 1000);
-		
+
 	}, 10 * 1000);
 
     if (emoteStates.twitch.shouldLoad) loadTwitchEmotes();
@@ -122,7 +122,7 @@ var loadEmotes = function() {
 
 var waitTillEmotesLoaded = function() {
 
-    if ((emoteStates.twitch.shouldLoad !== emoteStates.twitch.loaded) || 
+    if ((emoteStates.twitch.shouldLoad !== emoteStates.twitch.loaded) ||
         (emoteStates.sub.shouldLoad !== emoteStates.sub.loaded) ||
         (emoteStates.BTTV.shouldLoad !== emoteStates.BTTV.loaded) ||
         (emoteStates.BTTV.shouldLoad !== emoteStates.BTTVChannels.loaded)) {
@@ -208,41 +208,41 @@ var checkIfOnYTGaming = function() {
 };
 
 var checkIfOnStreamPage = function() {
- 
+
     var target = document.getElementById('owner');
     var chat = document.getElementById('chat');
     var text = $(target).find('span').text(); // Use "text != 'Ice Poseidon'" to check if on Ice's stream
     $('.scrolldownWrapper').remove();
- 
+
     if (typeof scrolldownInterval !== 'undefined') {
         clearTimeout(scrolldownInterval);
     }
-   
+
     if ((!target || !chat) && (!url.includes('live_chat') && !url.includes('is_popout=1'))) {
         return;
     }
-   
+
     var div = document.createElement('div');
     $(div).addClass('scrolldownWrapper');
- 
+
     document.body.appendChild(div);
- 
+
     var div = document.createElement('div');
     $(div).addClass('scrolldownWrapper');
- 
+
     document.body.appendChild(div);
- 
+
     $(div).html('<input type="checkbox" id="scrolldown" name="scrolldown" checked>Always scroll down');
     $(div).css('font-size', '16px');
     $(div).css('position', 'absolute');
     $(div).css('right', '125px');
     $(div).css('bottom', '16px');
     $(div).css('color', 'rgba(255, 255, 255, 0.54)');
- 
+
     var $input = $(div).find('input');
     $input.css('outline', 0);
     $input.css('opacity', 0.65);
- 
+
     scrolldownInterval = setInterval(function () {
         if (document.getElementById('scrolldown').checked) {
             $('#item-scroller').scrollTop(999999999);
@@ -253,12 +253,12 @@ var checkIfOnStreamPage = function() {
     setInterval(function () {
         messages = {};
     }, 1000 * 60 * 5);
- 
+
     addLoadingDiv();
     hideScrollOnSponsorButton(div);
     bindScrollListener();
     bindScrollDownListener();
- 
+
     loadEmotes();
 	getSubscribers();
 };
@@ -485,7 +485,7 @@ var replaceAll = function (str, find, replace) {
 
 var kappaCheck = function (msg) {
      $('img', msg).each(function () {
-         
+
         var $img = $(this);
 
         if (/\ud83c\udf1d/g.test($img.attr('alt'))) {
@@ -584,7 +584,7 @@ chrome.runtime.sendMessage({ items: ['emotesTwitch', 'emotesBTTV', 'emotesSub'] 
         emoteStates.BTTVChannels.channels = response.BTTVChannels;
     }
 
-    $('<style type="text/css">.yt-live-chat-text-message-renderer-0 #content #author-name:after{content: ":"}</style>').appendTo('head'); // Add ':' behind message author in chat
+    $('<style type="text/css">.yt-live-chat-text-message-renderer-0 #content #author-name:after{content: ":"} .style-scope.yt-live-chat-text-message-renderer.x-scope.paper-icon-button-1#menu-button {padding: 3px; height: 24px; width: 24px;}</style>').appendTo('head'); // Add ':' behind message author in chat
 
     if (response.disableAvatars) {
         $('<style type="text/css">.style-scope .yt-live-chat-item-list-renderer #author-photo { display: none !important; }.style-scope.yt-live-chat-message-input-renderer.no-transition{ display: none !important; }.style-scope yt-live-chat-message-input-renderer #avatar { display: none !important; }</style>').appendTo('head');
@@ -598,7 +598,7 @@ chrome.runtime.sendMessage({ items: ['emotesTwitch', 'emotesBTTV', 'emotesSub'] 
     if (response.enableSplitChat) {
         $('<style type="text/css">.style-scope yt-live-chat-text-message-renderer { border-top: 0.5px solid #333333; border-bottom: 0.5px solid #000000; }</style>').appendTo('head');
     }
-    
+
     if(response.showDeletedMessages) {
     	$('<style type="text/css">.yt-live-chat-text-message-renderer-0[is-deleted]:not([show-original]) #message.yt-live-chat-text-message-renderer {display: inline-block;} .yt-live-chat-text-message-renderer-0 #deleted-state.yt-live-chat-text-message-renderer { color: rgba(255, 255, 255, 0.25); } .yt-live-chat-text-message-renderer-0[is-deleted]:not([show-original]) #message.yt-live-chat-text-message-renderer { color: rgba(255, 255, 255, 0.25); } .yt-live-chat-text-message-renderer-0 #deleted-state:before{content: "  "}</style>').appendTo('head');
 	}
