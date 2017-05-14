@@ -104,11 +104,12 @@ if (window.Notification) {
 if (!localStorage.isLive) localStorage.isLive = false;
 if (!localStorage.isActivated) localStorage.isActivated = true;
 if (!localStorage.notificationSoundEnabled) localStorage.notificationSoundEnabled = true;
-if (!localStorage.notificationVolume) localStorage.notificationVolume = 50;
+if (!localStorage.notificationVolume) localStorage.notificationVolume = 40;
 if (!localStorage.showRecentTweet) localStorage.showRecentTweet = true;
 if (!localStorage.emotesTwitch) localStorage.emotesTwitch = true;
 if (!localStorage.emotesBTTV) localStorage.emotesBTTV = true;
 if (!localStorage.emotesSub) localStorage.emotesSub = true;
+if (!localStorage.emotesIce) localStorage.emotesIce = true;
 if (!localStorage.BTTVChannels) localStorage.BTTVChannels = 'Ice_Poseidon, monkasen, graphistrs, trihex, reckful, b0aty, NightDev';
 if (!localStorage.disableAvatars) localStorage.disableAvatars = true;
 if (!localStorage.enableChatColors) localStorage.enableChatColors = true;

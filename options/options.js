@@ -8,6 +8,7 @@ window.addEventListener('load', function () {
     options.emotesTwitch.checked = JSON.parse(localStorage.emotesTwitch);
     options.emotesBTTV.checked = JSON.parse(localStorage.emotesBTTV);
     options.emotesSub.checked = JSON.parse(localStorage.emotesSub);
+    options.emotesIce.checked = JSON.parse(localStorage.emotesIce);
     options.BTTVChannels.value = localStorage.BTTVChannels;
     options.disableAvatars.checked = JSON.parse(localStorage.disableAvatars);
     options.enableChatColors.checked = JSON.parse(localStorage.enableChatColors);
@@ -43,8 +44,11 @@ window.addEventListener('load', function () {
         localStorage.emotesSub = options.emotesSub.checked;
     };
 
+    options.emotesIce.onchange = function () {
+        localStorage.emotesIce = options.emotesIce.checked;
+    };
+
     options.BTTVChannels.onchange = function () {
-        console.log(localStorage.BTTVChannels);
         localStorage.BTTVChannels = options.BTTVChannels.value;
     };
 
@@ -63,7 +67,7 @@ window.addEventListener('load', function () {
     options.enableSplitChat.onchange = function () {
         localStorage.enableSplitChat = options.enableSplitChat.checked;
     };
-    
+
     options.showDeletedMessages.onchange = function () {
         localStorage.showDeletedMessages = options.showDeletedMessages.checked;
     };
@@ -196,7 +200,7 @@ var createSoundWithBuffer = function (buffer) {
         audioSource.buffer = res;
         audioSource.start(0);
     });
-}
+};
 
 // Check for valid audio extensions.
 var hasExtension = function (inputID, exts) {

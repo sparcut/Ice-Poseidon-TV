@@ -1,11 +1,6 @@
-/* Mod color*/
+/* Mod color */
 .yt-live-chat-text-message-renderer-0[author-type="moderator"] {
     background-color: #282828;
-    text-shadow: 2px 2px 5px rgba(0,0,0, 0.75);
-}
-
-.yt-live-chat-text-message-renderer-0[author-type="moderator"] img {
-    filter: drop-shadow(2px 2px 5px rgba(0,0,0, 0.75));
 }
 
 .yt-live-chat-text-message-renderer-0[author-type="moderator"] #content #author-name {
