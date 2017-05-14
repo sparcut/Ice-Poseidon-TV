@@ -261,9 +261,9 @@ var checkIfOnStreamPage = function() {
     hideScrollOnSponsorButton(div);
     bindScrollListener();
     bindScrollDownListener();
-
+  
+    addDonateButton();
     loadEmotes();
-	getSubscribers();
 };
 
 var addObserverIfDesiredNodeAvailable = function () {
@@ -328,6 +328,39 @@ var subCheck = function(el) {
     // $img.attr('src', imageUrl);
 
     // $(el).find('#author-badges').append($img);
+}
+
+var addDonateButton = function() {
+
+    let sponsorButton = '.style-scope.ytg-watch-footer.x-scope.ytg-membership-offer-button-0';
+    let sponsorIcon = '<img src="https://cdn.discordapp.com/attachments/308462749976100865/312541036851232769/ic_grade_white_24dp_2x.png" alt="star" style="pointer-events: none; display: block; width: 100%; height: 100%;">';
+
+    let donateButton = `
+    <iptv-donate-button style="display: inline-block;" raised="" supported-cold-load-actions="[&quot;sponsor&quot;]" wait-for-signal="watch-page-initialized" class="style-scope ytg-watch-footer x-scope iptv-donate-button-0">
+        <iron-signals class="style-scope iptv-donate-button"></iron-signals>
+        <paper-button style="color: #fff; background-color: #0f9d58; min-width: 0;" class="enabled style-scope iptv-donate-button x-scope paper-button-0" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" raised="" aria-label="Donate to Ice_Poseidon">
+            <div class="layout horizontal center-justified style-scope iptv-donate-button">
+                <div style="width: 24px; height: 24px;" class="icon-container layout horizontal center-center style-scope iptv-donate-button">
+                    <yt-icon class="style-scope iptv-donate-button x-scope yt-icon-0">
+                    </yt-icon>
+                </div>
+              <iptv-formatted-string id="text" class="layout horizontal center-center style-scope iptv-donate-button" style="margin-left: 6px"><span class="style-scope iptv-formatted-string">DONATE</span></iptv-formatted-string>
+            </div>
+        </paper-button>
+    </iptv-donate-button>`;
+    let donateIcon = '<img src="https://cdn.discordapp.com/attachments/308462749976100865/312541001220751361/ic_attach_money_white_24dp_2x.png" alt="dollar-sign" style="pointer-events: none; display: block; width: 100%; height: 100%;">';
+
+
+    // Insert donateButton next to sponsorButton
+    $(sponsorButton).before(donateButton);
+    $('.style-scope.iptv-donate-button.x-scope.yt-icon-0').html(donateIcon);
+    $('.style-scope.ytg-watch-footer.x-scope.iptv-donate-button-0').on('click', () => {
+        window.open('https://youtube.streamlabs.com/iceposeidon#/', '_blank');
+        $('.style-scope.ytg-watch-footer.x-scope.iptv-donate-button-0 paper-button')[0].blur();
+    });
+
+    // Change sponsorButton icon to star
+    $(`${sponsorButton} .style-scope.ytg-membership-offer-button.x-scope.yt-icon-0`).html(sponsorIcon);
 }
 
 var replaceExistingEmotes = function () {
