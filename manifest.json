@@ -1,6 +1,6 @@
 {
     "name": "Ice Poseidon TV",
-    "version": "2.4.2",
+    "version": "2.5.0",
     "description": "The official Ice Poseidon Chrome extension, includes all Twitch emotes and showing notifications when Ice Poseidon goes live.",
     "icons": {
         "64": "icons/64.png",
@@ -17,8 +17,8 @@
         "https://api.betterttv.net/2/channels/*"
     ],
     "options_page": "options/options.html",
-    "options_ui": { 
-        "page": "options/options.html" 
+    "options_ui": {
+        "page": "options/options.html"
     },
     "background": {
         "scripts": [
