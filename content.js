@@ -40,14 +40,17 @@ var onNewPageLoad = function() {
 
 var getSubscribers = function() {
 
-	var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'http://127.0.0.1:8000/api/v1/subscriptions');
-    xhr.send();
+	// WIP
 
-    xhr.onload = function () {
-		var responseSubs = JSON.parse(xhr.responseText)['subscriptions'];
-        subscribers = responseSubs;
-    }
+	// var xhr = new XMLHttpRequest();
+    // xhr.open('GET', 'http://127.0.0.1:8000/api/v1/subscriptions');
+    // xhr.send();
+
+    // xhr.onload = function () {
+	// 	var responseSubs = JSON.parse(xhr.responseText)['subscriptions'];
+    //     subscribers = responseSubs;
+    // }
+    // Test 123
 }
 
 var addLoadingDiv = function () {
@@ -306,23 +309,25 @@ var addObserverIfDesiredNodeAvailable = function () {
 
 var subCheck = function(el) {
 
-    var $img = $(el).find('img');
-    var imgSrc = $img.attr('src');
-    var ytId = imgSrc.split('/')[6];
+    // WIP
 
-    if (!subscribers.includes(ytId)) {
-        return;
-    }
+    // var $img = $(el).find('img');
+    // var imgSrc = $img.attr('src');
+    // var ytId = imgSrc.split('/')[6];
 
-    var imageUrl = chrome.extension.getURL('/icons/sub-3.png');
-    var $img = $('<img>');
-    $img.css('height', '14px');
-    $img.css('width', 'auto');
-    $img.css('margin-right', '4px');
+    // if (!subscribers.includes(ytId)) {
+    //     return;
+    // }
 
-    $img.attr('src', imageUrl);
+    // var imageUrl = chrome.extension.getURL('/icons/sub-3.png');
+    // var $img = $('<img>');
+    // $img.css('height', '14px');
+    // $img.css('width', 'auto');
+    // $img.css('margin-right', '4px');
 
-    $(el).find('#author-badges').append($img);
+    // $img.attr('src', imageUrl);
+
+    // $(el).find('#author-badges').append($img);
 }
 
 var replaceExistingEmotes = function () {
@@ -587,11 +592,11 @@ chrome.runtime.sendMessage({ items: ['emotesTwitch', 'emotesBTTV', 'emotesSub'] 
     $('<style type="text/css">.yt-live-chat-text-message-renderer-0 #content #author-name:after{content: ":"} .style-scope.yt-live-chat-text-message-renderer.x-scope.paper-icon-button-1#menu-button {padding: 3px; height: 24px; width: 24px;}</style>').appendTo('head'); // Add ':' behind message author in chat
 
     if (response.disableAvatars) {
-        $('<style type="text/css">.style-scope .yt-live-chat-item-list-renderer #author-photo { display: none !important; }.style-scope.yt-live-chat-message-input-renderer.no-transition{ display: none !important; }.style-scope yt-live-chat-message-input-renderer #avatar { display: none !important; }</style>').appendTo('head');
+        $('<style type="text/css">.style-scope .yt-live-chat-item-list-renderer #author-photo { width: 0px; height: 0px; margin-right: 0px; visibility: hidden; }.style-scope.yt-live-chat-message-input-renderer.no-transition{ display: none !important; }.style-scope yt-live-chat-message-input-renderer #avatar { display: none !important; }</style>').appendTo('head');
     }
 
     if (response.enableChatColors) {
-        var a = chrome.extension.getURL('external/chatColors.min.css');
+        var a = chrome.extension.getURL('external/chat-colors.css');
         $('<link rel="stylesheet" type="text/css" href="' + a + '" >').appendTo('head');
     }
 
