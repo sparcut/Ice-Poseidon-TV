@@ -5,8 +5,6 @@ const CHANNEL_ID = 'UCv9Edl_WbtbPeURPtFDo-uA',
     soundEffect = new Audio('online.mp3'),
     lastNotification = null;
 
-let currentIconPath = DEFAULT_ICON_PATH;
-
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
     var response = {};
@@ -37,13 +35,6 @@ var showNotification = function () {
     var time = /(..)(:..)/.exec(new Date());
     var hour = time[1] % 12 || 12;
     var period = time[1] < 12 ? 'AM' : 'PM';
-
-    // Temp fix to prevent notification spam
-    /*if (((Date.now() - lastNotification) >= (1000 * 60 * 30)) && (lastNotification !== null)) {
-        return ;
-    }
-
-    lastNotification = Date.now();*/
 
     if (JSON.parse(localStorage.isActivated) === true) {
 
@@ -82,12 +73,9 @@ var updateIcon = function () {
 
     const iconPath = isLive ? LIVE_ICON_PATH : DEFAULT_ICON_PATH;
 
-    if (iconPath !== currentIconPath) {
-        currentIconPath = iconPath;
-        chrome.browserAction.setIcon({
-            path: currentIconPath
-        });
-    }
+    chrome.browserAction.setIcon({
+        path: iconPath
+    });
 };
 
 var checkIfLive = function () {
