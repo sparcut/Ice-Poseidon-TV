@@ -13,6 +13,7 @@ window.addEventListener('load', function () {
     options.enableChatColors.checked = JSON.parse(localStorage.enableChatColors);
     options.redirectToYTGaming.checked = JSON.parse(localStorage.redirectToYTGaming);
     options.enableSplitChat.checked = JSON.parse(localStorage.enableSplitChat);
+    options.showDeletedMessages.checked = JSON.parse(localStorage.showDeletedMessages);
 
     options.isActivated.onchange = function () {
         localStorage.isActivated = options.isActivated.checked;
@@ -61,6 +62,10 @@ window.addEventListener('load', function () {
 
     options.enableSplitChat.onchange = function () {
         localStorage.enableSplitChat = options.enableSplitChat.checked;
+    };
+    
+    options.showDeletedMessages.onchange = function () {
+        localStorage.showDeletedMessages = options.showDeletedMessages.checked;
     };
 
     var audio = localStorage.getItem('audio');
