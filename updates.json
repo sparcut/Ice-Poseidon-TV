@@ -3,7 +3,9 @@
 		"ice_poseidon_tv@rawgit.com": {
 			"updates": [
 				{ "version": "2.5.4",
-				"update_link": "https://cdn.rawgit.com/ansien12/Ice-Poseidon-TV/3c1c8c77/updates/ice_poseidon_tv-2.5.4-an%2Bfx.xpi" }
+				"update_link": "https://cdn.rawgit.com/ansien12/Ice-Poseidon-TV/3c1c8c77/updates/ice_poseidon_tv-2.5.4-an%2Bfx.xpi" },
+				{ "version": "2.6.0",
+				"update_link": "https://cdn.rawgit.com/ansien12/Ice-Poseidon-TV/21ec07ad/updates/ice_poseidon_tv-2.6.0-an%2Bfx.xpi" }
 			]
 		}
 	}
