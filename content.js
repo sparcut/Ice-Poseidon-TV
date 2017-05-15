@@ -7,7 +7,8 @@ var disallowedChars = ['\\', ':', '/', '&', "'", '"', '?', '!', '#'],
     scrolldownInterval = null,
     redirectToYTGaming = false,
     redirectConfirm = null,
-    subscribers = null;
+    subscribers = null,
+    streampageChecks = 0;
 
 var emoteStates = {
     twitch: {
@@ -84,7 +85,7 @@ var isNode = function(o) {
 
     var target = document.querySelector('head > title');
 
-    var observer = new window.WebKitMutationObserver(function(mutations) {
+    var observer = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
             onNewPageLoad();
         });
@@ -147,7 +148,7 @@ var bindScrollListener = function () {
     var target = document.getElementById('item-scroller');
 
     if (!target) {
-        window.setTimeout(bindScrollListener, 250);
+        setTimeout(bindScrollListener, 250);
         return;
     }
 
@@ -220,15 +221,17 @@ var checkIfOnStreamPage = function() {
     var chat = document.getElementById('chat');
     var text = $(target).find('span').text(); // Use "text != 'Ice Poseidon'" to check if on Ice's stream
 
-    $('.scrolldownWrapper').remove();
-    $('.iptv-donate-button').remove();
-
     if (typeof scrolldownInterval !== 'undefined') {
         clearTimeout(scrolldownInterval);
     }
 
     if ((!target || !chat) && (!url.includes('live_chat') && !url.includes('is_popout=1'))) {
-        return;
+        streampageChecks++;
+
+        if (streampageChecks < 25) {
+            setTimeout(checkIfOnStreamPage, 250);
+            return;
+        }
     }
 
     var div = document.createElement('div');
@@ -277,7 +280,7 @@ var addObserverIfDesiredNodeAvailable = function () {
     var target = document.querySelector('.style-scope .yt-live-chat-item-list-renderer');
 
     if (!target) {
-        window.setTimeout(addObserverIfDesiredNodeAvailable, 250);
+        setTimeout(addObserverIfDesiredNodeAvailable, 250);
         return;
     }
 
