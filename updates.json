@@ -1,9 +1,9 @@
 {
 	"addons": {
-		"ice-poseidon-tv": {
+		"ice_poseidon_tv@rawgit.com": {
 			"updates": [
-				{ "version": "2.5.2",
-				"update_link": "https://cdn.rawgit.com/ansien12/Ice-Poseidon-TV/98a3a0d8/updates/ice_poseidon_tv-2.5.2-an%2Bfx.xpi" }
+				{ "version": "2.5.3",
+				"update_link": "https://cdn.rawgit.com/ansien12/Ice-Poseidon-TV/98a3a0d8/updates/ice_poseidon_tv-2.5.3-an%2Bfx.xpi" }
 			]
 		}
 	}
