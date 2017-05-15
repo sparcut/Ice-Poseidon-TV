@@ -239,11 +239,6 @@ var checkIfOnStreamPage = function() {
 
     document.body.appendChild(div);
 
-    var div = document.createElement('div');
-    $(div).addClass('scrolldownWrapper');
-
-    document.body.appendChild(div);
-
     $(div).html('<input type="checkbox" id="scrolldown" name="scrolldown" checked>Always scroll down');
     $(div).css('font-size', '16px');
     $(div).css('position', 'absolute');
