@@ -54,5 +54,5 @@
         "icons/donate-icon.png",
         "icons/sponsor-icon.png"
     ],
-	"update_url": "http://myhost.com/mytestextension/updates.xml",
+    "update_url": "http://myhost.com/mytestextension/updates.xml"
 }
