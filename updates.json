@@ -1,0 +1,10 @@
+{
+	"addons": {
+		"ice-poseidon-tv": {
+			"updates": [
+				{ "version": "2.5.1",
+				"update_link": "https://github.com/ansien12/Ice-Poseidon-TV/blob/master/updates/ice_poseidon_tv-2.5.1-an+fx.xpi?raw=true" }
+			]
+		}
+	}
+}
