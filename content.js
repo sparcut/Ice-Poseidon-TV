@@ -33,6 +33,8 @@ var emoteStates = {
     }
 };
 
+var donateButtonCreated = false;
+
 var onNewPageLoad = function() {
 
     if (redirectToYTGaming === true) {
@@ -40,6 +42,8 @@ var onNewPageLoad = function() {
     }
 
     checkIfOnStreamPage();
+    
+    donateButtonCreated = false;
 };
 
 var getSubscribers = function() {
@@ -266,7 +270,10 @@ var checkIfOnStreamPage = function() {
     bindScrollListener();
     bindScrollDownListener();
 
-    addDonateButton();
+    if(!donateButtonCreated) {
+        addDonateButton();
+    }
+    
     loadEmotes();
 };
 
@@ -336,6 +343,7 @@ var subCheck = function(el) {
 
 var addDonateButton = function() {
 
+    donateButtonCreated = true;
     var donateIcon = chrome.extension.getURL('/icons/donate-icon.png');
     var sponsorIcon = chrome.extension.getURL('/icons/sponsor-icon.png');
 
@@ -361,7 +369,7 @@ var addDonateButton = function() {
     var sponsorButton = '.style-scope.ytg-watch-footer.x-scope.ytg-membership-offer-button-0';
 
     $(sponsorButton).before(donateButton);
-    $('.style-scope.iptv-donate-button.x-scope.yt-icon-0').html(donateImage);
+    $(donateButton).ready( function() { $('.style-scope.iptv-donate-button.x-scope.yt-icon-0').html(donateImage); });
 
     $('.style-scope.ytg-watch-footer.x-scope.iptv-donate-button-0').on('click', () => {
         window.open('https://youtube.streamlabs.com/iceposeidon#/', '_blank');
