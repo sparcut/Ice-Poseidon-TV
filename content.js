@@ -42,6 +42,8 @@ var onNewPageLoad = function() {
     }
 
     checkIfOnStreamPage();
+    
+    donateButtonCreated = false;
 };
 
 var getSubscribers = function() {
