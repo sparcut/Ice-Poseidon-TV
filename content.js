@@ -309,7 +309,7 @@ var addObserverIfDesiredNodeAvailable = function () {
                         var message = $node.find('#message').text();
 
                         if(message.toLowerCase().indexOf(authorname.toLowerCase()) !== -1 & uniqueid.length > 30) { // If your name is in the message, and it's not your message
-                            $('<style type="text/css">.style-scope yt-live-chat-text-message-renderer[id="'+uniqueid+'"] { background-color: rgba(255, 0, 0, 0.40) !important; }</style>').appendTo('head');
+                            $node.get(0).style.backgroundColor = "rgba(255,0,0,0.40)";
                         }
                     }
                     
