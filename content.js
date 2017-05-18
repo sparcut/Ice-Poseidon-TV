@@ -281,6 +281,7 @@ var checkIfOnStreamPage = function() {
 var addObserverIfDesiredNodeAvailable = function () {
 
     var target = document.querySelector('.style-scope .yt-live-chat-item-list-renderer');
+    var authorname = $('#author #author-name').text();
 
     if (!target) {
         setTimeout(addObserverIfDesiredNodeAvailable, 250);
