@@ -33,7 +33,6 @@ var emoteStates = {
     }
 };
 
-var donateButtonCreated = false;
 var mentionHighlight = false;
 
 var onNewPageLoad = function() {
@@ -43,8 +42,6 @@ var onNewPageLoad = function() {
     }
 
     checkIfOnStreamPage();
-    
-    donateButtonCreated = false;
 };
 
 var getSubscribers = function() {
@@ -235,8 +232,9 @@ var checkIfOnStreamPage = function() {
 
         if (streampageChecks < 25) {
             setTimeout(checkIfOnStreamPage, 250);
-            return;
         }
+
+        return;
     }
 
     var div = document.createElement('div');
@@ -270,11 +268,7 @@ var checkIfOnStreamPage = function() {
     hideScrollOnSponsorButton(div);
     bindScrollListener();
     bindScrollDownListener();
-
-    if(!donateButtonCreated) {
-        addDonateButton();
-    }
-    
+    addDonateButton();
     loadEmotes();
 };
 
@@ -303,7 +297,7 @@ var addObserverIfDesiredNodeAvailable = function () {
                     if (!$node.hasClass('yt-live-chat-item-list-renderer')) {
                         return;
                     }
-                    
+
                     if(mentionHighlight && authorname.length > 2 && !$node.hasClass('yt-live-chat-legacy-paid-message-renderer-0')) { // Check it's not sponsor / superchat, also mentionHighlight enabled
                         var uniqueid = $node.get(0).getAttribute('id') // Copy unique message id
                         var message = $node.find('#message').text();
@@ -313,7 +307,7 @@ var addObserverIfDesiredNodeAvailable = function () {
                             $node.find('#author-name').get(0).style.color = "#ffffff";
                         }
                     }
-                    
+
                     emoteCheck($node);
                 });
             }
@@ -355,7 +349,8 @@ var subCheck = function(el) {
 
 var addDonateButton = function() {
 
-    donateButtonCreated = true;
+    $('.iptv-donate-button-0').remove();
+
     var donateIcon = chrome.extension.getURL('/icons/donate-icon.png');
     var sponsorIcon = chrome.extension.getURL('/icons/sponsor-icon.png');
 
@@ -723,7 +718,7 @@ chrome.runtime.sendMessage({ items: ['emotesTwitch', 'emotesBTTV', 'emotesSub', 
     if(response.showDeletedMessages) {
     	$('<style type="text/css">.yt-live-chat-text-message-renderer-0[is-deleted]:not([show-original]) #message.yt-live-chat-text-message-renderer {display: inline;} .yt-live-chat-text-message-renderer-0 #deleted-state.yt-live-chat-text-message-renderer { color: rgba(255, 255, 255, 0.25); } .yt-live-chat-text-message-renderer-0[is-deleted]:not([show-original]) #message.yt-live-chat-text-message-renderer { color: rgba(255, 255, 255, 0.25); } .yt-live-chat-text-message-renderer-0 #deleted-state:before{content: "  "}</style>').appendTo('head');
 	}
-    
+
     if(response.mentionHighlight) {
         mentionHighlight = true;
         $('<style type="text/css">.yt-live-chat-text-message-renderer-0 .mention.yt-live-chat-text-message-renderer { background-color: rgba(114, 15, 15, 0) !important; }</style>').appendTo('head');
