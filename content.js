@@ -304,7 +304,7 @@ var addObserverIfDesiredNodeAvailable = function () {
                         return;
                     }
                     
-                    if(mentionHighlight && !$node.hasClass('yt-live-chat-legacy-paid-message-renderer-0')) { // Check it's not sponsor / superchat, also mentionHighlight enabled
+                    if(mentionHighlight && authorname.length > 2 && !$node.hasClass('yt-live-chat-legacy-paid-message-renderer-0')) { // Check it's not sponsor / superchat, also mentionHighlight enabled
                         var uniqueid = $node.get(0).getAttribute('id') // Copy unique message id
                         var message = $node.find('#message').text();
 
