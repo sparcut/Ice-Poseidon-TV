@@ -310,6 +310,7 @@ var addObserverIfDesiredNodeAvailable = function () {
 
                         if(message.toLowerCase().indexOf(authorname.toLowerCase()) !== -1 & uniqueid.length > 30) { // If your name is in the message, and it's not your message
                             $node.get(0).style.backgroundColor = "rgba(255,0,0,0.40)";
+                            $node.find('#author-name').get(0).style.color = "#ffffff";
                         }
                     }
                     
