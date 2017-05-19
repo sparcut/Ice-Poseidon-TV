@@ -34,6 +34,7 @@ var emoteStates = {
 };
 
 var donateButtonCreated = false;
+var mentionHighlight = false;
 
 var onNewPageLoad = function() {
 
@@ -280,6 +281,7 @@ var checkIfOnStreamPage = function() {
 var addObserverIfDesiredNodeAvailable = function () {
 
     var target = document.querySelector('.style-scope .yt-live-chat-item-list-renderer');
+    var authorname = $('#author #author-name').text();
 
     if (!target) {
         setTimeout(addObserverIfDesiredNodeAvailable, 250);
@@ -301,7 +303,17 @@ var addObserverIfDesiredNodeAvailable = function () {
                     if (!$node.hasClass('yt-live-chat-item-list-renderer')) {
                         return;
                     }
+                    
+                    if(mentionHighlight && authorname.length > 2 && !$node.hasClass('yt-live-chat-legacy-paid-message-renderer-0')) { // Check it's not sponsor / superchat, also mentionHighlight enabled
+                        var uniqueid = $node.get(0).getAttribute('id') // Copy unique message id
+                        var message = $node.find('#message').text();
 
+                        if(message.toLowerCase().indexOf(authorname.toLowerCase()) !== -1 & uniqueid.length > 30) { // If your name is in the message, and it's not your message
+                            $node.get(0).style.backgroundColor = "rgba(255,0,0,0.40)";
+                            $node.find('#author-name').get(0).style.color = "#ffffff";
+                        }
+                    }
+                    
                     emoteCheck($node);
                 });
             }
@@ -711,6 +723,11 @@ chrome.runtime.sendMessage({ items: ['emotesTwitch', 'emotesBTTV', 'emotesSub', 
     if(response.showDeletedMessages) {
     	$('<style type="text/css">.yt-live-chat-text-message-renderer-0[is-deleted]:not([show-original]) #message.yt-live-chat-text-message-renderer {display: inline;} .yt-live-chat-text-message-renderer-0 #deleted-state.yt-live-chat-text-message-renderer { color: rgba(255, 255, 255, 0.25); } .yt-live-chat-text-message-renderer-0[is-deleted]:not([show-original]) #message.yt-live-chat-text-message-renderer { color: rgba(255, 255, 255, 0.25); } .yt-live-chat-text-message-renderer-0 #deleted-state:before{content: "  "}</style>').appendTo('head');
 	}
+    
+    if(response.mentionHighlight) {
+        mentionHighlight = true;
+        $('<style type="text/css">.yt-live-chat-text-message-renderer-0 .mention.yt-live-chat-text-message-renderer { background-color: rgba(114, 15, 15, 0) !important; }</style>').appendTo('head');
+    }
 
     onNewPageLoad();
 });
