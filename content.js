@@ -268,14 +268,14 @@ var checkIfOnStreamPage = function() {
     hideScrollOnSponsorButton(div);
     bindScrollListener();
     bindScrollDownListener();
-    addDonateButton();
+    if(text == 'Ice Poseidon') {addDonateButton();}
     loadEmotes();
 };
 
 var addObserverIfDesiredNodeAvailable = function () {
 
     var target = document.querySelector('.style-scope .yt-live-chat-item-list-renderer');
-    var authorname = $('#author #author-name').text();
+    var authorname = $('#author #author-name').text().toLowerCase();
 
     if (!target) {
         setTimeout(addObserverIfDesiredNodeAvailable, 250);
@@ -300,9 +300,9 @@ var addObserverIfDesiredNodeAvailable = function () {
 
                     if(mentionHighlight && authorname.length > 2 && !$node.hasClass('yt-live-chat-legacy-paid-message-renderer-0')) { // Check it's not sponsor / superchat, also mentionHighlight enabled
                         var uniqueid = $node.get(0).getAttribute('id') // Copy unique message id
-                        var message = $node.find('#message').text();
+                        var message = (" " + $node.find('#message').text().toLowerCase() + " ").replace(/[\u200B-\u200D\uFEFF]/g, '');
 
-                        if(message.toLowerCase().indexOf(authorname.toLowerCase()) !== -1 & uniqueid.length > 30) { // If your name is in the message, and it's not your message
+                        if(uniqueid.length > 30 && (message.indexOf(' '+authorname+' ') !== -1 || message.indexOf('@'+authorname+' ') !== -1)) { // If your name is in the message, and it's not your message
                             $node.get(0).style.backgroundColor = "rgba(255,0,0,0.40)";
                             $node.find('#author-name').get(0).style.color = "#ffffff";
                         }
@@ -721,7 +721,7 @@ chrome.runtime.sendMessage({ items: ['emotesTwitch', 'emotesBTTV', 'emotesSub', 
 
     if(response.mentionHighlight) {
         mentionHighlight = true;
-        $('<style type="text/css">.yt-live-chat-text-message-renderer-0 .mention.yt-live-chat-text-message-renderer { background-color: rgba(114, 15, 15, 0) !important; }</style>').appendTo('head');
+        $('<style type="text/css">.yt-live-chat-text-message-renderer-0 .mention.yt-live-chat-text-message-renderer { background-color: rgba(114, 15, 15, 0) !important; padding: 0px 0px !important; }</style>').appendTo('head');
     }
 
     onNewPageLoad();
