@@ -268,7 +268,7 @@ var checkIfOnStreamPage = function() {
     hideScrollOnSponsorButton(div);
     bindScrollListener();
     bindScrollDownListener();
-    addDonateButton();
+    if(text == 'Ice Poseidon') {addDonateButton();}
     loadEmotes();
 };
 
