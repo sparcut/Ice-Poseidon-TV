@@ -128,7 +128,7 @@ export default class Emote
             const $message = $(this).find('#message');
             Emote.kappaCheck($message);
 
-            const html = $message.html().trim();
+            let html = $message.html().trim();
             html = html.replace('/\xEF\xBB\xBF/', '').replace('﻿', '').replace(/\s/g,'');
 
             if (typeof Emote.messages[html] !== 'undefined') {
