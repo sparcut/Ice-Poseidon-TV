@@ -33,6 +33,7 @@ export default class PageCheck
         var url = document.location.href;
 
         if ((!target || !chat) && (!url.includes('live_chat') && !url.includes('is_popout=1'))) {
+
             PageCheck.streampageChecks++;
 
             if (PageCheck.streampageChecks < 25) {

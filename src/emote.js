@@ -52,7 +52,7 @@ export default class Emote
             return;
         }
 
-        $('.loadingIceTV').remove();
+        $('.iptv-loading-emotes').remove();
         Emote.replaceExistingEmotes();
     };
 
