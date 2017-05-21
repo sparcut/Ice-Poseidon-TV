@@ -8,8 +8,8 @@ export default class Emote
      * Load all enabled emotes.
      * @constructor
      */
-    static loadEmotes() {
-
+    static loadEmotes()
+    {
         loadingEmotesInfo();
 
         setTimeout(function() {

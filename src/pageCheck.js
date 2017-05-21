@@ -1,4 +1,6 @@
 import Emote from './emote';
+import { options } from './main';
+import ChatObserver from './chatObserver';
 import donateButton from './overlay/donateButton';
 import checkIfWatchingLive from './overlay/checkIfWatchingLive';
 import AlwaysScrollDown from './overlay/alwaysScrollDown';
@@ -49,6 +51,10 @@ export default class PageCheck
             }
 
             return;
+        }
+
+        if (options['emotesTwitch'] === true || options['emotesSub'] === true || options['emotesBTTV'] === true || options['emotesIce'] === true) {
+            ChatObserver();
         }
 
         if(text == 'Ice Poseidon') donateButton();

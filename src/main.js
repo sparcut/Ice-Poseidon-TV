@@ -1,7 +1,6 @@
 import Emote from './emote';
 import PageCheck from './pageCheck';
 import { isNode } from './util';
-import ChatObserver from './chatObserver';
 
 export const DISALLOWED_CHARS = ['\\', ':', '/', '&', "'", '"', '?', '!', '#'],
              SCROLL_ENABLED_URL =  chrome.extension.getURL('icons/scroll-enabled.png'),
@@ -13,7 +12,7 @@ const onNewPageLoad = function() {
 
     $('[class^="iptv-"]').remove();
 
-    if (options['redirectToYTGaming'] === true) {
+    if (options !== null && options['redirectToYTGaming'] === true) {
         setTimeout(PageCheck.youtubeGaming, 2500);
     }
 
@@ -40,10 +39,6 @@ const onNewPageLoad = function() {
 chrome.runtime.sendMessage('requestLocalstorage', function(response) {
 
     options = response;
-
-    if (options['emotesTwitch'] === true || options['emotesSub'] === true || options['emotesBTTV'] === true || options['emotesIce'] === true) {
-        ChatObserver();
-    }
 
     if (options['disableAvatars']) {
         $('<style type="text/css">.style-scope .yt-live-chat-item-list-renderer #author-photo { width: 0px; height: 0px; margin-right: 0px; visibility: hidden; }.style-scope.yt-live-chat-message-input-renderer.no-transition{ display: none !important; }.style-scope yt-live-chat-message-input-renderer #avatar { display: none !important; }</style>').appendTo('head');
