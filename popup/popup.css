@@ -79,6 +79,13 @@ a {
 .stream-status {
 	cursor: pointer;
 	margin: 14px 0 0 0;
+    width: 100%;
+    text-align: center;
+}
+
+.view-count {
+    margin: 4px 0 0 0;
+    font-size: 12px;
 }
 
 .status.offline {
@@ -100,7 +107,8 @@ a {
 
 .tweet-container {
 	margin: 14px 0 4px 0;
-    max-height: 123px;
+    height: 123px;
+    overflow: hidden;
 }
 
 .github-wrapper, .divider-right-wrapper, .divider-left-wrapper, .options-wrapper, .version-wrapper, .changelog-wrapper {
