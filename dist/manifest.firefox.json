@@ -1,6 +1,6 @@
 {
     "name": "Ice Poseidon TV",
-    "version": "2.7.1",
+    "version": "3.0.0",
     "description": "The official Ice Poseidon browser extension, includes all Twitch emotes and showing notifications when Ice Poseidon goes live.",
     "icons": {
         "64": "icons/64.png",
@@ -39,8 +39,7 @@
             "content.js"
         ],
         "css": [
-            "external/hint.css",
-            "content.css"
+            "external/hint.css"
         ],
         "run_at": "document_end",
         "matches": [
@@ -55,7 +54,12 @@
         "icons/donate-icon.png",
         "icons/sponsor-icon.png",
         "icons/scroll-enabled.png",
-        "icons/scroll-disabled.png",
-        "icons/TriHard-old.png"
-    ]
+        "icons/scroll-disabled.png"
+    ],
+	"applications": {
+		"gecko": {
+			"id": "ice_poseidon_tv@rawgit.com",
+			"update_url": "https://raw.githubusercontent.com/ansien12/Ice-Poseidon-TV/master/updates.json"
+		}
+	}
 }

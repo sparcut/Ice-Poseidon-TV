@@ -2,27 +2,23 @@ const CHANNEL_ID = 'UCv9Edl_WbtbPeURPtFDo-uA',
     INTERVAL = 1000 * 30, // 30 second interval
     DEFAULT_ICON_PATH = './icons/128.png',
     LIVE_ICON_PATH = './icons/128-green.png',
-    soundEffect = new Audio('online.mp3'),
-    lastNotification = null;
+    SOUND_EFFECT = new Audio('online.mp3');
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
-    var response = {};
+    let data = {};
 
-    for (var i = 0; i < request.items.length; i++) {
-        response[request.items[i]] = JSON.parse(localStorage[request.items[i]]);
+    for (let i = 0, len = localStorage.length; i < len; i++) {
+
+        let item = localStorage.getItem(localStorage.key(i));
+
+        if (item === 'true') item = true;
+        if (item === 'false') item = false;
+
+        data[localStorage.key(i)] = item;
     }
 
-    sendResponse({
-        data: response,
-        BTTVChannels: localStorage['BTTVChannels'],
-        disableAvatars: JSON.parse(localStorage['disableAvatars']),
-        enableChatColors: JSON.parse(localStorage['enableChatColors']),
-        redirectToYTGaming: JSON.parse(localStorage['redirectToYTGaming']),
-        enableSplitChat: JSON.parse(localStorage['enableSplitChat']),
-        showDeletedMessages: JSON.parse(localStorage['showDeletedMessages']),
-        mentionHighlight: JSON.parse(localStorage['mentionHighlight'])
-    });
+    sendResponse(data);
 });
 
 chrome.notifications.onClicked.addListener(function(notificationId) {
@@ -53,11 +49,10 @@ var showNotification = function () {
 
         if (localStorage.getItem('audio') === null) {
 
-            var defaultSound = new Audio('online.mp3');
             var volume = (localStorage.notificationVolume / 100);
 
-            defaultSound.volume = (typeof volume == 'undefined' ? 0.50 : volume);
-            defaultSound.play();
+            SOUND_EFFECT.volume = (typeof volume == 'undefined' ? 0.50 : volume);
+            SOUND_EFFECT.play();
 
         } else {
 

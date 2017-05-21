@@ -28,3 +28,13 @@
 .iptv-live-warning-dismiss:hover {
     text-decoration: none;
 }
+
+.yt-live-chat-text-message-renderer-0 #content #author-name:after{
+    content: ":"
+}
+
+.style-scope.yt-live-chat-text-message-renderer.x-scope.paper-icon-button-1#menu-button {
+    padding: 3px;
+    height: 24px;
+    width: 24px;
+}

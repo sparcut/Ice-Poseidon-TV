@@ -1,0 +1,23 @@
+{
+  "name": "ice-poseidon-tv",
+  "version": "3.0.0",
+  "description": "The official Ice Poseidon browser extension, includes all Twitch emotes and showing notifications when Ice Poseidon goes live.",
+  "main": "./src/main.js",
+  "scripts": {
+    "build": "webpack",
+	"watch": "webpack --progress --colors --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ansien12/Ice-Poseidon-TV.git"
+  },
+  "author": "Andries van den Berg",
+  "license": "GNU General Public License v3.0",
+  "bugs": {
+    "url": "https://github.com/ansien12/Ice-Poseidon-TV/issues"
+  },
+  "homepage": "https://github.com/ansien12/Ice-Poseidon-TV#readme",
+  "devDependencies": {
+    "webpack": "^2.5.1"
+  }
+}
