@@ -36,7 +36,10 @@ var emoteStates = {
 };
 
 var scrollEnabledUrl =  chrome.extension.getURL('/icons/scroll-enabled.png'),
-    scrollDisabledUrl =  chrome.extension.getURL('/icons/scroll-disabled.png');
+    scrollDisabledUrl =  chrome.extension.getURL('/icons/scroll-disabled.png'),
+    TriHardOldUrl = chrome.extension.getURL('/icons/TriHard-old.png');
+
+emotes['TriHard'] = { url: TriHardOldUrl };
 
 var onNewPageLoad = function() {
 
@@ -517,6 +520,9 @@ var loadTwitchEmotes = function () {
     xhr.onload = function () {
         emoteDic = JSON.parse(xhr.responseText)['emotes'];
         for (var emote in emoteDic) {
+
+            if (emote == 'TriHard') continue;
+
             emotes[emote] = {
                 url: urlTemplate + emoteDic[emote]['image_id'] + '/' + '1.0'
             };
