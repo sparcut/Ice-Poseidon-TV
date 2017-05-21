@@ -1,14 +1,15 @@
 var disallowedChars = ['\\', ':', '/', '&', "'", '"', '?', '!', '#'],
     messages = {},
     emotes = {},
-    clickBlueButton = true,
     url = document.location.href,
     prevScrollTop = 9999999,
     scrolldownInterval = null,
     redirectToYTGaming = false,
     redirectConfirm = null,
     subscribers = null,
-    streampageChecks = 0;
+    streampageChecks = 0,
+    scrollDown = true,
+    mentionHighlight = false;
 
 var emoteStates = {
     twitch: {
@@ -33,9 +34,12 @@ var emoteStates = {
     }
 };
 
-var mentionHighlight = false;
+var scrollEnabledUrl =  chrome.extension.getURL('/icons/scroll-enabled.png'),
+    scrollDisabledUrl =  chrome.extension.getURL('/icons/scroll-disabled.png');
 
 var onNewPageLoad = function() {
+
+    $('[class^="iptv-"]').remove();
 
     if (redirectToYTGaming === true) {
         setTimeout(checkIfOnYTGaming, 2500);
@@ -44,42 +48,28 @@ var onNewPageLoad = function() {
     checkIfOnStreamPage();
 };
 
-var getSubscribers = function() {
-
-	// WIP
-
-	// var xhr = new XMLHttpRequest();
-    // xhr.open('GET', 'http://127.0.0.1:8000/api/v1/subscriptions');
-    // xhr.send();
-
-    // xhr.onload = function () {
-	// 	var responseSubs = JSON.parse(xhr.responseText)['subscriptions'];
-    //     subscribers = responseSubs;
-    // }
-    // Test 123
-}
-
 var addLoadingDiv = function () {
 
-    $('.loadingIceTV').remove();
     var div = document.createElement('div');
     $(div).text('Loading emotes...');
 
-    $(div).css('font-size', '16px');
-    $(div).css('position', 'absolute');
-    $(div).css('right', '25px');
-    $(div).css('bottom', '75px');
-    $(div).css('color', '#fff');
-    $(div).css('text-shadow', '2px 2px 2px rgba(0,0,0,0.75)');
+    $(div).css({
+        'font-size': '16px',
+        'position': 'absolute',
+        'right': '25px',
+        'bottom': '75px',
+        'color': '#fff',
+        'text-shadow': '2px 2px 2px rgba(0,0,0,0.75)'
+    });
 
-    $(div).addClass('loadingIceTV');
+    $(div).addClass('iptv-loading-emotes');
 
     document.body.appendChild(div);
 };
 
 var isNode = function(o) {
     return (
-        typeof Node === "object" ? o instanceof Node : o && typeof o === "object" && typeof o.nodeType === "number" && typeof o.nodeName==="string"
+        typeof Node === 'object' ? o instanceof Node : o && typeof o === 'object' && typeof o.nodeType === 'number' && typeof o.nodeName === 'string'
     );
 };
 
@@ -102,18 +92,23 @@ var isNode = function(o) {
 
 var loadEmotes = function() {
 
-    // Add message if emotes failed to load
     setTimeout(function() {
 
-		if ($('.loadingIceTV')[0]){
-			$('.loadingIceTV').css('color', '#c0392b');
-			$('.loadingIceTV').css('background-color', '#282828');
-			$('.loadingIceTV').text('Failed some loading emotes (API servers down)');
-			$('.loadingIceTV').css('right', '19px');
+        var $loading = $('.iptv-loading-emotes');
+
+		if ($loading[0]) {
+
+			$loading.css({
+                'color': '#c0392b',
+                'background-color': '#282828',
+                'right': '19px'
+            });
+
+			$loading.text('Failed loading some emotes (API servers down)');
 		}
 
 		setTimeout(function() {
-			$('.loadingIceTV').remove();
+			$('.iptv-loading-emotes').remove();
 		}, 7.5 * 1000);
 
 	}, 10 * 1000);
@@ -145,31 +140,31 @@ var waitTillEmotesLoaded = function() {
     replaceExistingEmotes();
 };
 
-var bindScrollListener = function (scrollCheckbox) {
+var bindScrollListener = function () {
 
     var target = document.getElementById('item-scroller');
 
     if (!target) {
-        setTimeout(() => { bindScrollListener(scrollCheckbox) }, 250);
+        setTimeout(() => { bindScrollListener() }, 250);
         return;
     }
 
     $('#item-scroller').bind('mousewheel DOMMouseScroll', function (event) {
-        $(scrollCheckbox)[0].checked = false;
+        toggleScrollDown(false);
     });
 };
 
-var bindScrollDownListener = function (scrollCheckbox) {
+var bindScrollDownListener = function () {
 
     var target = document.getElementById('show-more');
 
     if (!target) {
-        window.setTimeout(() => { bindScrollDownListener(scrollCheckbox) }, 250);
+        window.setTimeout(() => { bindScrollDownListener() }, 250);
         return;
     }
 
     target.onmousedown = function () {
-        $(scrollCheckbox)[0].checked = true;
+        toggleScrollDown(true);
         return true;
     };
 };
@@ -226,40 +221,49 @@ var hideScrollOnCinema = function(scrollWrapper) {
     }, 250);
 };
 
+var toggleScrollDown = function(state) {
+
+    if (typeof state === 'undefined') {
+        scrollDown = !scrollDown;
+    } else {
+        scrollDown = state;
+    }
+
+    $('.iptv-scrolldown-wrapper').attr('aria-label', scrollDown ? 'Always scroll down (Enabled)' : 'Always scroll down (Disabled)');
+    $('.iptv-scrolldown-toggle-icon').attr('src', scrollDown ? scrollEnabledUrl : scrollDisabledUrl);
+}
+
 var addScrollCheckbox = function() {
 
-    // Temp fix for dupe checkboxes
-    if($('.iptv-scrolldownWrapper').length) {
-        hideScrollOnCinema('.iptv-scrolldownWrapper');
-        hideScrollOnSponsorButton('.iptv-scrolldownWrapper');
-        bindScrollListener('.iptv-scrolldownInput');
-        bindScrollDownListener('.iptv-scrolldownInput');
-        return false;
+    if($('.iptv-scrolldown-wrapper').length) {
+        $('.iptv-scrolldown-wrapper').remove();
     };
 
     var scrollWrapper = document.createElement('div');
-    $(scrollWrapper).addClass('iptv-scrolldownWrapper');
-    $(scrollWrapper).css({
-        'font-size': '16px',
-        'position': 'absolute',
-        'right': '125px',
-        'bottom': '16px',
-        'color': 'rgba(255, 255, 255, 0.54)'
-    });
-    $(scrollWrapper).html(`
-        <input type="checkbox" id="iptv-scrolldownInput" class="iptv-scrolldownInput" checked>
-        <label for="iptv-scrolldownInput">Always scroll down</label>`);
 
-    var scrollCheckbox = $(scrollWrapper).find('input');
-    $(scrollCheckbox).css({
-        'outline': 0,
-        'opacity': 0.65
+    scrollWrapper.setAttribute('aria-label', 'Always scroll down (Enabled)');
+    scrollWrapper.classList.add('hint--top', 'iptv-scrolldown-wrapper');
+
+    $(scrollWrapper).css({
+        'position': 'absolute',
+        'right': '113px',
+        'bottom': '18px'
     });
+
+    $(scrollWrapper).html(`
+        <a href="javascript:void(0)" class="iptv-scrolldown-toggle" style="outline: 0;">
+            <img src="${scrollEnabledUrl}" alt="Always scroll down" height="11" width="11" class="iptv-scrolldown-toggle-icon">
+        </a>
+    `);
 
     document.body.appendChild(scrollWrapper);
 
+    $(document).on('click', '.iptv-scrolldown-toggle', function() {
+        toggleScrollDown();
+    });
+
     scrolldownInterval = setInterval(function () {
-        if ($(scrollCheckbox)[0].checked) {
+        if (scrollDown) {
             $('#item-scroller').scrollTop(999999999);
         }
     }, 100);
@@ -271,8 +275,8 @@ var addScrollCheckbox = function() {
 
     hideScrollOnCinema(scrollWrapper);
     hideScrollOnSponsorButton(scrollWrapper);
-    bindScrollListener(scrollCheckbox);
-    bindScrollDownListener(scrollCheckbox);
+    bindScrollListener();
+    bindScrollDownListener();
 };
 
 var checkIfOnYTGaming = function() {
@@ -296,7 +300,7 @@ var checkIfOnStreamPage = function() {
 
     var target = document.getElementById('owner');
     var chat = document.getElementById('chat');
-    var text = $(target).find('span').text(); // Use "text != 'Ice Poseidon'" to check if on Ice's stream
+    var text = $(target).find('span').text();
 
     if (typeof scrolldownInterval !== 'undefined') {
         clearTimeout(scrolldownInterval);
@@ -312,9 +316,10 @@ var checkIfOnStreamPage = function() {
         return;
     }
 
+    if(text == 'Ice Poseidon') addDonateButton();
+
     addLoadingDiv();
     addScrollCheckbox();
-    if(text == 'Ice Poseidon') {addDonateButton();}
     loadEmotes();
 };
 
@@ -617,7 +622,6 @@ var loadIceEmotes = function () {
  		"purpleTaco": { "image_id": 132726 },
  		"purpleThink": { "image_id": 121770 },
  		"purpleW": { "image_id": 70838 },
-
  		"purpleClaus": { "image_id": 132737 },
  		"purpleCoolstory": { "image_id": 153621 },
  		"purpleDog": { "image_id": 105228 },
