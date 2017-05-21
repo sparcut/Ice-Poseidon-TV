@@ -7,12 +7,7 @@ export const DISALLOWED_CHARS = ['\\', ':', '/', '&', "'", '"', '?', '!', '#'],
              SCROLL_ENABLED_URL =  chrome.extension.getURL('icons/scroll-enabled.png'),
              SCROLL_DISABLED_URL =  chrome.extension.getURL('icons/scroll-disabled.png');
 
-export let url = document.location.href,
-           prevScrollTop = 9999999,
-           scrolldownInterval = null,
-           redirectConfirm = null,
-           subscribers = null,
-           options = null;
+export let options = null;
 
 const onNewPageLoad = function() {
 

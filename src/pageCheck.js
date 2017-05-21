@@ -12,6 +12,8 @@ export default class PageCheck
         const $textWrapper = $('.yt-user-info');
         const text = $textWrapper.find('a').text();
 
+        var url = document.location.href;
+
         if (text == 'Ice Poseidon' && !url.includes('gaming.youtube') && iframe) {
 
             const redirectConfirm = confirm('[Ice PoseidonTV] Go to the official Ice Poseidon livestream page?');
@@ -28,15 +30,13 @@ export default class PageCheck
         var chat = document.getElementById('chat');
         var text = $(target).find('span').text();
 
-        if (typeof scrolldownInterval !== 'undefined') {
-            clearTimeout(scrolldownInterval);
-        }
+        var url = document.location.href;
 
         if ((!target || !chat) && (!url.includes('live_chat') && !url.includes('is_popout=1'))) {
             PageCheck.streampageChecks++;
 
             if (PageCheck.streampageChecks < 25) {
-                setTimeout(checkIfOnStreamPage, 250);
+                setTimeout(PageCheck.livestreamPage, 250);
             }
 
             return;

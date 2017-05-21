@@ -1,5 +1,7 @@
 export default function checkIfWatchingLive() {
 
+    let liveCheckInterval = null;
+
     liveCheckInterval = setInterval(function() {
 
         var $liveButton = $('.ytp-live-badge.ytp-button');
