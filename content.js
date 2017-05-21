@@ -145,42 +145,42 @@ var waitTillEmotesLoaded = function() {
     replaceExistingEmotes();
 };
 
-var bindScrollListener = function () {
+var bindScrollListener = function (scrollCheckbox) {
 
     var target = document.getElementById('item-scroller');
 
     if (!target) {
-        setTimeout(bindScrollListener, 250);
+        setTimeout(() => { bindScrollListener(scrollCheckbox) }, 250);
         return;
     }
 
     $('#item-scroller').bind('mousewheel DOMMouseScroll', function (event) {
-        document.getElementById('scrolldown').checked = false;
+        $(scrollCheckbox)[0].checked = false;
     });
 };
 
-var bindScrollDownListener = function () {
+var bindScrollDownListener = function (scrollCheckbox) {
 
     var target = document.getElementById('show-more');
 
     if (!target) {
-        window.setTimeout(bindScrollDownListener, 250);
+        window.setTimeout(() => { bindScrollDownListener(scrollCheckbox) }, 250);
         return;
     }
 
     target.onmousedown = function () {
-        document.getElementById('scrolldown').checked = true;
+        $(scrollCheckbox)[0].checked = true;
         return true;
     };
 };
 
-var hideScrollOnSponsorButton = function (div) {
+var hideScrollOnSponsorButton = function (scrollWrapper) {
 
     var chatInputRenderer = 'yt-live-chat-message-input-renderer';
 
     var observer = new MutationObserver(function (mutations) {
         mutations.forEach((m) => {
-            $(m.target).attr('creator-open') ? $(div).hide() : $(div).show();
+            $(m.target).attr('creator-open') ? $(scrollWrapper).hide() : $(scrollWrapper).show();
         });
     });
 
@@ -198,6 +198,81 @@ var hideScrollOnSponsorButton = function (div) {
             clearInterval(sponsorClick);
         }
     }, 250);
+};
+
+var hideScrollOnCinema = function(scrollWrapper) {
+
+    var watchPage = 'ytg-watch-page';
+
+    var observer = new MutationObserver(function(mutations) {
+        mutations.forEach((m) => {
+            $(m.target).is('[sidebar-collapsed]') ? $(scrollWrapper).remove() : addScrollCheckbox();
+        });
+    });
+
+    var observerOpts = {
+        childList: false,
+        attributes: true,
+        characterData: false,
+        subtree: false,
+        attributeFilter: ['sidebar-collapsed']
+    }
+
+    var addObserver = setInterval(() => {
+        if($(watchPage).length) {
+            observer.observe($(watchPage)[0], observerOpts);
+            clearInterval(addObserver);
+        }
+    }, 250);
+};
+
+var addScrollCheckbox = function() {
+
+    // Temp fix for dupe checkboxes
+    if($('.iptv-scrolldownWrapper').length) {
+        hideScrollOnCinema('.iptv-scrolldownWrapper');
+        hideScrollOnSponsorButton('.iptv-scrolldownWrapper');
+        bindScrollListener('.iptv-scrolldownInput');
+        bindScrollDownListener('.iptv-scrolldownInput');
+        return false;
+    };
+
+    var scrollWrapper = document.createElement('div');
+    $(scrollWrapper).addClass('iptv-scrolldownWrapper');
+    $(scrollWrapper).css({
+        'font-size': '16px',
+        'position': 'absolute',
+        'right': '125px',
+        'bottom': '16px',
+        'color': 'rgba(255, 255, 255, 0.54)'
+    });
+    $(scrollWrapper).html(`
+        <input type="checkbox" id="iptv-scrolldownInput" class="iptv-scrolldownInput" checked>
+        <label for="iptv-scrolldownInput">Always scroll down</label>`);
+
+    var scrollCheckbox = $(scrollWrapper).find('input');
+    $(scrollCheckbox).css({
+        'outline': 0,
+        'opacity': 0.65
+    });
+
+    document.body.appendChild(scrollWrapper);
+
+    scrolldownInterval = setInterval(function () {
+        if ($(scrollCheckbox)[0].checked) {
+            $('#item-scroller').scrollTop(999999999);
+        }
+    }, 100);
+
+    // Temp fix to prevent ram being filled with messages
+    setInterval(function () {
+        messages = {};
+    }, 1000 * 60 * 5);
+
+    hideScrollOnCinema(scrollWrapper);
+    hideScrollOnSponsorButton(scrollWrapper);
+    bindScrollListener(scrollCheckbox);
+    bindScrollDownListener(scrollCheckbox);
 };
 
 var checkIfOnYTGaming = function() {
@@ -237,37 +312,8 @@ var checkIfOnStreamPage = function() {
         return;
     }
 
-    var div = document.createElement('div');
-    $(div).addClass('scrolldownWrapper');
-
-    document.body.appendChild(div);
-
-    $(div).html('<input type="checkbox" id="scrolldown" name="scrolldown" checked>Always scroll down');
-    $(div).css('font-size', '16px');
-    $(div).css('position', 'absolute');
-    $(div).css('right', '125px');
-    $(div).css('bottom', '16px');
-    $(div).css('color', 'rgba(255, 255, 255, 0.54)');
-
-    var $input = $(div).find('input');
-    $input.css('outline', 0);
-    $input.css('opacity', 0.65);
-
-    scrolldownInterval = setInterval(function () {
-        if (document.getElementById('scrolldown').checked) {
-            $('#item-scroller').scrollTop(999999999);
-        }
-    }, 100);
-
-    // Temp fix to prevent ram being filled with messages
-    setInterval(function () {
-        messages = {};
-    }, 1000 * 60 * 5);
-
     addLoadingDiv();
-    hideScrollOnSponsorButton(div);
-    bindScrollListener();
-    bindScrollDownListener();
+    addScrollCheckbox();
     if(text == 'Ice Poseidon') {addDonateButton();}
     loadEmotes();
 };
