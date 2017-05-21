@@ -42,8 +42,6 @@ var onNewPageLoad = function() {
     }
 
     checkIfOnStreamPage();
-
-    console.log('123');
 };
 
 var getSubscribers = function() {
@@ -152,12 +150,12 @@ var bindScrollListener = function (scrollCheckbox) {
     var target = document.getElementById('item-scroller');
 
     if (!target) {
-        setTimeout(bindScrollListener, 250);
+        setTimeout(() => { bindScrollListener(scrollCheckbox) }, 250);
         return;
     }
 
     $('#item-scroller').bind('mousewheel DOMMouseScroll', function (event) {
-        $(scrollCheckbox).removeAttr('checked');
+        $(scrollCheckbox)[0].checked = false;
     });
 };
 
@@ -166,12 +164,12 @@ var bindScrollDownListener = function (scrollCheckbox) {
     var target = document.getElementById('show-more');
 
     if (!target) {
-        window.setTimeout(bindScrollDownListener, 250);
+        window.setTimeout(() => { bindScrollDownListener(scrollCheckbox) }, 250);
         return;
     }
 
     target.onmousedown = function () {
-        $(scrollCheckbox).attr('checked', '');
+        $(scrollCheckbox)[0].checked = true;
         return true;
     };
 };
@@ -204,15 +202,15 @@ var hideScrollOnSponsorButton = function (scrollWrapper) {
 
 var hideScrollOnCinema = function(scrollWrapper) {
 
-    let watchPage = 'ytg-watch-page';
+    var watchPage = 'ytg-watch-page';
 
-    let observer = new MutationObserver(function(mutations) {
+    var observer = new MutationObserver(function(mutations) {
         mutations.forEach((m) => {
-            $(m.target).attr('sidebar-collapsed') ? $(scrollWrapper).hide() : $(scrollWrapper).show();
+            $(m.target).is('[sidebar-collapsed]') ? $(scrollWrapper).remove() : addScrollCheckbox();
         });
     });
 
-    let observerOpts = {
+    var observerOpts = {
         childList: false,
         attributes: true,
         characterData: false,
@@ -220,7 +218,7 @@ var hideScrollOnCinema = function(scrollWrapper) {
         attributeFilter: ['sidebar-collapsed']
     }
 
-    let addObserver = setInterval(() => {
+    var addObserver = setInterval(() => {
         if($(watchPage).length) {
             observer.observe($(watchPage)[0], observerOpts);
             clearInterval(addObserver);
@@ -230,7 +228,16 @@ var hideScrollOnCinema = function(scrollWrapper) {
 
 var addScrollCheckbox = function() {
 
-    let scrollWrapper = document.createElement('div');
+    // Temp fix for dupe checkboxes
+    if($('.iptv-scrolldownWrapper').length) {
+        hideScrollOnCinema('.iptv-scrolldownWrapper');
+        hideScrollOnSponsorButton('.iptv-scrolldownWrapper');
+        bindScrollListener('.iptv-scrolldownInput');
+        bindScrollDownListener('.iptv-scrolldownInput');
+        return false;
+    };
+
+    var scrollWrapper = document.createElement('div');
     $(scrollWrapper).addClass('iptv-scrolldownWrapper');
     $(scrollWrapper).css({
         'font-size': '16px',
@@ -240,10 +247,10 @@ var addScrollCheckbox = function() {
         'color': 'rgba(255, 255, 255, 0.54)'
     });
     $(scrollWrapper).html(`
-        <input type="checkbox" id="iptv-scrolldownInput" checked>
+        <input type="checkbox" id="iptv-scrolldownInput" class="iptv-scrolldownInput" checked>
         <label for="iptv-scrolldownInput">Always scroll down</label>`);
 
-    let scrollCheckbox = $(scrollWrapper).find('input');
+    var scrollCheckbox = $(scrollWrapper).find('input');
     $(scrollCheckbox).css({
         'outline': 0,
         'opacity': 0.65
@@ -305,7 +312,6 @@ var checkIfOnStreamPage = function() {
         return;
     }
 
-    console.log('kap')
     addLoadingDiv();
     addScrollCheckbox();
     if(text == 'Ice Poseidon') {addDonateButton();}
