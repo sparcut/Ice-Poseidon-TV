@@ -12,8 +12,8 @@ export default class Emote
 
         loadingEmotesInfo();
 
-        setTimeout(function()
-        {
+        setTimeout(function() {
+
             const $loading = $('.iptv-loading-emotes');
 
             if ($loading[0]) {
@@ -59,6 +59,11 @@ export default class Emote
             setTimeout(Emote.waitTillEmotesLoaded, 250);
             return;
         }
+
+        // Temp fix to prevent ram from filling up with messages.
+        setInterval(function () {
+            Emote.messages = {};
+        }, 1000 * 60 * 5);
 
         $('.iptv-loading-emotes').remove();
         Emote.replaceExistingEmotes();

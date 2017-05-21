@@ -45,7 +45,7 @@ export default class AlwaysScrollDown
         AlwaysScrollDown.hideScrollOnSponsorMenu(scrollWrapper);
         AlwaysScrollDown.bindScrollListener();
         AlwaysScrollDown.bindScrollDownListener();
-    }
+    };
 
     /**
      * Hides the 'Always scroll down' overlay when cinema mode is open
@@ -76,7 +76,7 @@ export default class AlwaysScrollDown
                 clearInterval(addObserver);
             }
         }, 250);
-    }
+    };
 
     /**
      * Hides the 'Always scroll down' overlay when sponsor menu is open.
@@ -162,7 +162,7 @@ export default class AlwaysScrollDown
 
         $('.iptv-scrolldown-wrapper').attr('aria-label', AlwaysScrollDown.scrollDown ? 'Always scroll down (Enabled)' : 'Always scroll down (Disabled)');
         $('.iptv-scrolldown-toggle-icon').attr('src', AlwaysScrollDown.scrollDown ? SCROLL_ENABLED_URL : SCROLL_DISABLED_URL);
-    }
+    };
 };
 
 AlwaysScrollDown.scrollDown = true;

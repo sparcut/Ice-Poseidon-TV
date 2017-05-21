@@ -51,17 +51,12 @@ export default class PageCheck
             return;
         }
 
-        // Temp fix to prevent ram from filling up with messages.
-        setInterval(function () {
-            messages = {};
-        }, 1000 * 60 * 5);
-
         if(text == 'Ice Poseidon') donateButton();
 
         Emote.loadEmotes();
         AlwaysScrollDown.init();
         checkIfWatchingLive();
-    }
+    };
 };
 
 PageCheck.streampageChecks = 0;

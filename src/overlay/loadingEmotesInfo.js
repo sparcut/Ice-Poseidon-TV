@@ -20,4 +20,3 @@ export default function loadingEmotesInfo()
 
     document.body.appendChild(div);
 };
-
