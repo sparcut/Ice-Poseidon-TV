@@ -1,3 +1,6 @@
+/**
+ * Adds donate button to livestream page.
+ */
 export default function donateButton()
 {
     const donateIcon = chrome.extension.getURL('/icons/donate-icon.png');

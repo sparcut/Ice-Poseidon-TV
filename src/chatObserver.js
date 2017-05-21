@@ -1,6 +1,9 @@
 import Emote from './emote';
 import MentionHighlight from './mentionHighlight';
 
+/**
+ * Binds chat mutation observer and listen for new chat messages.
+ */
 export default function chatObserver()
 {
     const target = document.querySelector('.style-scope .yt-live-chat-item-list-renderer');

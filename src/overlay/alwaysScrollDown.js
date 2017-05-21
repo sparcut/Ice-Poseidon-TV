@@ -8,7 +8,7 @@ export default class AlwaysScrollDown
      */
     static init()
     {
-        if($('.iptv-scrolldown-wrapper').length) {
+        if ($('.iptv-scrolldown-wrapper').length) {
             $('.iptv-scrolldown-wrapper').remove();
         };
 
@@ -71,7 +71,7 @@ export default class AlwaysScrollDown
         }
 
         const addObserver = setInterval(() => {
-            if($(watchPage).length) {
+            if ($(watchPage).length) {
                 observer.observe($(watchPage)[0], observerOpts);
                 clearInterval(addObserver);
             }

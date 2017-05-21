@@ -1,3 +1,6 @@
+/**
+ * Show emote loading information.
+ */
 export default function loadingEmotesInfo()
 {
     const div = document.createElement('div');

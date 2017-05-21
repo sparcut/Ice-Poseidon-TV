@@ -1,5 +1,9 @@
 import { options } from './main';
 
+/**
+ * Checks if a message contains mention and changes background to BTTV style background.
+ * @param {node} node - Message node
+ */
 export default function MentionHighlight(node)
 {
     const authorname = $('#author #author-name').text().toLowerCase();

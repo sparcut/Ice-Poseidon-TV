@@ -5,6 +5,10 @@ import AlwaysScrollDown from './overlay/alwaysScrollDown';
 
 export default class PageCheck
 {
+    /**
+     * Checks if user is watching from wrong livestream page and warns them.
+     * @static
+     */
     static youtubeGaming()
     {
         const iframe = document.getElementById('live-chat-iframe');
@@ -24,6 +28,10 @@ export default class PageCheck
         }
     };
 
+    /**
+     * Checks if user is watching a livestream on Youtube gaming.
+     * @static
+     */
     static livestreamPage()
     {
         const target = document.getElementById('owner');

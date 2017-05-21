@@ -4,6 +4,10 @@ import loadingEmotesInfo from './overlay/loadingEmotesInfo';
 
 export default class Emote
 {
+    /**
+     * Load all enabled emotes.
+     * @constructor
+     */
     static loadEmotes() {
 
         loadingEmotesInfo();
@@ -41,6 +45,10 @@ export default class Emote
         Emote.waitTillEmotesLoaded();
     };
 
+    /**
+     * setTimeout that keeps running until all emotes are loaded.
+     * @static
+     */
     static waitTillEmotesLoaded()
     {
         if ((options['emotesTwitch'] !== Emote.states['twitch'].loaded) ||
@@ -56,6 +64,10 @@ export default class Emote
         Emote.replaceExistingEmotes();
     };
 
+    /**
+     * Replace existing text with emotes in chat, happens when emotes are done loading.
+     * @static
+     */
     static replaceExistingEmotes()
     {
         const chatElements = $('.style-scope.yt-live-chat-item-list-renderer.x-scope.yt-live-chat-text-message-renderer-0');
@@ -70,6 +82,11 @@ export default class Emote
         });
     };
 
+    /**
+     * Checks if a message contains emotes.
+     * @static
+     * @param {node} node - Message node
+     */
     static emoteCheck(node)
     {
         const $message = $(node).find('#message');
@@ -142,6 +159,11 @@ export default class Emote
         });
     };
 
+    /**
+     * Checks if a message contains a kappa emote.
+     * @static
+     * @param {node} msg - Message node
+     */
     static kappaCheck(msg)
     {
         $('img', msg).each(function() {
@@ -154,6 +176,10 @@ export default class Emote
         });
     };
 
+    /**
+     * Load Twitch emotes.
+     * @static
+     */
     static loadTwitchEmotes()
     {
         const xhr = new XMLHttpRequest();
@@ -182,6 +208,10 @@ export default class Emote
         }
     };
 
+    /**
+     * Load Twitch subscriber emotes.
+     * @static
+     */
     static loadSubEmotes()
     {
         const xhr = new XMLHttpRequest();
@@ -216,6 +246,10 @@ export default class Emote
         }
     };
 
+    /**
+     * Load BTTV emotes.
+     * @static
+     */
     static loadBTTVEmotes()
     {
         const xhr = new XMLHttpRequest();
@@ -246,6 +280,10 @@ export default class Emote
         }
     };
 
+    /**
+     * Load BTTV channel emotes.
+     * @static
+     */
     static loadBTTVChannelEmotes()
     {
         const channels = options['BTTVChannels'];
@@ -292,6 +330,10 @@ export default class Emote
         }, this);
     };
 
+    /**
+     * Load Ice's old subscriber emotes.
+     * @static
+     */
     static loadIceEmotes()
     {
         const urlTemplate = 'https://static-cdn.jtvnw.net/emoticons/v1/';
@@ -344,6 +386,11 @@ export default class Emote
         }
     };
 
+    /**
+     * Checks if text is a valid emote
+     * @static
+     * @param {string} text
+     */
     static isValidEmote(text)
     {
         return !(text[0].match(/[A-Z]/g) ||
@@ -352,6 +399,11 @@ export default class Emote
         );
     };
 
+    /**
+     * Checks if text contains disallowed characters.
+     * @static
+     * @param {string} word
+     */
     static containsDisallowedChar(word)
     {
         for (const c in DISALLOWED_CHARS) {

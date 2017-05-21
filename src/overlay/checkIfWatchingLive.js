@@ -1,3 +1,6 @@
+/**
+ * Checks if user is behind in livestream and warns them.
+ */
 export default function checkIfWatchingLive() {
 
     let liveCheckInterval = null;
