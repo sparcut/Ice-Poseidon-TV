@@ -9,7 +9,8 @@ var disallowedChars = ['\\', ':', '/', '&', "'", '"', '?', '!', '#'],
     subscribers = null,
     streampageChecks = 0,
     scrollDown = true,
-    mentionHighlight = false;
+    mentionHighlight = false,
+    liveCheckInterval = null;
 
 var emoteStates = {
     twitch: {
@@ -83,9 +84,9 @@ var isNode = function(o) {
         });
     });
 
-	if (!isNode(target)) {
-		return;
-	}
+    if (!isNode(target)) {
+        return;
+    }
 
     observer.observe(target, { subtree: true, characterData: true, childList: true });
 }());
@@ -96,22 +97,22 @@ var loadEmotes = function() {
 
         var $loading = $('.iptv-loading-emotes');
 
-		if ($loading[0]) {
+        if ($loading[0]) {
 
-			$loading.css({
+            $loading.css({
                 'color': '#c0392b',
                 'background-color': '#282828',
                 'right': '19px'
             });
 
-			$loading.text('Failed loading some emotes (API servers down)');
-		}
+            $loading.text('Failed loading some emotes (API servers down)');
+        }
 
-		setTimeout(function() {
-			$('.iptv-loading-emotes').remove();
-		}, 7.5 * 1000);
+        setTimeout(function() {
+            $('.iptv-loading-emotes').remove();
+        }, 7.5 * 1000);
 
-	}, 10 * 1000);
+    }, 10 * 1000);
 
     if (emoteStates.twitch.shouldLoad) loadTwitchEmotes();
     if (emoteStates.sub.shouldLoad) loadSubEmotes();
@@ -193,6 +194,34 @@ var hideScrollOnSponsorButton = function (scrollWrapper) {
             clearInterval(sponsorClick);
         }
     }, 250);
+};
+
+var checkIfWatchingLive = function() {
+
+    liveCheckInterval = setInterval(function() {
+
+        if ($('.ytp-live-badge.ytp-button').is(':enabled')) {
+            $('#player-container').append(`
+                <div class="iptv-live-warning">
+                    <div class="iptv-live-warning-text">
+                        You\'re watching old footage, click the LIVE button in the bottom left corner to watch live.
+                    </div>
+                    <div class="iptv-live-warning-dismiss">
+                        <a href="javascript:void(0)" class="iptv-live-warning-close">✕</a>
+                    </div>
+                </div>
+            `);
+        }
+    }, 15 * 1000);
+
+    $(document).on('click', '.iptv-live-warning-close', function() {
+        $('.iptv-live-warning').remove();
+        clearInterval(liveCheckInterval);
+    });
+
+    $(document).on('mousedown', '.ytp-live-badge', function() {
+        $('.iptv-live-warning').remove();
+    });
 };
 
 var hideScrollOnCinema = function(scrollWrapper) {
@@ -321,6 +350,7 @@ var checkIfOnStreamPage = function() {
     addLoadingDiv();
     addScrollCheckbox();
     loadEmotes();
+    checkIfWatchingLive();
 };
 
 var addObserverIfDesiredNodeAvailable = function () {
@@ -594,47 +624,47 @@ var loadBTTVChannelEmotes = function () {
 
 var loadIceEmotes = function () {
 
- 	var urlTemplate = 'https://static-cdn.jtvnw.net/emoticons/v1/';
+     var urlTemplate = 'https://static-cdn.jtvnw.net/emoticons/v1/';
 
- 	var iceEmotes = {
+     var iceEmotes = {
         "purple1": { "image_id": 96873 },
- 		"purple2": { "image_id": 96874 },
- 		"purple3": { "image_id": 96875 },
- 		"purple4": { "image_id": 96876 },
- 		"purpleArm1": { "image_id": 84687 },
- 		"purpleArm2": { "image_id": 84533 },
- 		"purpleBluescreen": { "image_id": 157415 },
- 		"purpleBruh": { "image_id": 132893 },
- 		"purpleCigrip": { "image_id": 161828 },
- 		"purpleCreep": { "image_id": 153620 },
- 		"purpleCx": { "image_id": 91876 },
- 	    "purpleEnza": { "image_id": 105444 },
- 	    "purpleFake": { "image_id": 91874 },
- 	    "purpleFrank": { "image_id": 76640 },
- 	    "purpleHuh": { "image_id": 133286 },
- 	    "purpleIce": { "image_id": 80215 },
- 	    "purpleKKona": { "image_id": 121771 },
- 		"purpleM": { "image_id": 121772 },
- 	    "purpleNose": { "image_id": 65152 },
- 		"purpleOmg": { "image_id": 160462 },
- 		"purplePride": { "image_id": 62560 },
- 		"purpleRofl": { "image_id": 121495 },
- 		"purpleTaco": { "image_id": 132726 },
- 		"purpleThink": { "image_id": 121770 },
- 		"purpleW": { "image_id": 70838 },
- 		"purpleClaus": { "image_id": 132737 },
- 		"purpleCoolstory": { "image_id": 153621 },
- 		"purpleDog": { "image_id": 105228 },
- 		"purpleFro": { "image_id": 86444 },
- 		"purpleKkona": { "image_id": 121494 },
- 		"purpleLeo": { "image_id": 73632 },
- 		"purpleLUL": { "image_id": 126511 },
- 		"purpleReal": { "image_id": 91873 },
- 		"purpleThump": { "image_id": 86501 },
- 		"purpleTongue": { "image_id": 70838 },
- 		"purpleWalnut": { "image_id": 109084 },
- 		"purpleWat": { "image_id": 105229 },
- 		"purpleWut": { "image_id": 133844 }
+         "purple2": { "image_id": 96874 },
+         "purple3": { "image_id": 96875 },
+         "purple4": { "image_id": 96876 },
+         "purpleArm1": { "image_id": 84687 },
+         "purpleArm2": { "image_id": 84533 },
+         "purpleBluescreen": { "image_id": 157415 },
+         "purpleBruh": { "image_id": 132893 },
+         "purpleCigrip": { "image_id": 161828 },
+         "purpleCreep": { "image_id": 153620 },
+         "purpleCx": { "image_id": 91876 },
+         "purpleEnza": { "image_id": 105444 },
+         "purpleFake": { "image_id": 91874 },
+         "purpleFrank": { "image_id": 76640 },
+         "purpleHuh": { "image_id": 133286 },
+         "purpleIce": { "image_id": 80215 },
+         "purpleKKona": { "image_id": 121771 },
+         "purpleM": { "image_id": 121772 },
+         "purpleNose": { "image_id": 65152 },
+         "purpleOmg": { "image_id": 160462 },
+         "purplePride": { "image_id": 62560 },
+         "purpleRofl": { "image_id": 121495 },
+         "purpleTaco": { "image_id": 132726 },
+         "purpleThink": { "image_id": 121770 },
+         "purpleW": { "image_id": 70838 },
+         "purpleClaus": { "image_id": 132737 },
+         "purpleCoolstory": { "image_id": 153621 },
+         "purpleDog": { "image_id": 105228 },
+         "purpleFro": { "image_id": 86444 },
+         "purpleKkona": { "image_id": 121494 },
+         "purpleLeo": { "image_id": 73632 },
+         "purpleLUL": { "image_id": 126511 },
+         "purpleReal": { "image_id": 91873 },
+         "purpleThump": { "image_id": 86501 },
+         "purpleTongue": { "image_id": 70838 },
+         "purpleWalnut": { "image_id": 109084 },
+         "purpleWat": { "image_id": 105229 },
+         "purpleWut": { "image_id": 133844 }
     };
 
     for(var emote in iceEmotes) {
@@ -766,8 +796,8 @@ chrome.runtime.sendMessage({ items: ['emotesTwitch', 'emotesBTTV', 'emotesSub', 
     }
 
     if(response.showDeletedMessages) {
-    	$('<style type="text/css">.yt-live-chat-text-message-renderer-0[is-deleted]:not([show-original]) #message.yt-live-chat-text-message-renderer {display: inline;} .yt-live-chat-text-message-renderer-0 #deleted-state.yt-live-chat-text-message-renderer { color: rgba(255, 255, 255, 0.25); } .yt-live-chat-text-message-renderer-0[is-deleted]:not([show-original]) #message.yt-live-chat-text-message-renderer { color: rgba(255, 255, 255, 0.25); } .yt-live-chat-text-message-renderer-0 #deleted-state:before{content: "  "}</style>').appendTo('head');
-	}
+        $('<style type="text/css">.yt-live-chat-text-message-renderer-0[is-deleted]:not([show-original]) #message.yt-live-chat-text-message-renderer {display: inline;} .yt-live-chat-text-message-renderer-0 #deleted-state.yt-live-chat-text-message-renderer { color: rgba(255, 255, 255, 0.25); } .yt-live-chat-text-message-renderer-0[is-deleted]:not([show-original]) #message.yt-live-chat-text-message-renderer { color: rgba(255, 255, 255, 0.25); } .yt-live-chat-text-message-renderer-0 #deleted-state:before{content: "  "}</style>').appendTo('head');
+    }
 
     if(response.mentionHighlight) {
         mentionHighlight = true;

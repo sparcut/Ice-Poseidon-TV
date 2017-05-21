@@ -107,8 +107,14 @@ a {
 
 .tweet-container {
 	margin: 14px 0 4px 0;
-    height: 123px;
+    height: 124px;
     overflow: hidden;
+}
+
+@-moz-document url-prefix() {
+    .tweet-container {
+        border-bottom: 1px solid #677680;
+    }
 }
 
 .github-wrapper, .divider-right-wrapper, .divider-left-wrapper, .options-wrapper, .version-wrapper, .changelog-wrapper {
