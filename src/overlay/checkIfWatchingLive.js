@@ -4,7 +4,7 @@ export default function checkIfWatchingLive() {
 
     liveCheckInterval = setInterval(function() {
 
-        var $liveButton = $('.ytp-live-badge.ytp-button');
+        const $liveButton = $('.ytp-live-badge.ytp-button');
 
         if ($liveButton.is(':enabled') && $liveButton.is(':visible')) {
             $('#player-container').append(`

@@ -12,7 +12,7 @@ export default class AlwaysScrollDown
             $('.iptv-scrolldown-wrapper').remove();
         };
 
-        var scrollWrapper = document.createElement('div');
+        const scrollWrapper = document.createElement('div');
 
         scrollWrapper.setAttribute('aria-label', 'Always scroll down (Enabled)');
         scrollWrapper.classList.add('hint--top', 'iptv-scrolldown-wrapper');
@@ -115,7 +115,7 @@ export default class AlwaysScrollDown
      */
     static bindScrollListener()
     {
-        var target = document.getElementById('item-scroller');
+        const target = document.getElementById('item-scroller');
 
         if (!target) {
             setTimeout(() => { AlwaysScrollDown.bindScrollListener() }, 250);
@@ -133,7 +133,7 @@ export default class AlwaysScrollDown
      */
     static bindScrollDownListener()
     {
-        var target = document.getElementById('show-more');
+        const target = document.getElementById('show-more');
 
         if (!target) {
             window.setTimeout(() => { AlwaysScrollDown.bindScrollDownListener() }, 250);

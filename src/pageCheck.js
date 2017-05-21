@@ -12,7 +12,7 @@ export default class PageCheck
         const $textWrapper = $('.yt-user-info');
         const text = $textWrapper.find('a').text();
 
-        var url = document.location.href;
+        const url = document.location.href;
 
         if (text == 'Ice Poseidon' && !url.includes('gaming.youtube') && iframe) {
 
@@ -26,11 +26,11 @@ export default class PageCheck
 
     static livestreamPage()
     {
-        var target = document.getElementById('owner');
-        var chat = document.getElementById('chat');
-        var text = $(target).find('span').text();
+        const target = document.getElementById('owner');
+        const chat = document.getElementById('chat');
+        const text = $(target).find('span').text();
 
-        var url = document.location.href;
+        const url = document.location.href;
 
         if ((!target || !chat) && (!url.includes('live_chat') && !url.includes('is_popout=1'))) {
 

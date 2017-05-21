@@ -10,7 +10,7 @@ export default class Emote
 
         setTimeout(function()
         {
-            var $loading = $('.iptv-loading-emotes');
+            const $loading = $('.iptv-loading-emotes');
 
             if ($loading[0]) {
 
@@ -72,25 +72,25 @@ export default class Emote
 
     static emoteCheck(node)
     {
-        var $message = $(node).find('#message');
+        const $message = $(node).find('#message');
         Emote.kappaCheck($message);
 
-        var oldHTML = $message.html().trim();
-        var msgHTML = oldHTML;
+        let oldHTML = $message.html().trim();
+        let msgHTML = oldHTML;
 
         if (typeof Emote.messages[msgHTML] == 'undefined') {
 
-            var words = msgHTML.replace('/\xEF\xBB\xBF/', '').replace('﻿', '').split(' ');
-            var uniqueWords = [];
-            var emoteCount = 0;
+            const words = msgHTML.replace('/\xEF\xBB\xBF/', '').replace('﻿', '').split(' ');
+            const uniqueWords = [];
+            let emoteCount = 0;
 
             $.each(words, function (i, el) {
                 if ($.inArray(el, uniqueWords) === -1) uniqueWords.push(el);
             });
 
-            for (var i = 0; i < uniqueWords.length; i++) {
+            for (let i = 0; i < uniqueWords.length; i++) {
 
-                var word = uniqueWords[i];
+                const word = uniqueWords[i];
 
                 if (typeof Emote.emotes[word] === 'undefined') {
                     continue;
@@ -98,11 +98,11 @@ export default class Emote
 
                 emoteCount++;
 
-                var span = document.createElement('span');
+                const span = document.createElement('span');
                 span.setAttribute('aria-label', word);
                 span.classList.add('hint--top');
 
-                var img = document.createElement('img');
+                const img = document.createElement('img');
                 img.src = Emote.emotes[word]['url'];
                 img.alt = word;
                 img.style.display = 'inline';
@@ -125,9 +125,10 @@ export default class Emote
 
         $message.parent().parent().bind('DOMSubtreeModified', function () {
 
-            var $message = $(this).find('#message');
+            const $message = $(this).find('#message');
             Emote.kappaCheck($message);
-            var html = $message.html().trim();
+
+            const html = $message.html().trim();
             html = html.replace('/\xEF\xBB\xBF/', '').replace('﻿', '').replace(/\s/g,'');
 
             if (typeof Emote.messages[html] !== 'undefined') {
@@ -145,7 +146,7 @@ export default class Emote
     {
         $('img', msg).each(function() {
 
-            var $img = $(this);
+            const $img = $(this);
 
             if (/\ud83c\udf1d/g.test($img.attr('alt'))) {
                 $img.replaceWith(document.createTextNode('Kappa'));
@@ -155,10 +156,10 @@ export default class Emote
 
     static loadTwitchEmotes()
     {
-        var xhr = new XMLHttpRequest();
+        const xhr = new XMLHttpRequest();
         xhr.open('GET', 'https://twitchemotes.com/api_cache/v2/global.json');
         xhr.send();
-        var urlTemplate = '//static-cdn.jtvnw.net/emoticons/v1/';
+        const urlTemplate = '//static-cdn.jtvnw.net/emoticons/v1/';
 
         xhr.ontimeout = function() {
             Emote.states['twitch'].loaded = true;
@@ -168,7 +169,7 @@ export default class Emote
 
             const emoteDic = JSON.parse(xhr.responseText)['emotes'];
 
-            for (var emote in emoteDic) {
+            for (const emote in emoteDic) {
 
                 if (emote == 'TriHard') continue;
 
@@ -183,10 +184,10 @@ export default class Emote
 
     static loadSubEmotes()
     {
-        var xhr = new XMLHttpRequest();
+        const xhr = new XMLHttpRequest();
         xhr.open('GET', 'https://twitchemotes.com/api_cache/v2/subscriber.json');
         xhr.send();
-        var urlTemplate = '//static-cdn.jtvnw.net/emoticons/v1/';
+        const urlTemplate = '//static-cdn.jtvnw.net/emoticons/v1/';
 
         xhr.ontimeout = function() {
             Emote.states['sub'].loaded = true;
@@ -196,9 +197,9 @@ export default class Emote
 
             const emoteDic = JSON.parse(xhr.responseText)['channels'];
 
-            for (var channel in emoteDic) {
+            for (const channel in emoteDic) {
 
-                for (var i in emoteDic[channel]['emotes']) {
+                for (const i in emoteDic[channel]['emotes']) {
 
                     const dict = emoteDic[channel]['emotes'][i];
                     const code = dict['code'];
@@ -217,10 +218,10 @@ export default class Emote
 
     static loadBTTVEmotes()
     {
-        var xhr = new XMLHttpRequest();
+        const xhr = new XMLHttpRequest();
         xhr.open('GET', 'https://api.betterttv.net/2/emotes');
         xhr.send();
-        var urlTemplate = '//cdn.betterttv.net/emote/';
+        const urlTemplate = '//cdn.betterttv.net/emote/';
 
         xhr.ontimeout = function() {
             Emote.states['BTTV'].loaded = true;
@@ -230,7 +231,7 @@ export default class Emote
 
             const emoteList = JSON.parse(xhr.responseText)['emotes'];
 
-            for (var i in emoteList) {
+            for (const i in emoteList) {
 
                 const dict = emoteList[i];
 
@@ -252,10 +253,10 @@ export default class Emote
 
         commaChannels.forEach(function (channel) {
 
-            var xhr = new XMLHttpRequest();
+            const xhr = new XMLHttpRequest();
             xhr.open('GET', 'https://api.betterttv.net/2/channels/' + channel);
             xhr.send();
-            var url_template = '//cdn.betterttv.net/emote/';
+            const urlTemplate = '//cdn.betterttv.net/emote/';
 
             xhr.ontimeout = function() {
 
@@ -270,13 +271,13 @@ export default class Emote
 
                 const emoteList = JSON.parse(xhr.responseText)['emotes'];
 
-                for (var i in emoteList) {
+                for (const i in emoteList) {
 
-                    var dict = emoteList[i];
+                    const dict = emoteList[i];
 
                     if (!Emote.containsDisallowedChar(dict['code'])) {
                         Emote.emotes[dict['code']] = {
-                            url: url_template + dict['id'] + '/' + '1x',
+                            url: urlTemplate + dict['id'] + '/' + '1x',
                             channel: channel + ' (bttv)'
                         };
                     }

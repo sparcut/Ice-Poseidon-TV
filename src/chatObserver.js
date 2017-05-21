@@ -3,25 +3,27 @@ import MentionHighlight from './mentionHighlight';
 
 export default function chatObserver()
 {
-    var target = document.querySelector('.style-scope .yt-live-chat-item-list-renderer');
-    var authorname = $('#author #author-name').text().toLowerCase();
+    const target = document.querySelector('.style-scope .yt-live-chat-item-list-renderer');
+    const authorname = $('#author #author-name').text().toLowerCase();
 
     if (!target) {
         setTimeout(chatObserver, 250);
         return;
     }
 
-    var observer = new MutationObserver(function (mutations) {
+    const observer = new MutationObserver(function (mutations) {
 
         mutations.forEach(function (mutation) {
-            var newNodes = mutation.addedNodes;
+
+            const newNodes = mutation.addedNodes;
 
             if (newNodes !== null) {
-                var $nodes = $(newNodes);
+
+                const $nodes = $(newNodes);
 
                 $nodes.each(function () {
 
-                    var $node = $(this);
+                    const $node = $(this);
 
                     if (!$node.hasClass('yt-live-chat-item-list-renderer')) {
                         return;
@@ -34,7 +36,7 @@ export default function chatObserver()
         });
     });
 
-    var options = {
+    const options = {
         characterData: false,
         attributes: false,
         childList: true,

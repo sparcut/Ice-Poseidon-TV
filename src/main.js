@@ -22,9 +22,9 @@ const onNewPageLoad = function() {
 
 (function() {
 
-    var target = document.querySelector('head > title');
+    const target = document.querySelector('head > title');
 
-    var observer = new MutationObserver(function(mutations) {
+    const observer = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
             onNewPageLoad();
         });
@@ -50,7 +50,7 @@ chrome.runtime.sendMessage('requestLocalstorage', function(response) {
     }
 
     if (options['enableChatColors']) {
-        var a = chrome.extension.getURL('external/chat-colors.css');
+        const a = chrome.extension.getURL('external/chat-colors.css');
         $('<link rel="stylesheet" type="text/css" href="' + a + '" >').appendTo('head');
     }
 

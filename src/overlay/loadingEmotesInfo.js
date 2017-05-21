@@ -1,6 +1,6 @@
 export default function loadingEmotesInfo()
 {
-    var div = document.createElement('div');
+    const div = document.createElement('div');
 
     $(div).text('Loading emotes...');
 

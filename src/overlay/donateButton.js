@@ -1,11 +1,11 @@
 export default function donateButton()
 {
-    var donateIcon = chrome.extension.getURL('/icons/donate-icon.png');
-    var sponsorIcon = chrome.extension.getURL('/icons/sponsor-icon.png');
+    const donateIcon = chrome.extension.getURL('/icons/donate-icon.png');
+    const sponsorIcon = chrome.extension.getURL('/icons/sponsor-icon.png');
 
-    var sponsorImage = `<img src="${sponsorIcon}" alt="star" style="pointer-events: none; display: block; width: 100%; height: 100%;">`;
+    const sponsorImage = `<img src="${sponsorIcon}" alt="star" style="pointer-events: none; display: block; width: 100%; height: 100%;">`;
 
-    var donateButton = `
+    const donateButton = `
         <iptv-donate-button style="display: inline-block;" raised="" supported-cold-load-actions="[&quot;sponsor&quot;]" wait-for-signal="watch-page-initialized" class="style-scope ytg-watch-footer x-scope iptv-donate-button-0">
             <iron-signals class="style-scope iptv-donate-button"></iron-signals>
             <paper-button style="color: #fff; background-color: #0f9d58; min-width: 0;" class="enabled style-scope iptv-donate-button x-scope paper-button-0" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" raised="" aria-label="Donate to Ice_Poseidon">
@@ -19,10 +19,10 @@ export default function donateButton()
             </paper-button>
         </iptv-donate-button>`;
 
-    var donateImage = `<img src="${donateIcon}" alt="dollar-sign" style="pointer-events: none; display: block; width: 100%; height: 100%;">`;
+    const donateImage = `<img src="${donateIcon}" alt="dollar-sign" style="pointer-events: none; display: block; width: 100%; height: 100%;">`;
 
     // Insert donateButton next to sponsorButton
-    var sponsorButton = '.style-scope.ytg-watch-footer.x-scope.ytg-membership-offer-button-0';
+    const sponsorButton = '.style-scope.ytg-watch-footer.x-scope.ytg-membership-offer-button-0';
 
     $(sponsorButton).before(donateButton);
     $(donateButton).ready( function() { $('.style-scope.iptv-donate-button.x-scope.yt-icon-0').html(donateImage); });
