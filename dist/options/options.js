@@ -72,11 +72,10 @@ window.addEventListener('load', function () {
     options.showDeletedMessages.onchange = function () {
         localStorage.showDeletedMessages = options.showDeletedMessages.checked;
     };
-    
+
     options.mentionHighlight.onchange = function () {
         localStorage.mentionHighlight = options.mentionHighlight.checked;
     };
-
 
     var audio = localStorage.getItem('audio');
 
@@ -145,7 +144,7 @@ var showTestNotification = function () {
 
         if (localStorage.getItem('audio') === null) {
 
-            var defaultSound = new Audio('../online.mp3');
+            var defaultSound = new Audio('./../sounds/online.mp3');
             var volume = (localStorage.notificationVolume / 100);
 
             defaultSound.volume = (typeof volume == 'undefined' ? 0.50 : volume);

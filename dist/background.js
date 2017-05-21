@@ -2,7 +2,7 @@ const CHANNEL_ID = 'UCv9Edl_WbtbPeURPtFDo-uA',
     INTERVAL = 1000 * 30, // 30 second interval
     DEFAULT_ICON_PATH = './icons/128.png',
     LIVE_ICON_PATH = './icons/128-green.png',
-    SOUND_EFFECT = new Audio('online.mp3');
+    SOUND_EFFECT = new Audio('sounds/online.mp3');
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
