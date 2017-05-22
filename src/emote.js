@@ -1,5 +1,5 @@
 import { replaceAll } from './util';
-import { TRIHARD_URL, options, DISALLOWED_CHARS } from './main';
+import { options, DISALLOWED_CHARS } from './main';
 import loadingEmotesInfo from './overlay/loadingEmotesInfo';
 
 export default class Emote
@@ -201,8 +201,6 @@ export default class Emote
             const emoteDic = JSON.parse(xhr.responseText)['emotes'];
 
             for (const emote in emoteDic) {
-
-                if (emote == 'TriHard') continue;
 
                 Emote.emotes[emote] = {
                     url: urlTemplate + emoteDic[emote]['image_id'] + '/' + '1.0'
@@ -437,10 +435,5 @@ Emote.states = {
     }
 };
 
-Emote.emotes = {
-    TriHard: {
-        url: chrome.extension.getURL('icons/TriHard-old.png')
-    }
-};
-
+Emote.emotes = {};
 Emote.messages = {};
