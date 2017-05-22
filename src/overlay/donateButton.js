@@ -3,6 +3,8 @@
  */
 export default function donateButton()
 {
+    $('.iptv-donate-button-0').remove();
+
     const donateIcon = chrome.extension.getURL('/icons/donate-icon.png');
     const sponsorIcon = chrome.extension.getURL('/icons/sponsor-icon.png');
 
