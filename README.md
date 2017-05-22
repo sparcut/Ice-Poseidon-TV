@@ -13,6 +13,8 @@ The official Ice Poseidon browser extension, includes all Twitch emotes and show
 4. Start the watcher that will automaticly convert ES6 files to ES2015 when you make changes in '/src': ```npm run watch```
 5. Make your changes and create a pull request.
 
+If you're not making changes to the content script, you can skip step 1-4.
+
 ## Changelog
 See: https://github.com/ansien12/Ice-Poseidon-TV/blob/master/changelog.html
 
