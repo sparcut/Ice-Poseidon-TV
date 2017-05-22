@@ -16,7 +16,7 @@ The official Ice Poseidon browser extension, includes all Twitch emotes and show
 If you're not making changes to the content script, you can skip step 1-4.
 
 ## Changelog
-See: https://github.com/ansien12/Ice-Poseidon-TV/blob/master/changelog.html
+See: https://raw.githubusercontent.com/ansien12/Ice-Poseidon-TV/master/dist/changelog.html
 
 ## TODO
 See: https://github.com/ansien12/Ice-Poseidon-TV/issues
