@@ -2,12 +2,21 @@
 The official Ice Poseidon browser extension, includes all Twitch emotes and showing notifications when Ice Poseidon goes live.
 
 **Chrome Web Store:** https://chrome.google.com/webstore/detail/ice-poseidon-tv/kfhnbapjliobhpehkfjoicjojafenkll  
-**Firefox:** https://cdn.rawgit.com/ansien12/Ice-Poseidon-TV/1985835d/updates/ice_poseidon_tv-2.7.1-an%2Bfx.xpi
+**Firefox:** https://cdn.rawgit.com/ansien12/Ice-Poseidon-TV/f3b686f7/updates/ice_poseidon_tv-3.0.0-an%2Bfx.xpi
 
 **Discord:** Andries#7148 / Ice Poseidon Discord #dev channel
 
+## How to contribute
+1. Install [Node.js](https://nodejs.org/en/download/).
+2. Install webpack globally: ```npm install --global webpack```
+3. Run the npm install command to install dependencies: ```npm install```
+4. Start the watcher that will automaticly convert ES6 files to ES2015 when you make changes in '/src': ```npm run watch```
+5. Make your changes and create a pull request.
+
+If you're not making changes to the content script, you can skip step 1-4.
+
 ## Changelog
-See: https://github.com/ansien12/Ice-Poseidon-TV/blob/master/changelog.html
+See: https://raw.githubusercontent.com/ansien12/Ice-Poseidon-TV/master/dist/changelog.html
 
 ## TODO
 See: https://github.com/ansien12/Ice-Poseidon-TV/issues
