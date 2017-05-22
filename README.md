@@ -6,6 +6,12 @@ The official Ice Poseidon browser extension, includes all Twitch emotes and show
 
 **Discord:** Andries#7148 / Ice Poseidon Discord #dev channel
 
+## How to contribute
+1. Install webpack globally ```npm install --global webpack```
+2. Run npm install to install dependencies ```npm install```
+3. Start the watcher that will automaticly convert ES6 files to ES2015 ```npm run watch```
+4. Make your changes and create a pull request.
+
 ## Changelog
 See: https://github.com/ansien12/Ice-Poseidon-TV/blob/master/changelog.html
 
