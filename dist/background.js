@@ -26,6 +26,10 @@ chrome.notifications.onClicked.addListener(function(notificationId) {
  		chrome.tabs.create({ url: 'https://gaming.youtube.com/ice_poseidon/live' });
 		chrome.notifications.clear(notificationId);
     }
+    if (notificationId == 'androidNotification') {
+        chrome.tabs.create({ url: 'https://www.getice.tv/' });
+		chrome.notifications.clear(notificationId);
+    }
 });
 
 var showNotification = function () {
@@ -116,6 +120,20 @@ if (!localStorage.mentionHighlight) localStorage.mentionHighlight = true;
 
 if (localStorage.BTTVChannels) {
     localStorage.BTTVChannels = localStorage.BTTVChannels.replace('MonkaSenpai', 'monkasen');
+}
+
+if (!localStorage.androidNotification) {
+
+    chrome.notifications.create('androidNotification', {
+        type: 'progress',
+        title: 'Update! 📱',
+        message: 'Ice Poseidon TV is now available on Android!',
+        contextMessage: 'Click here to download!',
+        iconUrl: DEFAULT_ICON_PATH,
+        progress: 100
+    });
+
+    localStorage.androidNotification = true;
 }
 
 checkIfLive();

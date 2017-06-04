@@ -152,8 +152,6 @@ export default class AlwaysScrollDown
      */
     static toggleScrollDown(state)
     {
-        AlwaysScrollDown.scrollDown = false;
-
         if (typeof state === 'undefined') {
             AlwaysScrollDown.scrollDown = !AlwaysScrollDown.scrollDown;
         } else {

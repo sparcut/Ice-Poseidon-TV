@@ -8,6 +8,11 @@ export default function MentionHighlight(node)
 {
     const authorname = $('#author #author-name').text().toLowerCase();
 
+    /* Temp fix */
+    if (authorname === null) {
+        return false;
+    }
+
     if (options['mentionHighlight'] && authorname.length > 2 && !node.hasClass('yt-live-chat-legacy-paid-message-renderer-0')) { // Check it's not sponsor / superchat, also mentionHighlight enabled
 
         const uniqueid = node.get(0).getAttribute('id') // Copy unique message id
