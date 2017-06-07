@@ -122,8 +122,14 @@ export default class AlwaysScrollDown
             return;
         }
 
-        $('#item-scroller').bind('mousewheel DOMMouseScroll', function (event) {
+        $('#item-scroller').on('mousewheel DOMMouseScroll', function (event) {
             AlwaysScrollDown.toggleScrollDown(false);
+        });
+
+        $('#item-scroller').on('mousedown', function (event) {
+            if(event.target === this) {
+                AlwaysScrollDown.toggleScrollDown(false);
+            }
         });
     };
 
