@@ -22,6 +22,5 @@ export default function MentionHighlight(node)
             node.get(0).style.backgroundColor = "rgba(255,0,0,0.40)";
             node.find('#author-name').get(0).style.color = "#ffffff";
         }
-        else console.log("length: " + uniqueid.length + ", name: " + authorname)
     }
 };
