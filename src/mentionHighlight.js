@@ -21,7 +21,7 @@ export default function MentionHighlight(node)
             return;
         }
 
-        if (uniqueid.length > 30 && (message.indexOf(' '+authorname+' ') !== -1 || message.indexOf('@'+authorname+' ') !== -1)) { // If your name is in the message, and it's not your message
+        if (uniqueid.length > 30 && (authorname == "ice poseidon" || message.indexOf(' '+authorname+' ') !== -1 || message.indexOf('@'+authorname+' ') !== -1)) { // If your name is in the message, and it's not your message
             node.get(0).style.backgroundColor = "rgba(255,0,0,0.40)";
             node.find('#author-name').get(0).style.color = "#ffffff";
         }
