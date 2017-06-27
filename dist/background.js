@@ -1,38 +1,54 @@
-const CHANNEL_ID = 'UCv9Edl_WbtbPeURPtFDo-uA',
-    INTERVAL = 1000 * 30, // 30 second interval
-    DEFAULT_ICON_PATH = './icons/128.png',
-    LIVE_ICON_PATH = './icons/128-green.png',
-    SOUND_EFFECT = new Audio('sounds/online.mp3');
+const INTERVAL = 1000 * 30, // 30 second interval
+      DEFAULT_ICON_PATH = './icons/128.png',
+      LIVE_ICON_PATH = './icons/128-green.png',
+      SOUND_EFFECT = new Audio('sounds/online.mp3');
+
+let subscriptions = {};
+
+var getSubscriptions = function() {
+
+    console.log('@getSubscriptions');
+
+    $.get('https://www.iceposeidon.com/api/v1/subscriptions', function(response) {
+        subscriptions = response['subscriptions'];
+    });
+};
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
-    let data = {};
-
-    for (let i = 0, len = localStorage.length; i < len; i++) {
-
-        let item = localStorage.getItem(localStorage.key(i));
-
-        if (item === 'true') item = true;
-        if (item === 'false') item = false;
-
-        data[localStorage.key(i)] = item;
+    if (request === 'requestSubscriptions') {
+        sendResponse(subscriptions);
     }
 
-    sendResponse(data);
+    if (request === 'requestLocalstorage') {
+        let data = {};
+
+        for (let i = 0, len = localStorage.length; i < len; i++) {
+
+            let item = localStorage.getItem(localStorage.key(i));
+
+            if (item === 'true') item = true;
+            if (item === 'false') item = false;
+
+            data[localStorage.key(i)] = item;
+        }
+
+        getSubscriptions();
+
+        data['subscriptions'] = subscriptions;
+
+        sendResponse(data);
+    }
 });
 
 chrome.notifications.onClicked.addListener(function(notificationId) {
- 	if(notificationId == 'liveNotification') {
- 		chrome.tabs.create({ url: 'https://gaming.youtube.com/ice_poseidon/live' });
-		chrome.notifications.clear(notificationId);
-    }
-    if (notificationId == 'androidNotification') {
-        chrome.tabs.create({ url: 'https://www.getice.tv/' });
-		chrome.notifications.clear(notificationId);
+ 	if(notificationId === 'liveNotification') {
+        chrome.tabs.create({ url: 'http://www.iceposeidon.com/' });
+        chrome.notifications.clear(notificationId);
     }
 });
 
-var showNotification = function () {
+var showNotification = function() {
 
     var time = /(..)(:..)/.exec(new Date());
     var hour = time[1] % 12 || 12;
@@ -55,7 +71,7 @@ var showNotification = function () {
 
             var volume = (localStorage.notificationVolume / 100);
 
-            SOUND_EFFECT.volume = (typeof volume == 'undefined' ? 0.50 : volume);
+            SOUND_EFFECT.volume = (typeof volume === 'undefined' ? 0.50 : volume);
             SOUND_EFFECT.play();
 
         } else {
@@ -99,7 +115,7 @@ if (window.Notification) {
     setInterval(function () {
         checkIfLive();
     }, INTERVAL);
-};
+}
 
 if (!localStorage.isLive) localStorage.isLive = false;
 if (!localStorage.isActivated) localStorage.isActivated = true;
@@ -110,7 +126,7 @@ if (!localStorage.emotesTwitch) localStorage.emotesTwitch = true;
 if (!localStorage.emotesBTTV) localStorage.emotesBTTV = true;
 if (!localStorage.emotesSub) localStorage.emotesSub = true;
 if (!localStorage.emotesIce) localStorage.emotesIce = true;
-if (!localStorage.BTTVChannels) localStorage.BTTVChannels = 'Ice_Poseidon, monkasen, graphistrs, trihex, reckful, b0aty, NightDev';
+if (!localStorage.BTTVChannels) localStorage.BTTVChannels = 'monkasen, graphistrs, trihex, reckful, b0aty, NightDev';
 if (!localStorage.disableAvatars) localStorage.disableAvatars = true;
 if (!localStorage.enableChatColors) localStorage.enableChatColors = true;
 if (!localStorage.redirectToYTGaming) localStorage.redirectToYTGaming = true;
@@ -120,20 +136,9 @@ if (!localStorage.mentionHighlight) localStorage.mentionHighlight = true;
 
 if (localStorage.BTTVChannels) {
     localStorage.BTTVChannels = localStorage.BTTVChannels.replace('MonkaSenpai', 'monkasen');
-}
-
-if (!localStorage.androidNotification) {
-
-    chrome.notifications.create('androidNotification', {
-        type: 'progress',
-        title: 'Update! 📱',
-        message: 'Ice Poseidon TV is now available on Android!',
-        contextMessage: 'Click here to download!',
-        iconUrl: DEFAULT_ICON_PATH,
-        progress: 100
-    });
-
-    localStorage.androidNotification = true;
+    localStorage.BTTVChannels = localStorage.BTTVChannels.replace('Ice_Poseidon, ', '');
+    localStorage.BTTVChannels = localStorage.BTTVChannels.replace('Ice_Poseidon', '');
 }
 
 checkIfLive();
+getSubscriptions();

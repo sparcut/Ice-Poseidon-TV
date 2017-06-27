@@ -41,8 +41,9 @@
     padding: 8px 10px;
     font-size: 12px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-align: center;
     line-height: 12px;
-    white-space: nowrap; }
+    white-space: pre; }
   [class*="hint--"][aria-label]:after {
     content: attr(aria-label); }
   [class*="hint--"][data-hint]:after {

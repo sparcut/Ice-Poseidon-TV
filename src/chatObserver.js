@@ -1,4 +1,5 @@
 import Emote from './emote';
+import Subscribers from './subscribers';
 import MentionHighlight from './mentionHighlight';
 
 /**
@@ -6,14 +7,41 @@ import MentionHighlight from './mentionHighlight';
  */
 export default function chatObserver()
 {
+    /** Loop over existing messages and add badges */
+    $(document).on('DOMNodeInserted', $('#chat').parent(), function (e) {
+
+        if ($(e.target).find('img').length === 0) {
+            return;
+        }
+
+        /** Listen for self-avatar load and set self-info */
+        if ($(e.target).find('#avatar').length !== 0) {
+
+            $(e.target).find('#avatar').on('load', function() {
+
+                const imgSrc = $(this).attr('src');
+
+                if (imgSrc.includes('https://')) {
+                    Subscribers.setSelfInfo(imgSrc);
+                }
+            });
+        }
+
+        if (typeof $(e.target).find('#author-photo')[0] === 'undefined') {
+            return;
+        }
+
+        Subscribers.addBadges(e.target);
+    });
+
     const target = document.querySelector('.style-scope .yt-live-chat-item-list-renderer');
-    const authorname = $('#author #author-name').text().toLowerCase();
 
     if (!target) {
         setTimeout(chatObserver, 250);
         return;
     }
 
+    // Chat box observer
     const observer = new MutationObserver(function (mutations) {
 
         mutations.forEach(function (mutation) {

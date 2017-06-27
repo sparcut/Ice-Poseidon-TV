@@ -68,7 +68,7 @@ export default class AlwaysScrollDown
             characterData: false,
             subtree: false,
             attributeFilter: ['sidebar-collapsed']
-        }
+        };
 
         const addObserver = setInterval(() => {
             if ($(watchPage).length) {
@@ -122,7 +122,7 @@ export default class AlwaysScrollDown
             return;
         }
 
-        $('#item-scroller').on('mousewheel DOMMouseScroll', function (event) {
+        $('#item-scroller').on('mousewheel DOMMouseScroll', function () {
             AlwaysScrollDown.toggleScrollDown(false);
         });
 

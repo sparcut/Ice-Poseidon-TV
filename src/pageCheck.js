@@ -1,9 +1,10 @@
 import Emote from './emote';
-import { options } from './main';
-import ChatObserver from './chatObserver';
 import donateButton from './overlay/donateButton';
+import sponsorButton from './overlay/sponsorButton';
+import colorButton from './overlay/colorButton';
 import checkIfWatchingLive from './overlay/checkIfWatchingLive';
 import AlwaysScrollDown from './overlay/alwaysScrollDown';
+import SponsorCheck from './overlay/sponsorCheck';
 
 export default class PageCheck
 {
@@ -20,7 +21,7 @@ export default class PageCheck
 
         const url = document.location.href;
 
-        if (text == 'Ice Poseidon' && !url.includes('gaming.youtube') && iframe) {
+        if (text === 'Ice Poseidon' && !url.includes('gaming.youtube') && iframe) {
 
             const redirectConfirm = confirm('[Ice PoseidonTV] Go to the official Ice Poseidon livestream page?');
 
@@ -53,11 +54,12 @@ export default class PageCheck
             return;
         }
 
-        if (options['emotesTwitch'] === true || options['emotesSub'] === true || options['emotesBTTV'] === true || options['emotesIce'] === true) {
-            ChatObserver();
+        if(text === 'Ice Poseidon') {
+            donateButton();
+            sponsorButton();
+            colorButton();
+            setTimeout(SponsorCheck.check, 2500);
         }
-
-        if(text == 'Ice Poseidon') donateButton();
 
         Emote.loadEmotes();
         AlwaysScrollDown.init();

@@ -1,5 +1,3 @@
-var CHANNEL_ID = 'UCv9Edl_WbtbPeURPtFDo-uA';
-
 $(function() {
 	$('.popupchat').click(function() {
 		window.open('https://gaming.youtube.com/live_chat?v=AvZ0cYrbsAQ&is_popout=1', 'Ice Poseidon Chat', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=500,height=800');
@@ -11,9 +9,6 @@ $(function() {
 });
 
 var liveCheck = function() {
-
-	const bgPage = chrome.extension.getBackgroundPage();
-	const check = bgPage.checkIfLive();
 
 	$.get('http://107.170.95.160/live', function(data) {
 
