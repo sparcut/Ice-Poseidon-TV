@@ -5,10 +5,7 @@ const INTERVAL = 1000 * 30, // 30 second interval
 
 let subscriptions = {};
 
-var getSubscriptions = function() {
-
-    console.log('@getSubscriptions');
-
+const getSubscriptions = function() {
     $.get('https://www.iceposeidon.com/api/v1/subscriptions', function(response) {
         subscriptions = response['subscriptions'];
     });
@@ -48,11 +45,11 @@ chrome.notifications.onClicked.addListener(function(notificationId) {
     }
 });
 
-var showNotification = function() {
+const showNotification = function() {
 
-    var time = /(..)(:..)/.exec(new Date());
-    var hour = time[1] % 12 || 12;
-    var period = time[1] < 12 ? 'AM' : 'PM';
+    const time = /(..)(:..)/.exec(new Date());
+    const hour = time[1] % 12 || 12;
+    const period = time[1] < 12 ? 'AM' : 'PM';
 
     if (JSON.parse(localStorage.isActivated) === true) {
 
@@ -69,22 +66,22 @@ var showNotification = function() {
 
         if (localStorage.getItem('audio') === null) {
 
-            var volume = (localStorage.notificationVolume / 100);
+            const volume = (localStorage.notificationVolume / 100);
 
             SOUND_EFFECT.volume = (typeof volume === 'undefined' ? 0.50 : volume);
             SOUND_EFFECT.play();
 
         } else {
 
-            var encodedAudio = localStorage.getItem('audio');
-            var arrayBuffer = base64ToArrayBuffer(encodedAudio);
+            const encodedAudio = localStorage.getItem('audio');
+            const arrayBuffer = base64ToArrayBuffer(encodedAudio);
 
             createSoundWithBuffer(arrayBuffer);
         }
     }
 };
 
-var updateIcon = function () {
+const updateIcon = function () {
 
     const isLive = JSON.parse(localStorage.isLive) === true;
 
@@ -95,7 +92,7 @@ var updateIcon = function () {
     });
 };
 
-var checkIfLive = function () {
+const checkIfLive = function () {
 
     $.get('http://107.170.95.160/live', function (data) {
         if (data['status'] === true) {

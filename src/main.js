@@ -20,11 +20,6 @@ export function getOptions() {
 const onNewPageLoad = function() {
 
     $('[class^="iptv-"]').remove();
-
-    if (getOptions()['redirectToYTGaming'] === true) {
-        setTimeout(PageCheck.youtubeGaming, 2500);
-    }
-
     $('.yt-live-chat-header-renderer#title').text('Chat');
 
     PageCheck.livestreamPage();
@@ -49,9 +44,6 @@ const onNewPageLoad = function() {
 
 setTimeout(function() {
     chrome.runtime.sendMessage('requestSubscriptions', function(response) {
-
-        console.log(response);
-
         options['subscriptions'] = response;
     });
 }, 5000);
@@ -61,8 +53,6 @@ chrome.runtime.sendMessage('requestLocalstorage', function(response) {
     options = response;
 
     localStorage.setItem('optionsCache', JSON.stringify(options));
-
-    console.log('@options:', options);
 
     if (getOptions()['enableChatColors']) {
         const a = chrome.extension.getURL('external/chat-colors.css');
@@ -85,9 +75,8 @@ chrome.runtime.sendMessage('requestLocalstorage', function(response) {
         $('<style type="text/css">.yt-live-chat-text-message-renderer-0 .mention.yt-live-chat-text-message-renderer { background-color: rgba(114, 15, 15, 0) !important; padding: 0px 0px !important; }</style>').appendTo('head');
     }
 
-    console.log($('.yt-live-chat-header-renderer-0').css('background-color'));
-
     const chatColor = $('.yt-live-chat-header-renderer-0').css('background-color');
+
     if (chatColor === 'rgb(40, 40, 40)') {
         $('<style type="text/css">.yt-live-chat-text-message-renderer-0[author-type=moderator]{background-color:#282828}</style>').appendTo('head');
     } else if (chatColor === 'rgba(238, 238, 238, 0.4)') {

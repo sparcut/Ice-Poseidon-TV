@@ -1,5 +1,3 @@
-import { getOptions } from './../main';
-
 /**
  * Adds new sponsor button to livestream page.
  */
@@ -23,7 +21,6 @@ export default function sponsorButton()
         </iptv-sponsor-button>`;
 
     $('.style-scope.ytg-watch-footer.x-scope.ytg-membership-offer-button-0').before(sponsorButton);
-    console.log($('.big-dick'));
 
     $(sponsorButton).ready( function() {
         $('.style-scope.iptv-sponsor-button.x-scope.yt-icon-0').html(sponsorImage);
@@ -33,6 +30,4 @@ export default function sponsorButton()
         window.open('https://www.iceposeidon.com/', '_blank');
         $('.style-scope.ytg-watch-footer.x-scope.iptv-sponsor-button-0 paper-button')[0].blur();
     });
-
-    const sponsorText = $('.ytg-membership-offer-button-0 .ytg-membership-offer-button').find('.ytg-formatted-string').text();
 };

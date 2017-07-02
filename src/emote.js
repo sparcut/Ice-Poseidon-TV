@@ -134,7 +134,7 @@ export default class Emote
             if (typeof messageTier === 'undefined') {
                 setTimeout(function() {
                     Emote.emoteCheck(node)
-                }, 10);
+                }, 25);
                 return;
             }
 

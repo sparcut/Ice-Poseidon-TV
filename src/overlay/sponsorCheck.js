@@ -1,5 +1,3 @@
-import { getOptions } from './../main';
-
 export default class SponsorCheck
 {
     /**

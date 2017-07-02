@@ -19,8 +19,6 @@ export default class Subscribers
             profileId: profileId,
             subTier: subTier
         };
-
-        console.log(Subscribers.self);
     }
 
     /**
@@ -83,7 +81,7 @@ export default class Subscribers
                         });
                     });
 
-                    const dataObserverConfig = { attributes: true, childList: true, characterData: true, subtree: true };
+                    const dataObserverConfig = { characterData: false, attributes: false, childList: false, subtree: false };
                     dataObserver.observe(mutation.target, dataObserverConfig);
                 }
             });

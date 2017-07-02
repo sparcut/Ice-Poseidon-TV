@@ -1,5 +1,3 @@
-import { getOptions } from './../main';
-
 /**
  * Adds new color change button to livestream page.
  */
