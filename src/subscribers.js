@@ -81,7 +81,7 @@ export default class Subscribers
                         });
                     });
 
-                    const dataObserverConfig = { characterData: false, attributes: false, childList: false, subtree: false };
+                    const dataObserverConfig = { attributes: true, childList: true, characterData: true, subtree: false };
                     dataObserver.observe(mutation.target, dataObserverConfig);
                 }
             });

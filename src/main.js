@@ -39,7 +39,14 @@ const onNewPageLoad = function() {
         return;
     }
 
-    observer.observe(target, { subtree: true, characterData: true, childList: true });
+    const options = {
+        characterData: true,
+        attributes: false,
+        childList: true,
+        subtree: true
+    };
+
+    observer.observe(target, options);
 }());
 
 setTimeout(function() {
@@ -91,3 +98,5 @@ Subscribers.loadBadges();
 if (getOptions()['emotesTwitch'] === true || getOptions()['emotesSub'] === true || getOptions()['emotesBTTV'] === true || getOptions()['emotesIce'] === true) {
     ChatObserver();
 }
+
+console.info('[IPTV] Init!');

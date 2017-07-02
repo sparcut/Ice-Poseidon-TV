@@ -1,6 +1,6 @@
 {
   "name": "ice-poseidon-tv",
-  "version": "4.0.8",
+  "version": "4.0.9",
   "description": "The official Ice Poseidon browser extension, includes all Twitch emotes and showing notifications when Ice Poseidon goes live.",
   "main": "./src/main.js",
   "scripts": {

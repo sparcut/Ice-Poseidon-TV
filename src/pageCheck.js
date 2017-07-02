@@ -47,11 +47,11 @@ export default class PageCheck
 
             PageCheck.streampageChecks++;
 
-            if (PageCheck.streampageChecks < 25) {
-                setTimeout(PageCheck.livestreamPage, 250);
+            if (PageCheck.streampageChecks < 5) {
+                setTimeout(PageCheck.livestreamPage, 1000);
             }
 
-            return;
+            return false;
         }
 
         if(text === 'Ice Poseidon') {
@@ -64,6 +64,8 @@ export default class PageCheck
         Emote.loadEmotes();
         AlwaysScrollDown.init();
         checkIfWatchingLive();
+
+        PageCheck.streampageChecks = 0;
     };
 };
 
