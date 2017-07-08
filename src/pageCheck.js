@@ -67,6 +67,41 @@ export default class PageCheck
 
         PageCheck.streampageChecks = 0;
     };
+
+    /**
+     * Check if user is watching a livestream.
+     * @static
+     */
+    static isLivestream() {
+        const liveButton = document.querySelector('.ytp-live-badge.ytp-button');
+        const chatApp    = document.querySelector('yt-live-chat-app');
+        const chatiFrame = document.querySelector('#live-chat-iframe');
+        const chatHeader = document.querySelector('.yt-live-chat-header-renderer');
+
+        // Thanks StackOverflow! https://stackoverflow.com/questions/3420004/access-parent-url-from-iframe
+        var url = (window.location != window.parent.location)
+            ? document.referrer
+            : document.location.href;
+
+
+        var urlCheck = (url.indexOf('iceposeidon.com') > -1 || url.indexOf('iceposeidon.com') > -1);
+        var liveButtonCheck = (document.body.contains(liveButton) && !liveButton.getAttribute('disabled'));
+        var chatCheck = (document.body.contains(chatApp) || document.body.contains(chatiFrame) || document.body.contains(chatHeader));
+
+        console.debug("URL CHECK:", urlCheck, url);
+        console.debug("LIVE BUTTON CHECK:", liveButtonCheck);
+        console.debug("CHAT EXISTS CHECK:", chatCheck);
+
+        if (urlCheck || liveButtonCheck || chatCheck) {
+            console.debug("IS LIVESTREAM!");
+            return true;
+        } else {
+            console.debug("IS NOT LIVESTREAM");
+            return false;
+        }
+    }
+
+
 };
 
 PageCheck.streampageChecks = 0;
