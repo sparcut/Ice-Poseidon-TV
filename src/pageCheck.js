@@ -84,7 +84,7 @@ export default class PageCheck
             : document.location.href;
 
 
-        var urlCheck = (url.indexOf('iceposeidon.com') > -1 || url.indexOf('iceposeidon.com') > -1);
+        var urlCheck = (url.indexOf('iceposeidon.com') > -1);
         var liveButtonCheck = (document.body.contains(liveButton) && !liveButton.getAttribute('disabled'));
         var chatCheck = (document.body.contains(chatApp) || document.body.contains(chatiFrame) || document.body.contains(chatHeader));
 
@@ -100,8 +100,6 @@ export default class PageCheck
             return false;
         }
     }
-
-
 };
 
 PageCheck.streampageChecks = 0;
