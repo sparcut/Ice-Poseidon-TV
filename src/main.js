@@ -9,7 +9,8 @@ export const DISALLOWED_CHARS = ['\\', ':', '/', '&', "'", '"', '?', '!', '#'],
 
 export let options = null;
 
-export var IPTVLoaded = false;
+window.IPTVLoaded = false;
+window.LSPageLoaded = false;
 
 export function getOptions() {
     if (options === null) {
@@ -24,11 +25,10 @@ const onNewPageLoad = function () {
     $('[class^="iptv-"]').remove();
     $('.yt-live-chat-header-renderer#title').text('Chat');
 
-    setTimeout(PageCheck.livestreamPage, 1E3);
-
     setTimeout(function () {
-        if (PageCheck.isLivestream()) {
+        if (PageCheck.isLivestream() && PageCheck.isIcePoseidonStream()) {
             init();
+            if (!window.LSPageLoaded) { PageCheck.livestreamPage(); window.LSPageLoaded = true; }
         }
     }, 2E3);
 };
@@ -57,7 +57,8 @@ const onNewPageLoad = function () {
 }());
 
 var init = function() {
-    if(!IPTVLoaded) {
+    if(!window.IPTVLoaded) {
+        window.IPTVLoaded = true;
         setTimeout(function () {
             chrome.runtime.sendMessage('requestSubscriptions', function (response) {
                 options['subscriptions'] = response;
@@ -107,7 +108,6 @@ var init = function() {
         }
 
         console.info('[IPTV] Init!');
-        IPTVLoaded = true;
     }
 }
 

@@ -100,6 +100,33 @@ export default class PageCheck
             return false;
         }
     }
+
+    /**
+     * Check if user is watching an Ice Poseidon livestream.
+     * @static
+     */
+    static isIcePoseidonStream() {
+        // Thanks StackOverflow! https://stackoverflow.com/questions/3420004/access-parent-url-from-iframe
+        var url = (window.location != window.parent.location)
+            ? document.referrer
+            : document.location.href;
+        var YTGchannel = $("ytg-owner-badges").parent().attr('href');
+        var YTchannel  = $("a.ytd-video-owner-renderer").attr('href');
+
+        var urlCheck = (url.indexOf('iceposeidon.com') > -1);
+        var channelCheck = (YTGchannel === "/channel/UCv9Edl_WbtbPeURPtFDo-uA" || YTchannel === "/channel/UCv9Edl_WbtbPeURPtFDo-uA");
+
+        console.debug("URL CHECK:", urlCheck, url);
+        console.debug("CHANNEL CHECK:", channelCheck, YTGchannel, YTchannel);
+
+        if (urlCheck || channelCheck) {
+            console.debug("IS ICEPOSEIDON STREAM!");
+            return true;
+        } else {
+            console.debug("IS NOT ICEPOSEIDON STREAM!");
+            return false;
+        }
+    }
 };
 
 PageCheck.streampageChecks = 0;
