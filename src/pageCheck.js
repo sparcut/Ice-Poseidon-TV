@@ -43,10 +43,10 @@ export default class PageCheck
     {
         // Run checks in steps so we're not calling methods unnecessarily
         const url = document.location.href;
+        const target = document.getElementById('owner');
         const text = $(target).find('span').text();
         
         if(!url.includes('live_chat') && !url.includes('is_popout=1')){
-            const target = document.getElementById('owner');
             const chat = document.getElementById('chat');
             
             if(!target || !chat){
@@ -58,7 +58,7 @@ export default class PageCheck
                 return false;
             }
         }
-
+		
         if(text === 'Ice Poseidon') {
             donateButton();
             sponsorButton();
