@@ -14,19 +14,23 @@ export default class PageCheck
      */
     static youtubeGaming()
     {
-        const iframe = document.getElementById('live-chat-iframe');
-
-        const $textWrapper = $('.yt-user-info');
-        const text = $textWrapper.find('a').text();
-
+        // Run checks in steps so we're not calling methods unnecessarily
         const url = document.location.href;
+        
+        if(!url.includes('gaming.youtube')){
+            const iframe = document.getElementById('live-chat-iframe');
+            
+            if(iframe){
+                const $textWrapper = $('.yt-user-info');
+                const text = $textWrapper.find('a').text();
+                
+                if(text === 'Ice Poseidon'){
+                    const redirectConfirm = confirm('[Ice PoseidonTV] Go to the official Ice Poseidon livestream page?');
 
-        if (text === 'Ice Poseidon' && !url.includes('gaming.youtube') && iframe) {
-
-            const redirectConfirm = confirm('[Ice PoseidonTV] Go to the official Ice Poseidon livestream page?');
-
-            if (redirectConfirm === true) {
-                window.location = 'https://gaming.youtube.com/ice_poseidon/live';
+                    if (redirectConfirm === true) {
+                        window.location = 'https://gaming.youtube.com/ice_poseidon/live';
+                    }
+                }
             }
         }
     };
@@ -37,21 +41,22 @@ export default class PageCheck
      */
     static livestreamPage()
     {
-        const target = document.getElementById('owner');
-        const chat = document.getElementById('chat');
-        const text = $(target).find('span').text();
-
+        // Run checks in steps so we're not calling methods unnecessarily
         const url = document.location.href;
+        const text = $(target).find('span').text();
+        
+        if(!url.includes('live_chat') && !url.includes('is_popout=1')){
+            const target = document.getElementById('owner');
+            const chat = document.getElementById('chat');
+            
+            if(!target || !chat){
+                PageCheck.streampageChecks++;
 
-        if ((!target || !chat) && (!url.includes('live_chat') && !url.includes('is_popout=1'))) {
+                if (PageCheck.streampageChecks < 5)
+                    setTimeout(PageCheck.livestreamPage, 1000);
 
-            PageCheck.streampageChecks++;
-
-            if (PageCheck.streampageChecks < 5) {
-                setTimeout(PageCheck.livestreamPage, 1000);
+                return false;
             }
-
-            return false;
         }
 
         if(text === 'Ice Poseidon') {
