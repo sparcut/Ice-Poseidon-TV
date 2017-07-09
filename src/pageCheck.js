@@ -113,8 +113,16 @@ export default class PageCheck
         var YTGchannel = $("ytg-owner-badges").parent().attr('href');
         var YTchannel  = $("a.ytd-video-owner-renderer").attr('href');
 
+        var whitelistedChannels = [
+            "/channel/UCv9Edl_WbtbPeURPtFDo-uA", // Ice Poseidon
+            "/channel/UCpxAv8i0MTPoci7I7aFNxZg", // George Allen
+            "/channel/UCaDJ_DTz3kbneMWiV31YiFA", // Ansien 12 / andries_dev
+            "/channel/UCTmrHQEEFDYPy51mUg0JpjA", // xByt3z
+            "/channel/UC1EzZOW1tVEK2vjmbSo137A"  // xByt3z IPTV testing stream
+        ];
+
         var urlCheck = (url.indexOf('iceposeidon.com') > -1 || url.indexOf('live_chat') > -1);
-        var channelCheck = (YTGchannel === "/channel/UCv9Edl_WbtbPeURPtFDo-uA" || YTchannel === "/channel/UCv9Edl_WbtbPeURPtFDo-uA");
+        var channelCheck = (whitelistedChannels.indexOf(YTGchannel) > -1 || whitelistedChannels.indexOf(YTchannel) > -1);
 
         console.debug("URL CHECK:", urlCheck, url);
         console.debug("CHANNEL CHECK:", channelCheck, YTGchannel, YTchannel);
