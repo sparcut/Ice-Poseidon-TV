@@ -113,7 +113,7 @@ export default class PageCheck
         var YTGchannel = $("ytg-owner-badges").parent().attr('href');
         var YTchannel  = $("a.ytd-video-owner-renderer").attr('href');
 
-        var urlCheck = (url.indexOf('iceposeidon.com') > -1);
+        var urlCheck = (url.indexOf('iceposeidon.com') > -1 || url.indexOf('live_chat') > -1);
         var channelCheck = (YTGchannel === "/channel/UCv9Edl_WbtbPeURPtFDo-uA" || YTchannel === "/channel/UCv9Edl_WbtbPeURPtFDo-uA");
 
         console.debug("URL CHECK:", urlCheck, url);
