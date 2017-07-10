@@ -25,6 +25,8 @@ See: https://github.com/ansien12/Ice-Poseidon-TV/issues
 Feel free to make a pull request and add a feature you'd like to see. But please make sure to follow the current coding style (i.e. 4 spaces, single quotes wherever possible and function expression instead of declaration).
 
 ## Contributors (Big thanks!)
+- Seanm07
+- xBytez
 - wtfblub
 - sparcut
 - KyleCrowley
