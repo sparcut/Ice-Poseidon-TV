@@ -9,7 +9,7 @@ export default function checkIfWatchingLive() {
 
         const $liveButton = $('.ytp-live-badge.ytp-button');
 
-        if ($liveButton.is(':enabled') && $liveButton.is(':visible')) {
+        if ($liveButton.is(':enabled') && $liveButton.is(':visible') && $('.iptv-live-warning').length < 1) {
             $('#player-container').append(`
                 <div class="iptv-live-warning">
                     <div class="iptv-live-warning-text">

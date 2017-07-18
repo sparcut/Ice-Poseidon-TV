@@ -27,7 +27,9 @@
                 { "version": "4.0.1",
 				"update_link": "https://cdn.rawgit.com/ansien12/IPTV-Extension/0b0fcb7c/updates/ice_poseidon_tv-4.0.6-an%2Bfx.xpi" },
                 { "version": "4.0.8",
-				"update_link": "https://cdn.rawgit.com/ansien12/IPTV-Extension/2f60d9bb/updates/ice_poseidon_tv-4.0.8-an%2Bfx.xpi" }
+				"update_link": "https://cdn.rawgit.com/ansien12/IPTV-Extension/2f60d9bb/updates/ice_poseidon_tv-4.0.8-an%2Bfx.xpi" },
+                { "version": "4.1.0",
+				"update_link": "https://cdn.rawgit.com/ansien12/IPTV-Extension/98358e25/updates/ice_poseidon_tv-4.1.0-an%2Bfx.xpi" }
 			]
 		}
 	}

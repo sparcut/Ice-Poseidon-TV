@@ -131,13 +131,6 @@ export default class Emote
             const messageTier = $(node).find('#author-photo').data('sub-tier');
             let tooltipText = word;
 
-            if (typeof messageTier === 'undefined') {
-                setTimeout(function() {
-                    Emote.emoteCheck(node)
-                }, 25);
-                return;
-            }
-
             if (messageTier < Emote.emotes[word]['tier']) {
                 return;
             }
