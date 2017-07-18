@@ -4,8 +4,6 @@ The official Ice Poseidon browser extension, includes all Twitch emotes and show
 **Chrome Web Store:** https://chrome.google.com/webstore/detail/ice-poseidon-tv/kfhnbapjliobhpehkfjoicjojafenkll  
 **Firefox:** https://cdn.rawgit.com/ansien12/IPTV-Extension/98358e25/updates/ice_poseidon_tv-4.1.0-an%2Bfx.xpi
 
-**Discord:** Andries#7148 / Ice Poseidon Discord #dev channel
-
 ## How to contribute
 1. Install [Node.js](https://nodejs.org/en/download/).
 2. Install webpack globally: ```npm install --global webpack```
