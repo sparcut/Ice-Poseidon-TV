@@ -1,5 +1,6 @@
 export function replaceAll(str, find, replace) {
-    return str.replace(new RegExp(find, 'g'), replace);
+    let string = "("+find+")(?![^alt=\"]*\")";
+    return str.replace(new RegExp(string, 'g'), replace);
 }
 
 export function isNode(o) {
