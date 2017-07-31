@@ -418,7 +418,7 @@ export default class Emote
                 'purpleCx', 'purpleLewd', 'purpleLama', 'purplePizza', 'purpleWallet', 'purpleS', 'purpleLate', 'purpleMoose', 'purpleNose', 'purpleWut'
             ],
             3: [
-                'purpleAllen'
+                'purpleAllen', 'purpleTroll'
             ]
         };
 
