@@ -5,6 +5,7 @@ window.addEventListener('load', function () {
     options.notificationSoundEnabled.checked = JSON.parse(localStorage.notificationSoundEnabled);
     options.notificationVolume.value = JSON.parse(localStorage.notificationVolume);
     options.showRecentTweet.checked = JSON.parse(localStorage.showRecentTweet);
+    options.showCxLive.checked = JSON.parse(localStorage.showCxLive);
     options.emotesTwitch.checked = JSON.parse(localStorage.emotesTwitch);
     options.emotesBTTV.checked = JSON.parse(localStorage.emotesBTTV);
     options.emotesSub.checked = JSON.parse(localStorage.emotesSub);
@@ -31,6 +32,10 @@ window.addEventListener('load', function () {
 
     options.showRecentTweet.onchange = function () {
         localStorage.showRecentTweet = options.showRecentTweet.checked;
+    };
+
+    options.showCxLive.onchange = function () {
+        localStorage.showCxLive = options.showCxLive.checked;
     };
 
     options.emotesTwitch.onchange = function () {

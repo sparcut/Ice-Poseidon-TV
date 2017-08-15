@@ -119,6 +119,7 @@ if (!localStorage.isActivated) localStorage.isActivated = true;
 if (!localStorage.notificationSoundEnabled) localStorage.notificationSoundEnabled = true;
 if (!localStorage.notificationVolume) localStorage.notificationVolume = 40;
 if (!localStorage.showRecentTweet) localStorage.showRecentTweet = true;
+if (!localStorage.showCxLive) localStorage.showCxLive = true;
 if (!localStorage.emotesTwitch) localStorage.emotesTwitch = true;
 if (!localStorage.emotesBTTV) localStorage.emotesBTTV = true;
 if (!localStorage.emotesSub) localStorage.emotesSub = true;

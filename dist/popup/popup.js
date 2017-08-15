@@ -36,7 +36,14 @@ var getLatestTweet = function() {
 	$('.tweet-container').removeClass('hidden');
 };
 
+var getCxLiveStreamers = function() {
+	if (JSON.parse(localStorage.showCxLive) !== false) {
+		$('.cxlive-container').removeClass('hidden');
+	}
+};
+
 document.addEventListener('DOMContentLoaded', function () {
 	liveCheck();
 	getLatestTweet();
+    getCxLiveStreamers();
 });

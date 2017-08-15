@@ -7,7 +7,6 @@ body, html {
 	-webkit-font-smoothing: antialiased;
 	text-shadow: rgba(0,0,0,.01) 0 0 1px;
     overflow: hidden;
-    width: 431px;
 }
 
 .bottom-container {
@@ -105,15 +104,34 @@ a {
 	animation: pulse 2s infinite;
 }
 
+.hover-link:hover {
+    color: #e2e2e2;
+}
+
 .tweet-container {
 	margin: 14px 0 4px 0;
-    height: 124px;
     overflow: hidden;
+    height: 130px;
+    border-bottom: 1px solid #677680;
+}
+
+.cxlive-container {
+    text-align: center;
+    margin-left: 6px;
+    margin-bottom: 12px;
+}
+
+.cxlive-container iframe {
+    border: none;
+    overflow: hidden;
+    width: 420px;
+    height: 280px;
 }
 
 @-moz-document url-prefix() {
     .tweet-container {
         border-bottom: 1px solid #677680;
+        border-top: 1px solid #677680;
     }
 }
 
