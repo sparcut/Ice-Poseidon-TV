@@ -204,6 +204,7 @@ export default class Emote
      */
     static loadTwitchEmotes()
     {
+        Emote.emotes['LUL'] = { url: 'https://cdn.betterttv.net/emote/567b00c61ddbe1786688a633/1x' };
         const xhr = new XMLHttpRequest();
         xhr.open('GET', 'https://twitchemotes.com/api_cache/v2/global.json');
         xhr.send();
