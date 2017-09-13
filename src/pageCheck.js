@@ -16,14 +16,14 @@ export default class PageCheck
     {
         // Run checks in steps so we're not calling methods unnecessarily
         const url = document.location.href;
-
+        
         if(!url.includes('gaming.youtube')){
             const iframe = document.getElementById('live-chat-iframe');
-
+            
             if(iframe){
                 const $textWrapper = $('.yt-user-info');
                 const text = $textWrapper.find('a').text();
-
+                
                 if(text === 'Ice Poseidon'){
                     const redirectConfirm = confirm('[Ice PoseidonTV] Go to the official Ice Poseidon livestream page?');
 
@@ -45,10 +45,10 @@ export default class PageCheck
         const url = document.location.href;
         const target = document.getElementById('owner');
         const text = $(target).find('span').text();
-
+        
         if(!url.includes('live_chat') && !url.includes('is_popout=1')){
             const chat = document.getElementById('chat');
-
+            
             if(!target || !chat){
                 PageCheck.streampageChecks++;
 
@@ -58,7 +58,7 @@ export default class PageCheck
                 return false;
             }
         }
-
+		
         if(text === 'Ice Poseidon') {
             donateButton();
             sponsorButton();
@@ -123,8 +123,7 @@ export default class PageCheck
             "/channel/UCpxAv8i0MTPoci7I7aFNxZg", // George Allen
             "/channel/UCaDJ_DTz3kbneMWiV31YiFA", // Ansien 12 / andries_dev
             "/channel/UCTmrHQEEFDYPy51mUg0JpjA", // xByt3z
-            "/channel/UC1EzZOW1tVEK2vjmbSo137A",  // xByt3z IPTV testing stream
-            "/channel/UCEvlFOdUrtlryD4Auy1Y7VA",
+            "/channel/UC1EzZOW1tVEK2vjmbSo137A"  // xByt3z IPTV testing stream
         ];
 
         var urlCheck = (url.indexOf('iceposeidon.com') > -1 || url.indexOf('live_chat') > -1);
