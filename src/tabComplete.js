@@ -47,8 +47,11 @@ export default class TabComplete
             if (keyCode == 9) {
                 e.preventDefault();
                 let currentText = $(this).text();
+                if(/\s$/.test(currentText)){ //last char is whitespace - so dont treat it as a word. split function doesnt actually split eg "TriHard " into "TriHard" and "" but returns "TriHard "
+                    return;
+                }
                 let words = currentText.split(' ');
-                if (TabComplete.lastWord.length) {
+                if (TabComplete.lastWord.length) { //word typed by used has been already replaced by some suggestion -> remove that suggestion (is going to get replaced by new suggestion or lastWord)
                     words.pop();
                 } else {
                     TabComplete.lastWord = words.pop();
