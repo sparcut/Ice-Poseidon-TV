@@ -2,7 +2,6 @@ import PageCheck from './pageCheck';
 import Subscribers from './subscribers';
 import { isNode } from './util';
 import ChatObserver from './chatObserver';
-import Emote from './emote';
 import TabComplete from './tabComplete';
 
 export const DISALLOWED_CHARS = ['\\', ':', '/', '&', "'", '"', '?', '!', '#'],
