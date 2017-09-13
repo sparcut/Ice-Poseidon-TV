@@ -2,40 +2,8 @@
 	"addons": {
 		"ice_poseidon_tv@rawgit.com": {
 			"updates": [
-				{ "version": "2.5.4",
-				"update_link": "https://cdn.rawgit.com/ansien12/Ice-Poseidon-TV/3c1c8c77/updates/ice_poseidon_tv-2.5.4-an%2Bfx.xpi" },
-				{ "version": "2.6.0",
-				"update_link": "https://cdn.rawgit.com/ansien12/Ice-Poseidon-TV/21ec07ad/updates/ice_poseidon_tv-2.6.0-an%2Bfx.xpi" },
-				{ "version": "2.6.1",
-				"update_link": "https://cdn.rawgit.com/ansien12/Ice-Poseidon-TV/f5454a92/updates/ice_poseidon_tv-2.6.1-an%2Bfx.xpi" },
-				{ "version": "2.6.2",
-				"update_link": "https://cdn.rawgit.com/ansien12/Ice-Poseidon-TV/2f3b285f/updates/ice_poseidon_tv-2.6.2-an%2Bfx.xpi" },
-				{ "version": "2.7.0",
-				"update_link": "https://cdn.rawgit.com/ansien12/Ice-Poseidon-TV/d6107755/updates/ice_poseidon_tv-2.7.0-an%2Bfx.xpi" },
-				{ "version": "2.7.1",
-				"update_link": "https://cdn.rawgit.com/ansien12/Ice-Poseidon-TV/1985835d/updates/ice_poseidon_tv-2.7.1-an%2Bfx.xpi" },
-				{ "version": "3.0.0",
-				"update_link": "https://cdn.rawgit.com/ansien12/Ice-Poseidon-TV/f3b686f7/updates/ice_poseidon_tv-3.0.0-an%2Bfx.xpi" },
-				{ "version": "3.0.2",
-				"update_link": "https://cdn.rawgit.com/ansien12/Ice-Poseidon-TV/8d9cf2a9/updates/ice_poseidon_tv-3.0.2-an%2Bfx.xpi" },
-                { "version": "4.0.0",
-				"update_link": "https://cdn.rawgit.com/ansien12/IPTV-Extension/f3039e22/updates/ice_poseidon_tv-4.0.0-an%2Bfx.xpi" },
-                { "version": "4.0.1",
-				"update_link": "https://cdn.rawgit.com/ansien12/IPTV-Extension/5f3cc21f/updates/ice_poseidon_tv-4.0.1-an%2Bfx.xpi" },
-                { "version": "4.0.1",
-				"update_link": "https://cdn.rawgit.com/ansien12/IPTV-Extension/a0fa95be/updates/ice_poseidon_tv-4.0.3-an%2Bfx.xpi" },
-                { "version": "4.0.1",
-				"update_link": "https://cdn.rawgit.com/ansien12/IPTV-Extension/0b0fcb7c/updates/ice_poseidon_tv-4.0.6-an%2Bfx.xpi" },
-                { "version": "4.0.8",
-				"update_link": "https://cdn.rawgit.com/ansien12/IPTV-Extension/2f60d9bb/updates/ice_poseidon_tv-4.0.8-an%2Bfx.xpi" },
-                { "version": "4.1.0",
-				"update_link": "https://cdn.rawgit.com/ansien12/IPTV-Extension/98358e25/updates/ice_poseidon_tv-4.1.0-an%2Bfx.xpi" },
-                { "version": "4.1.3",
-				"update_link": "https://cdn.rawgit.com/ansien12/IPTV-Extension/1330dc5f/updates/ice_poseidon_tv-4.1.3-an%2Bfx.xpi" },
-                { "version": "4.1.4",
-				"update_link": "https://cdn.rawgit.com/ansien12/IPTV-Extension/204f1410/updates/ice_poseidon_tv-4.1.4-an%2Bfx.xpi" },
-                { "version": "4.1.5",
-				"update_link": "https://cdn.rawgit.com/ansien12/IPTV-Extension/516df063/updates/ice_poseidon_tv-4.1.5-an%2Bfx.xpi" }
+                { "version": "4.1.7",
+				"update_link": "https://cdn.rawgit.com/ansien12/IPTV-Extension/986b4567/updates/ice_poseidon_tv-4.1.7-an%2Bfx.xpi" }
 			]
 		}
 	}
