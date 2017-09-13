@@ -3,6 +3,7 @@ import Subscribers from './subscribers';
 import { isNode } from './util';
 import ChatObserver from './chatObserver';
 import Emote from './emote';
+import TabComplete from './tabComplete';
 
 export const DISALLOWED_CHARS = ['\\', ':', '/', '&', "'", '"', '?', '!', '#'],
     SCROLL_ENABLED_URL = chrome.extension.getURL('icons/scroll-enabled.png'),
@@ -110,85 +111,7 @@ var init = function() {
 
         console.info('[IPTV] Init!');
 
-        function getPossibleValues(localTrie, valuesArray) {
-            if (typeof localTrie === 'string') {
-                valuesArray.push(localTrie);
-            } else {
-                var keys = Object.keys(localTrie);
-                var returnValues = [];
-                for (var i = 0; i < keys.length; i++) {
-                    getPossibleValues(localTrie[keys[i]], valuesArray);
-                }
-            }
-        }
-
-        function findSimilar(s, pos) {
-            s = s.toLowerCase();
-            var i = 0;
-            var localTrie = Emote.trie;
-            while ((i < s.length) && (s.charAt(i) in localTrie)) {
-                localTrie = localTrie[s.charAt(i)];
-                i++;
-            }
-            if (i == 0) return false;
-            else {
-                var values = [];
-                getPossibleValues(localTrie, values);
-                if (pos >= values.length) {
-                    return false;
-                } else {
-                    return values[pos];
-                }
-            }
-        }
-
-        var tabPressedCount = 0;
-        var lastWord = '';
-        var inputChangedEvent = new Event('input', {
-            'bubbles': true,
-            'cancelable': true
-        });
-
-        $("yt-live-chat-text-input-field-renderer").on('keydown', "div#input", function(e) {
-            var keyCode = e.keyCode || e.which;
-            if (keyCode == 9) {
-                e.preventDefault();
-                var currentText = $(this).text();
-                var words = currentText.split(' ');
-                if (lastWord.length) {
-                    words.pop();
-                } else {
-                    lastWord = words.pop();
-                }
-                var similar = findSimilar(lastWord, tabPressedCount);
-                var newText = '';
-                for (var i = 0; i < words.length; i++) {
-                    newText += words[i] + ' ';
-                }
-                if (similar) {
-                    newText += similar;
-                    tabPressedCount++;
-                } else {
-                    newText += lastWord;
-                    lastWord = '';
-                    tabPressedCount = 0;
-                }
-                $(this).text(newText);
-                //adds focus to last char
-                var range = document.createRange();
-                range.selectNodeContents($(this)[0]);
-                range.collapse(false);
-                var sel = window.getSelection();
-                sel.removeAllRanges();
-                sel.addRange(range);
-
-                //updates character count
-                this.dispatchEvent(inputChangedEvent);
-            } else {
-                tabPressedCount = 0;
-                lastWord = '';
-            }
-        });
+        TabComplete.bindEvent();
     }
 }
 
