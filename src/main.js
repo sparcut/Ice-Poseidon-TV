@@ -2,6 +2,7 @@ import PageCheck from './pageCheck';
 import Subscribers from './subscribers';
 import { isNode } from './util';
 import ChatObserver from './chatObserver';
+import TabComplete from './tabComplete';
 
 export const DISALLOWED_CHARS = ['\\', ':', '/', '&', "'", '"', '?', '!', '#'],
     SCROLL_ENABLED_URL = chrome.extension.getURL('icons/scroll-enabled.png'),
@@ -107,7 +108,10 @@ var init = function() {
             ChatObserver();
         }
 
+        TabComplete.bindEvent();
+
         console.info('[IPTV] Init!');
+
     }
 }
 
