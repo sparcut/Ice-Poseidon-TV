@@ -10,6 +10,8 @@ export default class Emote
      */
     static loadEmotes()
     {
+        console.log('@loadEmotes');
+
         loadingEmotesInfo();
 
         setTimeout(function() {
@@ -82,14 +84,19 @@ export default class Emote
      */
     static replaceExistingEmotes()
     {
-        const chatElements = $('.style-scope.yt-live-chat-item-list-renderer.x-scope.yt-live-chat-text-message-renderer-0');
+        const chatElements = $('.style-scope yt-live-chat-item-list-renderer x-scope yt-live-chat-text-message-renderer-0');
+        const chatElementsPopout = $('#items.yt-live-chat-item-list-renderer .yt-live-chat-item-list-renderer');
 
-        if (chatElements.length < 1) {
+        if (chatElements.length < 1 && chatElementsPopout < 1) {
             setTimeout(Emote.replaceExistingEmotes, 250);
             return;
         }
 
         chatElements.each(function (i, el) {
+            Emote.emoteCheck(el);
+        });
+
+        chatElementsPopout.each(function (i, el) {
             Emote.emoteCheck(el);
         });
     };
@@ -107,6 +114,8 @@ export default class Emote
 
         const $message = $(node).find('#message');
         Emote.kappaCheck($message);
+
+        console.log($message);
 
         let oldHTML = $message.html().trim();
         let msgHTML = oldHTML;

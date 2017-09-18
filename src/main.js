@@ -93,11 +93,14 @@ var init = function() {
             }
 
             const chatColor = $('.yt-live-chat-header-renderer-0').css('background-color');
+            const chatColorPopout = $('.style-scope.yt-live-chat-renderer[role="heading"]').css('background-color');
 
-            if (chatColor === 'rgb(40, 40, 40)') {
+            if (chatColor === 'rgb(40, 40, 40)' || chatColorPopout === 'rgb(40, 40, 40)') {
                 $('<style type="text/css">.yt-live-chat-text-message-renderer-0[author-type=moderator]{background-color:#282828}</style>').appendTo('head');
-            } else if (chatColor === 'rgba(238, 238, 238, 0.4)') {
+                $('<style type="text/css">.style-scope.yt-live-chat-item-list-renderer[author-type=moderator]{background-color:#282828}</style>').appendTo('head');
+            } else if (chatColor === 'rgba(238, 238, 238, 0.4)' || chatColorPopout === 'rgba(238, 238, 238, 0.4)') {
                 $('<style type="text/css">.yt-live-chat-text-message-renderer-0[author-type=moderator]{background-color:#e2e2e2}</style>').appendTo('head');
+                $('<style type="text/css">.style-scope.yt-live-chat-item-list-renderer[author-type=moderator]{background-color:#e2e2e2}</style>').appendTo('head');
             }
         });
 
