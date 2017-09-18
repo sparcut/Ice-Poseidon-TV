@@ -3,7 +3,9 @@
 		"ice_poseidon_tv@rawgit.com": {
 			"updates": [
                 { "version": "4.1.7",
-				"update_link": "https://cdn.rawgit.com/ansien12/IPTV-Extension/986b4567/updates/ice_poseidon_tv-4.1.7-an%2Bfx.xpi" }
+				"update_link": "https://cdn.rawgit.com/ansien12/IPTV-Extension/986b4567/updates/ice_poseidon_tv-4.1.7-an%2Bfx.xpi" },
+                { "version": "4.1.9",
+				"update_link": "https://cdn.rawgit.com/ansien12/IPTV-Extension/cfd3bb5c/updates/ice_poseidon_tv-4.1.9-an%2Bfx.xpi" }
 			]
 		}
 	}

@@ -240,6 +240,8 @@ export default class Emote
 
             for (const emote in emoteDic) {
 
+                Emote.addEmoteToTrie(emote);
+
                 Emote.emotes[emote] = {
                     url: urlTemplate + emoteDic[emote]['image_id'] + '/' + '1.0'
                 };
@@ -285,6 +287,9 @@ export default class Emote
                     const code = dict['code'];
 
                     if (Emote.isValidEmote(code)) {
+
+                        Emote.addEmoteToTrie(code);
+
                         Emote.emotes[code] = {
                             url: urlTemplate + dict['image_id'] + '/' + '1.0'
                         };
@@ -329,6 +334,9 @@ export default class Emote
                 const dict = emoteList[i];
 
                 if (!Emote.containsDisallowedChar(dict['code'])) {
+
+                    Emote.addEmoteToTrie(dict['code']);
+
                     Emote.emotes[dict['code']] = {
                         url: urlTemplate + dict['id'] + '/' + '1x'
                     };
@@ -402,6 +410,9 @@ export default class Emote
                     const dict = emoteList[i];
 
                     if (!Emote.containsDisallowedChar(dict['code'])) {
+
+                        Emote.addEmoteToTrie(dict['code']);
+
                         Emote.emotes[dict['code']] = {
                             url: urlTemplate + dict['id'] + '/' + '1x',
                             channel: channel + ' (bttv)'
@@ -434,6 +445,9 @@ export default class Emote
 
         for(const tier in subTierEmotes) {
             for (let i = 0; i < subTierEmotes[tier].length; i++) {
+
+                Emote.addEmoteToTrie(subTierEmotes[tier][i]);
+
                 Emote.emotes[subTierEmotes[tier][i]] = {
                     url: chrome.extension.getURL('/icons/emotes/' + subTierEmotes[tier][i] + '.png'),
                     tier: tier
@@ -470,6 +484,31 @@ export default class Emote
 
         return false;
     };
+
+
+    /**
+     * Adds emote into global Emote.trie.
+     * @static
+     * @param {string} emoteString
+     */
+    static addEmoteToTrie(emoteString) {
+        var lowered = emoteString.toLowerCase();
+        var localTrie = Emote.trie;
+        for (var i = 0; i < emoteString.length; i++) {
+            if (lowered.charAt(i) in localTrie) {
+                if(typeof localTrie[lowered.charAt(i)] !== 'string' || i == emoteString.length-1){
+                    localTrie = localTrie[lowered.charAt(i)];
+                }
+            } else {
+                if (i == emoteString.length - 1) {
+                    localTrie[lowered.charAt(i)] = emoteString;
+                } else {
+                    localTrie[lowered.charAt(i)] = [];
+                }
+                localTrie = localTrie[lowered.charAt(i)];
+            }
+        }
+    };
 };
 
 Emote.states = {
@@ -489,3 +528,4 @@ Emote.states = {
 };
 
 Emote.emotes = {};
+Emote.trie = [];
