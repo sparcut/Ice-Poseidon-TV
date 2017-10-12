@@ -1,12 +1,13 @@
 import { getOptions } from './main';
+import ChatColors from './chatColors';
 
 export default class Subscribers
 {
     static loadBadges()
     {
-        Subscribers.badges['1'] =  chrome.extension.getURL('/icons/tierBadge1.png');
-        Subscribers.badges['2'] =  chrome.extension.getURL('/icons/tierBadge2.png');
-        Subscribers.badges['3'] =  chrome.extension.getURL('/icons/tierBadge3.png');
+        Subscribers.badges['1'] = chrome.extension.getURL('/icons/tierBadge1.png');
+        Subscribers.badges['2'] = chrome.extension.getURL('/icons/tierBadge2.png');
+        Subscribers.badges['3'] = chrome.extension.getURL('/icons/tierBadge3.png');
     }
 
     static setSelfInfo(imgSrc)
@@ -48,6 +49,7 @@ export default class Subscribers
                     }
 
                     mutation.target.setAttribute('data-profile-id', profileId);
+					ChatColors(mutation.target, profileId);
 
                     const subInfo = getOptions()['subscriptions'][profileId];
 
@@ -66,6 +68,7 @@ export default class Subscribers
 
                             if (mutation.target.getAttribute('data-profile-id') === '') {
                                 mutation.target.setAttribute('data-profile-id', profileId);
+								ChatColors(mutation.target, profileId);
                             }
 
                             if (mutation.target.getAttribute('data-sub-tier') === '') {
@@ -76,6 +79,7 @@ export default class Subscribers
                                     mutation.target.setAttribute('data-sub-tier', 0);
                                 } else {
                                     mutation.target.setAttribute('data-sub-tier', getOptions()['subscriptions'][profileId]['subtier']);
+									ChatColors(mutation.target, profileId);
                                 }
                             }
                         });

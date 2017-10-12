@@ -10,8 +10,6 @@ export default class Emote
      */
     static loadEmotes()
     {
-        console.log('@loadEmotes');
-
         loadingEmotesInfo();
 
         setTimeout(function() {
@@ -76,6 +74,8 @@ export default class Emote
 
         $('.iptv-loading-emotes').remove();
         Emote.replaceExistingEmotes();
+		
+		console.log(Object.keys(Emote.emotes).length);
     };
 
     /**
@@ -114,8 +114,6 @@ export default class Emote
 
         const $message = $(node).find('#message');
         Emote.kappaCheck($message);
-
-        console.log($message);
 
         let oldHTML = $message.html().trim();
         let msgHTML = oldHTML;
@@ -215,7 +213,7 @@ export default class Emote
     {
         Emote.emotes['LUL'] = { url: 'https://cdn.betterttv.net/emote/567b00c61ddbe1786688a633/1x' };
         const xhr = new XMLHttpRequest();
-        xhr.open('GET', 'https://twitchemotes.com/api_cache/v2/global.json');
+        xhr.open('GET', 'https://twitchemotes.com/api_cache/v3/global.json');
         xhr.send();
         xhr.timeout = 5000;
         const urlTemplate = 'https://static-cdn.jtvnw.net/emoticons/v1/';
@@ -236,14 +234,14 @@ export default class Emote
                 return;
             }
 
-            const emoteDic = JSON.parse(xhr.responseText)['emotes'];
+            const emoteDic = JSON.parse(xhr.responseText);
 
             for (const emote in emoteDic) {
 
                 Emote.addEmoteToTrie(emote);
 
                 Emote.emotes[emote] = {
-                    url: urlTemplate + emoteDic[emote]['image_id'] + '/' + '1.0'
+                    url: urlTemplate + emoteDic[emote]['id'] + '/' + '1.0'
                 };
             }
         }
@@ -256,7 +254,7 @@ export default class Emote
     static loadSubEmotes()
     {
         const xhr = new XMLHttpRequest();
-        xhr.open('GET', 'https://twitchemotes.com/api_cache/v2/subscriber.json');
+        xhr.open('GET', 'https://twitchemotes.com/api_cache/v3/subscriber.json');
         xhr.send();
         xhr.timeout = 5000;
         const urlTemplate = 'https://static-cdn.jtvnw.net/emoticons/v1/';
@@ -277,21 +275,21 @@ export default class Emote
                 return;
             }
 
-            const emoteDic = JSON.parse(xhr.responseText)['channels'];
+            const emoteDic = JSON.parse(xhr.responseText);
 
             for (const channel in emoteDic) {
-
+			
                 for (const i in emoteDic[channel]['emotes']) {
 
                     const dict = emoteDic[channel]['emotes'][i];
                     const code = dict['code'];
-
+				
                     if (Emote.isValidEmote(code)) {
 
                         Emote.addEmoteToTrie(code);
 
                         Emote.emotes[code] = {
-                            url: urlTemplate + dict['image_id'] + '/' + '1.0'
+                            url: urlTemplate + dict['id'] + '/' + '1.0'
                         };
                     }
                 }
