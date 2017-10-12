@@ -42,9 +42,9 @@ var getCxLiveStreamers = function () {
 	}
 };
 
-var getstreamURL = function () {
-    if(JSON.parse(localStorage.streamURL) !== '') {
-        $('#streamLink').attr('href', JSON.parse(localStorage.streamURL));
+var getStreamURL = function () {
+    if(localStorage.streamURL !== '') {
+        $('#streamLink').attr('href', localStorage.streamURL);
     }
 };
 

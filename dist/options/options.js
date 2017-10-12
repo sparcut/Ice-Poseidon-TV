@@ -14,7 +14,7 @@ window.addEventListener('load', function () {
     options.disableAvatars.checked = JSON.parse(localStorage.disableAvatars);
     options.enableChatColors.checked = JSON.parse(localStorage.enableChatColors);
     options.redirectToYTGaming.checked = JSON.parse(localStorage.redirectToYTGaming);
-    options.streamURL.value = JSON.parse(localStorage.streamURL);
+    options.streamURL.value = localStorage.streamURL;
     options.enableSplitChat.checked = JSON.parse(localStorage.enableSplitChat);
     options.showDeletedMessages.checked = JSON.parse(localStorage.showDeletedMessages);
     options.mentionHighlight.checked = JSON.parse(localStorage.mentionHighlight);

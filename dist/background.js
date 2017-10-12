@@ -40,7 +40,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
 chrome.notifications.onClicked.addListener(function(notificationId) {
  	if(notificationId === 'liveNotification') {
-        chrome.tabs.create({ url: 'http://www.iceposeidon.com/' });
+        chrome.tabs.create({ url: localStorage.streamURL });
         chrome.notifications.clear(notificationId);
     }
 });
