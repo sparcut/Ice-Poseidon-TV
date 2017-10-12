@@ -128,6 +128,7 @@ if (!localStorage.BTTVChannels) localStorage.BTTVChannels = 'monkasen, graphistr
 if (!localStorage.disableAvatars) localStorage.disableAvatars = true;
 if (!localStorage.enableChatColors) localStorage.enableChatColors = true;
 if (!localStorage.redirectToYTGaming) localStorage.redirectToYTGaming = true;
+if (!localStorage.streamURL) localStorage.streamURL = 'http://www.iceposeidon.com/';
 if (!localStorage.enableSplitChat) localStorage.enableSplitChat = false;
 if (!localStorage.showDeletedMessages) localStorage.showDeletedMessages = false;
 if (!localStorage.mentionHighlight) localStorage.mentionHighlight = true;
